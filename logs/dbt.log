@@ -377,3 +377,1042 @@ https://docs.getdbt.com/docs/configure-your-profile
 [0m10:34:37.506331 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f20757d7140>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2075752c90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2075750230>]}
 [0m10:34:37.506899 [debug] [MainThread]: Flushing usage events
 [0m10:34:38.272807 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:20:18.630658 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29f89b260>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29fa65670>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29f89bd70>]}
+
+
+============================== 14:20:18.635275 | 9435c007-9837-407a-a60a-1c96326b37aa ==============================
+[0m14:20:18.635275 [info ] [MainThread]: Running with dbt=1.9.3
+[0m14:20:18.636289 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'invocation_command': 'dbt debug', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m14:20:18.651254 [info ] [MainThread]: dbt version: 1.9.3
+[0m14:20:18.652055 [info ] [MainThread]: python version: 3.12.9
+[0m14:20:18.652708 [info ] [MainThread]: python path: /home/egor/projects/TSM_DWH/venv/bin/python
+[0m14:20:18.653353 [info ] [MainThread]: os info: Linux-6.13.7-100.fc40.x86_64-x86_64-with-glibc2.39
+[0m14:20:18.721582 [info ] [MainThread]: Using profiles dir at /home/egor/.dbt
+[0m14:20:18.722453 [info ] [MainThread]: Using profiles.yml file at /home/egor/.dbt/profiles.yml
+[0m14:20:18.723238 [info ] [MainThread]: Using dbt_project.yml file at /home/egor/projects/TSM_DWH/dbt_project.yml
+[0m14:20:18.724603 [info ] [MainThread]: adapter type: postgres
+[0m14:20:18.725269 [info ] [MainThread]: adapter version: 1.9.0
+[0m14:20:18.859311 [info ] [MainThread]: Configuration:
+[0m14:20:18.860102 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m14:20:18.860815 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m14:20:18.861783 [info ] [MainThread]: Required dependencies:
+[0m14:20:18.862468 [debug] [MainThread]: Executing "git --help"
+[0m14:20:18.864945 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m14:20:18.865549 [debug] [MainThread]: STDERR: "b''"
+[0m14:20:18.866364 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m14:20:18.867253 [info ] [MainThread]: Connection:
+[0m14:20:18.867995 [info ] [MainThread]:   host: 127.0.0.1
+[0m14:20:18.868620 [info ] [MainThread]:   port: 5432
+[0m14:20:18.869230 [info ] [MainThread]:   user: postgres
+[0m14:20:18.869829 [info ] [MainThread]:   database: postgres
+[0m14:20:18.870536 [info ] [MainThread]:   schema: public
+[0m14:20:18.871465 [info ] [MainThread]:   connect_timeout: 10
+[0m14:20:18.872409 [info ] [MainThread]:   role: None
+[0m14:20:18.873343 [info ] [MainThread]:   search_path: None
+[0m14:20:18.874368 [info ] [MainThread]:   keepalives_idle: 0
+[0m14:20:18.875442 [info ] [MainThread]:   sslmode: None
+[0m14:20:18.876498 [info ] [MainThread]:   sslcert: None
+[0m14:20:18.877394 [info ] [MainThread]:   sslkey: None
+[0m14:20:18.878291 [info ] [MainThread]:   sslrootcert: None
+[0m14:20:18.879441 [info ] [MainThread]:   application_name: dbt
+[0m14:20:18.880328 [info ] [MainThread]:   retries: 1
+[0m14:20:18.881182 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m14:20:19.017984 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m14:20:19.053143 [debug] [MainThread]: Using postgres connection "debug"
+[0m14:20:19.054075 [debug] [MainThread]: On debug: select 1 as id
+[0m14:20:19.054709 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m14:20:19.070441 [debug] [MainThread]: SQL status: SELECT 1 in 0.016 seconds
+[0m14:20:19.072304 [debug] [MainThread]: On debug: Close
+[0m14:20:19.073066 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m14:20:19.073830 [info ] [MainThread]: [32mAll checks passed![0m
+[0m14:20:19.075940 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.50706464, "process_in_blocks": "272", "process_kernel_time": 0.237743, "process_mem_max_rss": "109160", "process_out_blocks": "24", "process_user_time": 1.891519}
+[0m14:20:19.076827 [debug] [MainThread]: Command `dbt debug` succeeded at 14:20:19.076626 after 0.51 seconds
+[0m14:20:19.077494 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m14:20:19.078265 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29fb4bdd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29f173f50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc29eff86b0>]}
+[0m14:20:19.079013 [debug] [MainThread]: Flushing usage events
+[0m14:20:19.988176 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:20:26.044810 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff281acb3e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff28358c290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff2810b0b60>]}
+
+
+============================== 14:20:26.048687 | c8d61401-d463-461c-9e35-7aa9f07030e6 ==============================
+[0m14:20:26.048687 [info ] [MainThread]: Running with dbt=1.9.3
+[0m14:20:26.049603 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'target_path': 'None', 'invocation_command': 'dbt build', 'send_anonymous_usage_stats': 'True'}
+[0m14:20:26.231134 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c8d61401-d463-461c-9e35-7aa9f07030e6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff281aca330>]}
+[0m14:20:26.299373 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'c8d61401-d463-461c-9e35-7aa9f07030e6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff2809718e0>]}
+[0m14:20:26.300370 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m14:20:26.430515 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m14:20:26.494034 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:20:26.494571 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:20:26.495397 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.postgres_dwh.example
+[0m14:20:26.501168 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'c8d61401-d463-461c-9e35-7aa9f07030e6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff28090a150>]}
+[0m14:20:26.563094 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:20:26.565599 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:20:26.597280 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'c8d61401-d463-461c-9e35-7aa9f07030e6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff27f9c2930>]}
+[0m14:20:26.597973 [info ] [MainThread]: Found 433 macros
+[0m14:20:26.600682 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:20:26.603309 [debug] [MainThread]: Command end result
+[0m14:20:26.644303 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:20:26.647013 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:20:26.653004 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m14:20:26.654749 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.66780007, "process_in_blocks": "848", "process_kernel_time": 0.200079, "process_mem_max_rss": "108192", "process_out_blocks": "1728", "process_user_time": 2.002761}
+[0m14:20:26.655786 [debug] [MainThread]: Command `dbt build` succeeded at 14:20:26.655589 after 0.67 seconds
+[0m14:20:26.656657 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff28120b6b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff2813cfe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff28019ac30>]}
+[0m14:20:26.657585 [debug] [MainThread]: Flushing usage events
+[0m14:20:27.463187 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:20:59.750659 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f517934f920>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f517934f350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f517931c800>]}
+
+
+============================== 14:20:59.754658 | c2e6b2c0-e61b-4783-998d-95714040a408 ==============================
+[0m14:20:59.754658 [info ] [MainThread]: Running with dbt=1.9.3
+[0m14:20:59.755712 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'invocation_command': 'dbt ', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m14:20:59.946810 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5178ff39b0>]}
+[0m14:21:00.014798 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f51791889e0>]}
+[0m14:21:00.015759 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m14:21:00.144994 [debug] [MainThread]: checksum: 832ccc19e5146dd41eb231211d90ac7a4e1ff8e4c869b5af4f43785a9ac82e23, vars: {}, profile: , target: dev, version: 1.9.3
+[0m14:21:00.188155 [info ] [MainThread]: Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m14:21:00.188887 [debug] [MainThread]: previous checksum: 832ccc19e5146dd41eb231211d90ac7a4e1ff8e4c869b5af4f43785a9ac82e23, current checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f
+[0m14:21:00.189674 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5177f49910>]}
+[0m14:21:00.970382 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.postgres_dwh.example
+[0m14:21:00.976461 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5179e0ab70>]}
+[0m14:21:01.034118 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:21:01.036565 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:21:01.049983 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5177f68ef0>]}
+[0m14:21:01.050616 [info ] [MainThread]: Found 433 macros
+[0m14:21:01.051228 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c2e6b2c0-e61b-4783-998d-95714040a408', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f51783b39b0>]}
+[0m14:21:01.052223 [warn ] [MainThread]: The selection criterion 'stg' does not match any enabled nodes
+[0m14:21:01.053938 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:21:01.054989 [debug] [MainThread]: Command end result
+[0m14:21:01.090415 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:21:01.092891 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:21:01.096802 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m14:21:01.098111 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.4047768, "process_in_blocks": "0", "process_kernel_time": 0.259464, "process_mem_max_rss": "106256", "process_out_blocks": "2496", "process_user_time": 2.811057}
+[0m14:21:01.098738 [debug] [MainThread]: Command `cli run` succeeded at 14:21:01.098568 after 1.41 seconds
+[0m14:21:01.099362 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5179add0a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5179561730>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5178bb7230>]}
+[0m14:21:01.099872 [debug] [MainThread]: Flushing usage events
+[0m14:21:01.972454 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:35:58.945936 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013f106e70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013ebd8f80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013d1e9400>]}
+
+
+============================== 14:35:58.951303 | 4ad44510-724c-4927-9ef6-eb078bb6ee78 ==============================
+[0m14:35:58.951303 [info ] [MainThread]: Running with dbt=1.9.3
+[0m14:35:58.952332 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt build', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m14:35:59.162761 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '4ad44510-724c-4927-9ef6-eb078bb6ee78', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013d7bc170>]}
+[0m14:35:59.231434 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '4ad44510-724c-4927-9ef6-eb078bb6ee78', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013cfe7530>]}
+[0m14:35:59.232466 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m14:35:59.428437 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m14:35:59.530072 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:35:59.530685 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:35:59.531691 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.postgres_dwh.example
+[0m14:35:59.538620 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '4ad44510-724c-4927-9ef6-eb078bb6ee78', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013cbfbe60>]}
+[0m14:35:59.601266 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:35:59.603830 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:35:59.646209 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '4ad44510-724c-4927-9ef6-eb078bb6ee78', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013b57ed20>]}
+[0m14:35:59.646885 [info ] [MainThread]: Found 433 macros
+[0m14:35:59.649087 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:35:59.651320 [debug] [MainThread]: Command end result
+[0m14:35:59.681150 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:35:59.682875 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:35:59.688045 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m14:35:59.689909 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.8075227, "process_in_blocks": "50808", "process_kernel_time": 0.377926, "process_mem_max_rss": "107492", "process_out_blocks": "1704", "process_user_time": 2.203792}
+[0m14:35:59.690598 [debug] [MainThread]: Command `dbt build` succeeded at 14:35:59.690392 after 0.81 seconds
+[0m14:35:59.691241 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013f106e70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013cccc2c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f013bd46bd0>]}
+[0m14:35:59.691761 [debug] [MainThread]: Flushing usage events
+[0m14:36:00.640111 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:37:50.666944 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c763da60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c763cce0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c72f8260>]}
+
+
+============================== 14:37:50.672602 | 66c75e48-2de2-48e0-aee6-b5e7a0b7728c ==============================
+[0m14:37:50.672602 [info ] [MainThread]: Running with dbt=1.9.3
+[0m14:37:50.673651 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt build', 'log_format': 'default', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m14:37:50.898645 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '66c75e48-2de2-48e0-aee6-b5e7a0b7728c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c6498320>]}
+[0m14:37:50.966990 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '66c75e48-2de2-48e0-aee6-b5e7a0b7728c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c6acb050>]}
+[0m14:37:50.968026 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m14:37:51.095735 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m14:37:51.155623 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:37:51.156171 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:37:51.162058 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '66c75e48-2de2-48e0-aee6-b5e7a0b7728c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c650c6e0>]}
+[0m14:37:51.216998 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:37:51.219370 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:37:51.259494 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '66c75e48-2de2-48e0-aee6-b5e7a0b7728c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c610a060>]}
+[0m14:37:51.260409 [info ] [MainThread]: Found 433 macros
+[0m14:37:51.262624 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m14:37:51.265101 [debug] [MainThread]: Command end result
+[0m14:37:51.298858 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m14:37:51.300572 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m14:37:51.304164 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m14:37:51.305926 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.7007353, "process_in_blocks": "46352", "process_kernel_time": 0.281581, "process_mem_max_rss": "107400", "process_out_blocks": "1800", "process_user_time": 2.167548}
+[0m14:37:51.306565 [debug] [MainThread]: Command `dbt build` succeeded at 14:37:51.306432 after 0.70 seconds
+[0m14:37:51.307132 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c6c43410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c64e8440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc0c6da3440>]}
+[0m14:37:51.307625 [debug] [MainThread]: Flushing usage events
+[0m14:37:52.153313 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:00:26.186612 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f83039ff500>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8305a50200>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8303f1eff0>]}
+
+
+============================== 15:00:26.191633 | 2f8dc286-bf6c-4ebe-b8db-234b7977ed18 ==============================
+[0m15:00:26.191633 [info ] [MainThread]: Running with dbt=1.9.3
+[0m15:00:26.192564 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'warn_error': 'None', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt build', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m15:00:26.400818 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '2f8dc286-bf6c-4ebe-b8db-234b7977ed18', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8303fcc0b0>]}
+[0m15:00:26.468234 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '2f8dc286-bf6c-4ebe-b8db-234b7977ed18', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f830365f530>]}
+[0m15:00:26.469298 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m15:00:26.596034 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m15:00:26.657154 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m15:00:26.657671 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m15:00:26.658522 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models
+[0m15:00:26.665356 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '2f8dc286-bf6c-4ebe-b8db-234b7977ed18', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8303304500>]}
+[0m15:00:26.736022 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m15:00:26.738903 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m15:00:26.780862 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '2f8dc286-bf6c-4ebe-b8db-234b7977ed18', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8301d9dc10>]}
+[0m15:00:26.781548 [info ] [MainThread]: Found 433 macros
+[0m15:00:26.784055 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m15:00:26.786744 [debug] [MainThread]: Command end result
+[0m15:00:26.818329 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m15:00:26.820216 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m15:00:26.825051 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m15:00:26.826865 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.7227416, "process_in_blocks": "42448", "process_kernel_time": 0.285072, "process_mem_max_rss": "107832", "process_out_blocks": "1736", "process_user_time": 2.212713}
+[0m15:00:26.827688 [debug] [MainThread]: Command `dbt build` succeeded at 15:00:26.827519 after 0.72 seconds
+[0m15:00:26.828218 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8303bab0b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8302d30440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8302dc6570>]}
+[0m15:00:26.828834 [debug] [MainThread]: Flushing usage events
+[0m15:00:27.765238 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:01:37.172889 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec533a6c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec533b710>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec5a3edb0>]}
+
+
+============================== 15:01:37.178512 | 603f7497-ae25-48c8-b54c-3089712c8e72 ==============================
+[0m15:01:37.178512 [info ] [MainThread]: Running with dbt=1.9.3
+[0m15:01:37.179398 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'profiles_dir': '/home/egor/.dbt', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt build', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m15:01:37.369296 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '603f7497-ae25-48c8-b54c-3089712c8e72', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec5acacc0>]}
+[0m15:01:37.438576 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '603f7497-ae25-48c8-b54c-3089712c8e72', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec5bb91f0>]}
+[0m15:01:37.439524 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m15:01:37.564962 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m15:01:37.625271 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m15:01:37.625843 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m15:01:37.626682 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models
+[0m15:01:37.632459 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '603f7497-ae25-48c8-b54c-3089712c8e72', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec48bc860>]}
+[0m15:01:37.694668 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m15:01:37.697062 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m15:01:37.722886 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '603f7497-ae25-48c8-b54c-3089712c8e72', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec35c38f0>]}
+[0m15:01:37.723565 [info ] [MainThread]: Found 433 macros
+[0m15:01:37.725843 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m15:01:37.728339 [debug] [MainThread]: Command end result
+[0m15:01:37.761349 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m15:01:37.763006 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m15:01:37.767089 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m15:01:37.768367 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.6649259, "process_in_blocks": "5216", "process_kernel_time": 0.227331, "process_mem_max_rss": "107692", "process_out_blocks": "1736", "process_user_time": 2.000981}
+[0m15:01:37.768968 [debug] [MainThread]: Command `dbt build` succeeded at 15:01:37.768807 after 0.67 seconds
+[0m15:01:37.769525 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec5a3edb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec491a5a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8ec5a930b0>]}
+[0m15:01:37.770075 [debug] [MainThread]: Flushing usage events
+[0m15:01:38.799439 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:21:42.500082 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabe961e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabf1cfda0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabe963ec0>]}
+
+
+============================== 13:21:42.505467 | f4eaceaf-f301-4d4a-8f64-bf1a454d66d4 ==============================
+[0m13:21:42.505467 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:21:42.506305 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'log_format': 'default', 'static_parser': 'True', 'target_path': 'None', 'invocation_command': 'dbt build', 'send_anonymous_usage_stats': 'True'}
+[0m13:21:42.718443 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'f4eaceaf-f301-4d4a-8f64-bf1a454d66d4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabede6300>]}
+[0m13:21:42.800167 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'f4eaceaf-f301-4d4a-8f64-bf1a454d66d4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabe58c680>]}
+[0m13:21:42.801243 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:21:42.954561 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:21:43.024821 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:21:43.025344 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:21:43.031208 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'f4eaceaf-f301-4d4a-8f64-bf1a454d66d4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabdb4b7d0>]}
+[0m13:21:43.110313 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:21:43.113393 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:21:43.158138 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'f4eaceaf-f301-4d4a-8f64-bf1a454d66d4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabd7004d0>]}
+[0m13:21:43.159258 [info ] [MainThread]: Found 433 macros
+[0m13:21:43.161423 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:21:43.163690 [debug] [MainThread]: Command end result
+[0m13:21:43.196826 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:21:43.198521 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:21:43.202209 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:21:43.204338 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.7656624, "process_in_blocks": "65992", "process_kernel_time": 0.333371, "process_mem_max_rss": "107352", "process_out_blocks": "1736", "process_user_time": 2.193067}
+[0m13:21:43.204945 [debug] [MainThread]: Command `dbt build` succeeded at 13:21:43.204819 after 0.77 seconds
+[0m13:21:43.205490 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabeed3b00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabdb99eb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fbabc7b55b0>]}
+[0m13:21:43.205989 [debug] [MainThread]: Flushing usage events
+[0m13:21:43.907307 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:23:45.261861 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f78e03440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f7b0506e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f78b50b60>]}
+
+
+============================== 13:23:45.266106 | 91723730-b387-49e7-ad96-2143b8b39464 ==============================
+[0m13:23:45.266106 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:23:45.267268 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt clean', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:23:45.399106 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '91723730-b387-49e7-ad96-2143b8b39464', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f7c9bbc50>]}
+[0m13:23:45.419988 [debug] [MainThread]: Resource report: {"command_name": "clean", "command_success": true, "command_wall_clock_time": 0.2196086, "process_in_blocks": "21544", "process_kernel_time": 0.223245, "process_mem_max_rss": "97164", "process_out_blocks": "144", "process_user_time": 1.703779}
+[0m13:23:45.420663 [debug] [MainThread]: Command `dbt clean` succeeded at 13:23:45.420536 after 0.22 seconds
+[0m13:23:45.421221 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f78ee2600>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f7c9bbc50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2f78b70ad0>]}
+[0m13:23:45.421773 [debug] [MainThread]: Flushing usage events
+[0m13:23:46.477983 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:23:52.160381 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a7008b90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a4e1a600>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a50f9e80>]}
+
+
+============================== 13:23:52.164096 | 1868b1c3-b584-4d89-9c3c-2cbb3f835a57 ==============================
+[0m13:23:52.164096 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:23:52.165009 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'invocation_command': 'dbt debug', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:23:52.186024 [info ] [MainThread]: dbt version: 1.9.3
+[0m13:23:52.186759 [info ] [MainThread]: python version: 3.12.9
+[0m13:23:52.187507 [info ] [MainThread]: python path: /home/egor/projects/TSM_DWH/venv/bin/python
+[0m13:23:52.188245 [info ] [MainThread]: os info: Linux-6.13.7-100.fc40.x86_64-x86_64-with-glibc2.39
+[0m13:23:52.269160 [info ] [MainThread]: Using profiles dir at /home/egor/.dbt
+[0m13:23:52.269881 [info ] [MainThread]: Using profiles.yml file at /home/egor/.dbt/profiles.yml
+[0m13:23:52.270514 [info ] [MainThread]: Using dbt_project.yml file at /home/egor/projects/TSM_DWH/dbt_project.yml
+[0m13:23:52.271368 [info ] [MainThread]: adapter type: postgres
+[0m13:23:52.271889 [info ] [MainThread]: adapter version: 1.9.0
+[0m13:23:52.387787 [info ] [MainThread]: Configuration:
+[0m13:23:52.388514 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:23:52.389131 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m13:23:52.389724 [info ] [MainThread]: Required dependencies:
+[0m13:23:52.390426 [debug] [MainThread]: Executing "git --help"
+[0m13:23:52.392947 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:23:52.393714 [debug] [MainThread]: STDERR: "b''"
+[0m13:23:52.394525 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:23:52.395394 [info ] [MainThread]: Connection:
+[0m13:23:52.396367 [info ] [MainThread]:   host: 127.0.0.1
+[0m13:23:52.397200 [info ] [MainThread]:   port: 5432
+[0m13:23:52.397953 [info ] [MainThread]:   user: postgres
+[0m13:23:52.398710 [info ] [MainThread]:   database: postgres
+[0m13:23:52.399589 [info ] [MainThread]:   schema: public
+[0m13:23:52.400536 [info ] [MainThread]:   connect_timeout: 10
+[0m13:23:52.401641 [info ] [MainThread]:   role: None
+[0m13:23:52.402666 [info ] [MainThread]:   search_path: None
+[0m13:23:52.403774 [info ] [MainThread]:   keepalives_idle: 0
+[0m13:23:52.404953 [info ] [MainThread]:   sslmode: None
+[0m13:23:52.406038 [info ] [MainThread]:   sslcert: None
+[0m13:23:52.407215 [info ] [MainThread]:   sslkey: None
+[0m13:23:52.408132 [info ] [MainThread]:   sslrootcert: None
+[0m13:23:52.409059 [info ] [MainThread]:   application_name: dbt
+[0m13:23:52.410007 [info ] [MainThread]:   retries: 1
+[0m13:23:52.411135 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:23:52.540525 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m13:23:52.570959 [debug] [MainThread]: Using postgres connection "debug"
+[0m13:23:52.571540 [debug] [MainThread]: On debug: select 1 as id
+[0m13:23:52.572015 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:23:52.587533 [debug] [MainThread]: SQL status: SELECT 1 in 0.015 seconds
+[0m13:23:52.589190 [debug] [MainThread]: On debug: Close
+[0m13:23:52.589760 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m13:23:52.590944 [info ] [MainThread]: [32mAll checks passed![0m
+[0m13:23:52.592286 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.4910602, "process_in_blocks": "1576", "process_kernel_time": 0.229584, "process_mem_max_rss": "109340", "process_out_blocks": "16", "process_user_time": 1.77595}
+[0m13:23:52.592967 [debug] [MainThread]: Command `dbt debug` succeeded at 13:23:52.592783 after 0.49 seconds
+[0m13:23:52.593537 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m13:23:52.594084 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a4d395e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a4cc48f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f42a35f8ad0>]}
+[0m13:23:52.594682 [debug] [MainThread]: Flushing usage events
+[0m13:23:53.440356 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:24:00.607956 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f604540b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f6074f530>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f6074f830>]}
+
+
+============================== 13:24:00.611810 | 7b91b304-cec1-4663-a6d9-282455bbc9b6 ==============================
+[0m13:24:00.611810 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:24:00.613118 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'profiles_dir': '/home/egor/.dbt', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'version_check': 'True', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'static_parser': 'True', 'log_format': 'default', 'target_path': 'None', 'invocation_command': 'dbt list', 'send_anonymous_usage_stats': 'True'}
+[0m13:24:00.797615 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '7b91b304-cec1-4663-a6d9-282455bbc9b6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f60edff50>]}
+[0m13:24:00.866444 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '7b91b304-cec1-4663-a6d9-282455bbc9b6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f609ba780>]}
+[0m13:24:00.867481 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:24:00.995218 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:24:00.996118 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:24:00.996775 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '7b91b304-cec1-4663-a6d9-282455bbc9b6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f6077d790>]}
+[0m13:24:01.803083 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '7b91b304-cec1-4663-a6d9-282455bbc9b6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f603fa2a0>]}
+[0m13:24:01.843913 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:24:01.846395 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:24:01.859659 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '7b91b304-cec1-4663-a6d9-282455bbc9b6', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f5f3677d0>]}
+[0m13:24:01.860543 [warn ] [MainThread]: No nodes selected!
+[0m13:24:01.861759 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 1.3104166, "process_in_blocks": "360", "process_kernel_time": 0.226335, "process_mem_max_rss": "105504", "process_out_blocks": "1656", "process_user_time": 2.628581}
+[0m13:24:01.862405 [debug] [MainThread]: Command `dbt list` succeeded at 13:24:01.862243 after 1.31 seconds
+[0m13:24:01.862903 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f604540b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f61cfd910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f60d3ed50>]}
+[0m13:24:01.863471 [debug] [MainThread]: Flushing usage events
+[0m13:24:02.759734 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:24:15.655469 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc354ab1df0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc356cbbb00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc3546913a0>]}
+
+
+============================== 13:24:15.659338 | 3b8ec4b6-72a2-4a8b-a570-e5062f7028e9 ==============================
+[0m13:24:15.659338 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:24:15.660309 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'target_path': 'None', 'invocation_command': 'dbt compile', 'send_anonymous_usage_stats': 'True'}
+[0m13:24:15.858397 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3b8ec4b6-72a2-4a8b-a570-e5062f7028e9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc354f9ff80>]}
+[0m13:24:15.927125 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3b8ec4b6-72a2-4a8b-a570-e5062f7028e9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc3569624b0>]}
+[0m13:24:15.928102 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:24:16.047691 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:24:16.108544 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:24:16.109072 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:24:16.114947 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3b8ec4b6-72a2-4a8b-a570-e5062f7028e9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc353dbaa80>]}
+[0m13:24:16.166288 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:24:16.168696 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:24:16.181284 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '3b8ec4b6-72a2-4a8b-a570-e5062f7028e9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc355d3b320>]}
+[0m13:24:16.181946 [info ] [MainThread]: Found 433 macros
+[0m13:24:16.182537 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '3b8ec4b6-72a2-4a8b-a570-e5062f7028e9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc353520e90>]}
+[0m13:24:16.184290 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:24:16.186498 [debug] [MainThread]: Command end result
+[0m13:24:16.219579 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:24:16.221409 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:24:16.225020 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:24:16.226192 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_success": true, "command_wall_clock_time": 0.628353, "process_in_blocks": "24", "process_kernel_time": 0.20496, "process_mem_max_rss": "105712", "process_out_blocks": "1648", "process_user_time": 1.968162}
+[0m13:24:16.226790 [debug] [MainThread]: Command `dbt compile` succeeded at 13:24:16.226662 after 0.63 seconds
+[0m13:24:16.227292 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc3547bb440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc354ffae10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc354ffb380>]}
+[0m13:24:16.227803 [debug] [MainThread]: Flushing usage events
+[0m13:24:16.953102 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:24:22.800341 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6ae4a780>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6ae49340>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6a7a57f0>]}
+
+
+============================== 13:24:22.804589 | 4fca89c0-69f4-48ed-9f7a-3cea7dbda313 ==============================
+[0m13:24:22.804589 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:24:22.805401 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/egor/.dbt', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt list', 'log_format': 'default', 'static_parser': 'True', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:24:22.988733 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '4fca89c0-69f4-48ed-9f7a-3cea7dbda313', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6aed8140>]}
+[0m13:24:23.055639 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '4fca89c0-69f4-48ed-9f7a-3cea7dbda313', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6acdbad0>]}
+[0m13:24:23.056650 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:24:23.175886 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:24:23.235077 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:24:23.235594 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:24:23.241975 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '4fca89c0-69f4-48ed-9f7a-3cea7dbda313', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd69f85e80>]}
+[0m13:24:23.293079 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:24:23.295659 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:24:23.307103 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '4fca89c0-69f4-48ed-9f7a-3cea7dbda313', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6973f2f0>]}
+[0m13:24:23.307988 [warn ] [MainThread]: No nodes selected!
+[0m13:24:23.309317 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 0.5662237, "process_in_blocks": "0", "process_kernel_time": 0.188126, "process_mem_max_rss": "105420", "process_out_blocks": "840", "process_user_time": 1.913242}
+[0m13:24:23.309894 [debug] [MainThread]: Command `dbt list` succeeded at 13:24:23.309756 after 0.57 seconds
+[0m13:24:23.310426 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6a8a4cb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6a471040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fcd6a472cf0>]}
+[0m13:24:23.310914 [debug] [MainThread]: Flushing usage events
+[0m13:24:24.160536 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:26:08.065353 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4340b2600>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4349d9ac0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4349dae10>]}
+
+
+============================== 13:26:08.069130 | c24d46c7-5815-481c-8779-6d9f674337aa ==============================
+[0m13:26:08.069130 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:26:08.070007 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt list', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:26:08.252901 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c24d46c7-5815-481c-8779-6d9f674337aa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4349dbf80>]}
+[0m13:26:08.319962 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'c24d46c7-5815-481c-8779-6d9f674337aa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4342918e0>]}
+[0m13:26:08.320982 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:26:08.455724 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:26:08.518105 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:26:08.518622 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:26:08.519458 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.postgres_dwh.stg
+[0m13:26:08.525403 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'c24d46c7-5815-481c-8779-6d9f674337aa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa434dbeea0>]}
+[0m13:26:08.588289 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:26:08.590987 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:26:08.601539 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c24d46c7-5815-481c-8779-6d9f674337aa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa432f6d1c0>]}
+[0m13:26:08.602755 [warn ] [MainThread]: No nodes selected!
+[0m13:26:08.604243 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 0.59719795, "process_in_blocks": "1384", "process_kernel_time": 0.203827, "process_mem_max_rss": "105240", "process_out_blocks": "848", "process_user_time": 1.994807}
+[0m13:26:08.604991 [debug] [MainThread]: Command `dbt list` succeeded at 13:26:08.604846 after 0.60 seconds
+[0m13:26:08.605559 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa434975dc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4343883e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa4343896a0>]}
+[0m13:26:08.606172 [debug] [MainThread]: Flushing usage events
+[0m13:26:09.429036 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:26:25.938562 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b3089a00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b53fffb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b373aff0>]}
+
+
+============================== 13:26:25.943048 | 19d3992f-0627-4e05-9daa-d8ea0578f562 ==============================
+[0m13:26:25.943048 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:26:25.944267 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'invocation_command': 'dbt list', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:26:26.127448 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '19d3992f-0627-4e05-9daa-d8ea0578f562', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b38d9a90>]}
+[0m13:26:26.198928 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '19d3992f-0627-4e05-9daa-d8ea0578f562', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b52798b0>]}
+[0m13:26:26.199998 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:26:26.321803 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:26:26.381028 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:26:26.381550 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:26:26.382417 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.stg
+[0m13:26:26.388488 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '19d3992f-0627-4e05-9daa-d8ea0578f562', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b27d4620>]}
+[0m13:26:26.450489 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:26:26.452971 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:26:26.463640 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '19d3992f-0627-4e05-9daa-d8ea0578f562', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b26f87d0>]}
+[0m13:26:26.464601 [warn ] [MainThread]: No nodes selected!
+[0m13:26:26.465735 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 0.5887456, "process_in_blocks": "0", "process_kernel_time": 0.21783, "process_mem_max_rss": "105208", "process_out_blocks": "840", "process_user_time": 2.082377}
+[0m13:26:26.466346 [debug] [MainThread]: Command `dbt list` succeeded at 13:26:26.466219 after 0.59 seconds
+[0m13:26:26.466853 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b1f50440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b2df4ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f12b31492b0>]}
+[0m13:26:26.467401 [debug] [MainThread]: Flushing usage events
+[0m13:26:27.247013 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:27:40.838266 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d41f3350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d3830b60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d5cd8410>]}
+
+
+============================== 13:27:40.842142 | af3969a9-3f44-4598-827a-6d5b83c18591 ==============================
+[0m13:27:40.842142 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:27:40.843221 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt compile', 'send_anonymous_usage_stats': 'True'}
+[0m13:27:41.032776 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'af3969a9-3f44-4598-827a-6d5b83c18591', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2f30320>]}
+[0m13:27:41.099938 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'af3969a9-3f44-4598-827a-6d5b83c18591', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2f578c0>]}
+[0m13:27:41.100969 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:27:41.264818 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:27:41.344833 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:27:41.345329 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:27:41.346134 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.postgres_dwh
+[0m13:27:41.352355 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'af3969a9-3f44-4598-827a-6d5b83c18591', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2f301a0>]}
+[0m13:27:41.415095 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:27:41.417576 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:27:41.429582 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'af3969a9-3f44-4598-827a-6d5b83c18591', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2b298e0>]}
+[0m13:27:41.430213 [info ] [MainThread]: Found 433 macros
+[0m13:27:41.430888 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'af3969a9-3f44-4598-827a-6d5b83c18591', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d27728d0>]}
+[0m13:27:41.432696 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:27:41.434882 [debug] [MainThread]: Command end result
+[0m13:27:41.469468 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:27:41.471569 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:27:41.475250 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:27:41.476375 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_success": true, "command_wall_clock_time": 0.6955867, "process_in_blocks": "0", "process_kernel_time": 0.214587, "process_mem_max_rss": "105724", "process_out_blocks": "1672", "process_user_time": 2.052575}
+[0m13:27:41.476968 [debug] [MainThread]: Command `dbt compile` succeeded at 13:27:41.476839 after 0.70 seconds
+[0m13:27:41.477528 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d390b2f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2f560c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f86d2f766c0>]}
+[0m13:27:41.478064 [debug] [MainThread]: Flushing usage events
+[0m13:27:42.203449 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:34:12.506530 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a3e00cb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a37bc0b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a3e02270>]}
+
+
+============================== 13:34:12.512243 | c24b9e2b-355b-41c7-b7ad-ba162d31195a ==============================
+[0m13:34:12.512243 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:34:12.513312 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt clean', 'introspect': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m13:34:12.712487 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c24b9e2b-355b-41c7-b7ad-ba162d31195a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a38436b0>]}
+[0m13:34:12.733729 [debug] [MainThread]: Resource report: {"command_name": "clean", "command_success": true, "command_wall_clock_time": 0.28819168, "process_in_blocks": "51928", "process_kernel_time": 0.277124, "process_mem_max_rss": "96960", "process_out_blocks": "112", "process_user_time": 1.854209}
+[0m13:34:12.734391 [debug] [MainThread]: Command `dbt clean` succeeded at 13:34:12.734245 after 0.29 seconds
+[0m13:34:12.734908 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a3777a70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a5ac83e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f91a345b7a0>]}
+[0m13:34:12.735422 [debug] [MainThread]: Flushing usage events
+[0m13:34:13.782712 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:34:26.173388 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bcaa600>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bf7fbc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bf7d220>]}
+
+
+============================== 13:34:26.177045 | f92a6545-7ab6-4c79-950d-f35fe76c56b5 ==============================
+[0m13:34:26.177045 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:34:26.177992 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt list', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:34:26.383062 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'f92a6545-7ab6-4c79-950d-f35fe76c56b5', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bfd3e00>]}
+[0m13:34:26.451581 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'f92a6545-7ab6-4c79-950d-f35fe76c56b5', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bbe5670>]}
+[0m13:34:26.452589 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:34:26.607315 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:34:26.608145 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m13:34:26.608764 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'f92a6545-7ab6-4c79-950d-f35fe76c56b5', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7adf0ef0>]}
+[0m13:34:27.396922 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'f92a6545-7ab6-4c79-950d-f35fe76c56b5', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc79d2f560>]}
+[0m13:34:27.439190 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:34:27.441609 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:34:27.457684 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'f92a6545-7ab6-4c79-950d-f35fe76c56b5', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7a588530>]}
+[0m13:34:27.458577 [warn ] [MainThread]: No nodes selected!
+[0m13:34:27.459752 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 1.3455738, "process_in_blocks": "9160", "process_kernel_time": 0.213884, "process_mem_max_rss": "105480", "process_out_blocks": "1704", "process_user_time": 2.664903}
+[0m13:34:27.460400 [debug] [MainThread]: Command `dbt list` succeeded at 13:34:27.460233 after 1.35 seconds
+[0m13:34:27.460959 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7bfd0b30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7a5f6960>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7efc7f5bbc50>]}
+[0m13:34:27.461687 [debug] [MainThread]: Flushing usage events
+[0m13:34:28.324446 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:34:35.759831 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3399e5b650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3399d68f80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3399e5b6e0>]}
+
+
+============================== 13:34:35.763686 | 8a227833-36a8-4be5-a2dd-4afd2f40a43e ==============================
+[0m13:34:35.763686 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:34:35.764609 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'log_format': 'default', 'invocation_command': 'dbt compile', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:34:35.955460 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '8a227833-36a8-4be5-a2dd-4afd2f40a43e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3399328320>]}
+[0m13:34:36.024304 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '8a227833-36a8-4be5-a2dd-4afd2f40a43e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f339a18b830>]}
+[0m13:34:36.025354 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:34:36.157033 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:34:36.216233 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:34:36.216745 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:34:36.222428 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '8a227833-36a8-4be5-a2dd-4afd2f40a43e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f339939de80>]}
+[0m13:34:36.274990 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:34:36.277800 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:34:36.291102 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '8a227833-36a8-4be5-a2dd-4afd2f40a43e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f33983d4b00>]}
+[0m13:34:36.291815 [info ] [MainThread]: Found 433 macros
+[0m13:34:36.292496 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '8a227833-36a8-4be5-a2dd-4afd2f40a43e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f339939e7e0>]}
+[0m13:34:36.294348 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:34:36.296669 [debug] [MainThread]: Command end result
+[0m13:34:36.332387 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:34:36.334827 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:34:36.338499 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:34:36.340398 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_success": true, "command_wall_clock_time": 0.63800305, "process_in_blocks": "7824", "process_kernel_time": 0.228434, "process_mem_max_rss": "105480", "process_out_blocks": "1736", "process_user_time": 1.984186}
+[0m13:34:36.341020 [debug] [MainThread]: Command `dbt compile` succeeded at 13:34:36.340873 after 0.64 seconds
+[0m13:34:36.341583 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3399e5b6e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f33993f8440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f3398b69100>]}
+[0m13:34:36.342089 [debug] [MainThread]: Flushing usage events
+[0m13:34:37.038700 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:36:25.264618 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e58025910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e59b4c290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e58026060>]}
+
+
+============================== 13:36:25.268452 | f6d55630-f7c7-4da9-886f-d83e7d42e940 ==============================
+[0m13:36:25.268452 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:36:25.269385 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt build', 'send_anonymous_usage_stats': 'True'}
+[0m13:36:25.451431 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'f6d55630-f7c7-4da9-886f-d83e7d42e940', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e580b3f50>]}
+[0m13:36:25.518351 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'f6d55630-f7c7-4da9-886f-d83e7d42e940', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e57126510>]}
+[0m13:36:25.519599 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:36:25.642590 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:36:25.706330 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:36:25.706841 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:36:25.712671 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'f6d55630-f7c7-4da9-886f-d83e7d42e940', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e571e11c0>]}
+[0m13:36:25.761784 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:36:25.764349 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:36:25.800708 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'f6d55630-f7c7-4da9-886f-d83e7d42e940', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e5659c0e0>]}
+[0m13:36:25.801349 [info ] [MainThread]: Found 433 macros
+[0m13:36:25.803453 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:36:25.805678 [debug] [MainThread]: Command end result
+[0m13:36:25.837490 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:36:25.839386 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:36:25.843277 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:36:25.844471 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": true, "command_wall_clock_time": 0.6412807, "process_in_blocks": "9152", "process_kernel_time": 0.223425, "process_mem_max_rss": "107440", "process_out_blocks": "1672", "process_user_time": 1.988765}
+[0m13:36:25.845178 [debug] [MainThread]: Command `dbt build` succeeded at 13:36:25.845001 after 0.64 seconds
+[0m13:36:25.845708 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e59b4c290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e580b2090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f8e580b0e90>]}
+[0m13:36:25.846249 [debug] [MainThread]: Flushing usage events
+[0m13:36:26.801607 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:36:47.318145 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3be93c5c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3bc8c4da0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3bcac33b0>]}
+
+
+============================== 13:36:47.322420 | cf651dca-cef7-4cfd-b5c9-286f053df877 ==============================
+[0m13:36:47.322420 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:36:47.323364 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'debug': 'False', 'version_check': 'True', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt debug', 'log_format': 'default', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:36:47.345503 [info ] [MainThread]: dbt version: 1.9.3
+[0m13:36:47.346413 [info ] [MainThread]: python version: 3.12.9
+[0m13:36:47.347227 [info ] [MainThread]: python path: /home/egor/projects/TSM_DWH/venv/bin/python
+[0m13:36:47.348330 [info ] [MainThread]: os info: Linux-6.13.7-100.fc40.x86_64-x86_64-with-glibc2.39
+[0m13:36:47.416000 [info ] [MainThread]: Using profiles dir at /home/egor/.dbt
+[0m13:36:47.416645 [info ] [MainThread]: Using profiles.yml file at /home/egor/.dbt/profiles.yml
+[0m13:36:47.417165 [info ] [MainThread]: Using dbt_project.yml file at /home/egor/projects/TSM_DWH/dbt_project.yml
+[0m13:36:47.417887 [info ] [MainThread]: adapter type: postgres
+[0m13:36:47.418371 [info ] [MainThread]: adapter version: 1.9.0
+[0m13:36:47.537547 [info ] [MainThread]: Configuration:
+[0m13:36:47.538280 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:36:47.538950 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m13:36:47.539623 [info ] [MainThread]: Required dependencies:
+[0m13:36:47.540350 [debug] [MainThread]: Executing "git --help"
+[0m13:36:47.542879 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:36:47.543686 [debug] [MainThread]: STDERR: "b''"
+[0m13:36:47.544673 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:36:47.545700 [info ] [MainThread]: Connection:
+[0m13:36:47.546738 [info ] [MainThread]:   host: 127.0.0.1
+[0m13:36:47.547694 [info ] [MainThread]:   port: 5432
+[0m13:36:47.548627 [info ] [MainThread]:   user: postgres
+[0m13:36:47.549502 [info ] [MainThread]:   database: postgres
+[0m13:36:47.550361 [info ] [MainThread]:   schema: public
+[0m13:36:47.551368 [info ] [MainThread]:   connect_timeout: 10
+[0m13:36:47.552403 [info ] [MainThread]:   role: None
+[0m13:36:47.553578 [info ] [MainThread]:   search_path: None
+[0m13:36:47.554848 [info ] [MainThread]:   keepalives_idle: 0
+[0m13:36:47.555641 [info ] [MainThread]:   sslmode: None
+[0m13:36:47.556296 [info ] [MainThread]:   sslcert: None
+[0m13:36:47.556829 [info ] [MainThread]:   sslkey: None
+[0m13:36:47.557605 [info ] [MainThread]:   sslrootcert: None
+[0m13:36:47.558524 [info ] [MainThread]:   application_name: dbt
+[0m13:36:47.559390 [info ] [MainThread]:   retries: 1
+[0m13:36:47.560444 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:36:47.678408 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m13:36:47.739009 [debug] [MainThread]: Using postgres connection "debug"
+[0m13:36:47.739620 [debug] [MainThread]: On debug: select 1 as id
+[0m13:36:47.740086 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:36:47.770875 [debug] [MainThread]: SQL status: SELECT 1 in 0.031 seconds
+[0m13:36:47.772097 [debug] [MainThread]: On debug: Close
+[0m13:36:47.772657 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m13:36:47.773296 [info ] [MainThread]: [32mAll checks passed![0m
+[0m13:36:47.774491 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.515724, "process_in_blocks": "2912", "process_kernel_time": 0.206429, "process_mem_max_rss": "109292", "process_out_blocks": "24", "process_user_time": 1.827276}
+[0m13:36:47.775215 [debug] [MainThread]: Command `dbt debug` succeeded at 13:36:47.775014 after 0.52 seconds
+[0m13:36:47.775680 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m13:36:47.776193 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3bcf95250>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3bc2efd40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fa3bcea0aa0>]}
+[0m13:36:47.776755 [debug] [MainThread]: Flushing usage events
+[0m13:36:48.569010 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:39:03.748425 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc6d4b890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc8f8c860>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc6d4b800>]}
+
+
+============================== 13:39:03.752181 | 9a1a493c-570c-4854-9a9e-ace6b4b256c1 ==============================
+[0m13:39:03.752181 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:39:03.753323 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt ', 'log_format': 'default', 'static_parser': 'True', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:39:03.941894 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc74f8200>]}
+[0m13:39:04.011713 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc6a17380>]}
+[0m13:39:04.012745 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:39:04.140726 [debug] [MainThread]: checksum: 832ccc19e5146dd41eb231211d90ac7a4e1ff8e4c869b5af4f43785a9ac82e23, vars: {}, profile: , target: dev, version: 1.9.3
+[0m13:39:04.185363 [info ] [MainThread]: Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m13:39:04.186066 [debug] [MainThread]: previous checksum: 832ccc19e5146dd41eb231211d90ac7a4e1ff8e4c869b5af4f43785a9ac82e23, current checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f
+[0m13:39:04.186789 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc59414f0>]}
+[0m13:39:05.009769 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc5942390>]}
+[0m13:39:05.058990 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:39:05.062335 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:39:05.075340 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc5d845c0>]}
+[0m13:39:05.075974 [info ] [MainThread]: Found 433 macros
+[0m13:39:05.076854 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '9a1a493c-570c-4854-9a9e-ace6b4b256c1', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc5980b00>]}
+[0m13:39:05.078048 [warn ] [MainThread]: The selection criterion 'stg' does not match any enabled nodes
+[0m13:39:05.080311 [warn ] [MainThread]: Nothing to do. Try checking your model configs and model specification args
+[0m13:39:05.081345 [debug] [MainThread]: Command end result
+[0m13:39:05.118443 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:39:05.120262 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:39:05.123829 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:39:05.124951 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.4347928, "process_in_blocks": "72", "process_kernel_time": 0.240631, "process_mem_max_rss": "106028", "process_out_blocks": "2528", "process_user_time": 2.99393}
+[0m13:39:05.125586 [debug] [MainThread]: Command `cli run` succeeded at 13:39:05.125454 after 1.44 seconds
+[0m13:39:05.126092 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc6c7c470>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc6ff9130>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4cc59b37a0>]}
+[0m13:39:05.126723 [debug] [MainThread]: Flushing usage events
+[0m13:39:06.137188 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:39:41.918530 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62e1205dc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62e11940e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62df10eb70>]}
+
+
+============================== 13:39:41.922224 | 5ed9fc8f-53ba-4e8b-8c23-9e183a4bfd17 ==============================
+[0m13:39:41.922224 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:39:41.923233 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'profiles_dir': '/home/egor/.dbt', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'static_parser': 'True', 'invocation_command': 'dbt parse', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:39:42.104363 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '5ed9fc8f-53ba-4e8b-8c23-9e183a4bfd17', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62df6f60f0>]}
+[0m13:39:42.170468 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '5ed9fc8f-53ba-4e8b-8c23-9e183a4bfd17', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62deae0860>]}
+[0m13:39:42.171529 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:39:42.299214 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:39:42.344931 [info ] [MainThread]: Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m13:39:42.345649 [debug] [MainThread]: previous checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, current checksum: 832ccc19e5146dd41eb231211d90ac7a4e1ff8e4c869b5af4f43785a9ac82e23
+[0m13:39:42.346196 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '5ed9fc8f-53ba-4e8b-8c23-9e183a4bfd17', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62def3ecc0>]}
+[0m13:39:43.135273 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '5ed9fc8f-53ba-4e8b-8c23-9e183a4bfd17', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62ddd87d70>]}
+[0m13:39:43.139965 [info ] [MainThread]: Performance info: /home/egor/projects/TSM_DWH/target/perf_info.json
+[0m13:39:43.201470 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:39:43.204709 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:39:43.206078 [debug] [MainThread]: Resource report: {"command_name": "parse", "command_success": true, "command_wall_clock_time": 1.3475802, "process_in_blocks": "0", "process_kernel_time": 0.183959, "process_mem_max_rss": "105280", "process_out_blocks": "1656", "process_user_time": 2.706665}
+[0m13:39:43.206723 [debug] [MainThread]: Command `dbt parse` succeeded at 13:39:43.206594 after 1.35 seconds
+[0m13:39:43.207310 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62e2bbbc50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62dec999d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f62ddda2210>]}
+[0m13:39:43.207846 [debug] [MainThread]: Flushing usage events
+[0m13:39:43.844600 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:41:08.877401 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29c0bd8e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29bd787a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29bb27cb0>]}
+
+
+============================== 13:41:08.881135 | e322ed2e-9f5f-4aa8-a2cc-e1fc0a92572c ==============================
+[0m13:41:08.881135 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:41:08.882090 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'debug': 'False', 'fail_fast': 'False', 'log_path': 'logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt init', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:41:17.485419 [debug] [MainThread]: Starter project path: /home/egor/projects/TSM_DWH/venv/lib64/python3.12/site-packages/dbt/include/starter_project
+[0m13:41:17.488818 [info ] [MainThread]: 
+Your new dbt project "tsm_dwh" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m13:41:17.489437 [info ] [MainThread]: Setting up your profile.
+[0m13:42:02.874915 [info ] [MainThread]: Profile tsm_dwh written to /home/egor/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m13:42:02.876472 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 54.05607, "process_in_blocks": "152", "process_kernel_time": 0.147331, "process_mem_max_rss": "98528", "process_out_blocks": "280", "process_user_time": 1.579614}
+[0m13:42:02.877446 [debug] [MainThread]: Command `dbt init` succeeded at 13:42:02.877206 after 54.06 seconds
+[0m13:42:02.878511 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29bbc3440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29b74acc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb29c3e4dd0>]}
+[0m13:42:02.879588 [debug] [MainThread]: Flushing usage events
+[0m13:42:03.700119 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:42:55.177100 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff94e34140>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff95261550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff95263b00>]}
+
+
+============================== 13:42:55.180878 | 2e390459-48e6-4b7a-9f71-9a5d577d2eed ==============================
+[0m13:42:55.180878 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:42:55.181718 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'version_check': 'True', 'profiles_dir': '/home/egor/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt list', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:42:55.182434 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/egor/projects/TSM_DWH/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m13:42:55.183638 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": false, "command_wall_clock_time": 0.06828066, "process_in_blocks": "0", "process_kernel_time": 0.140197, "process_mem_max_rss": "93384", "process_out_blocks": "16", "process_user_time": 1.500763}
+[0m13:42:55.184258 [debug] [MainThread]: Command `dbt list` failed at 13:42:55.184089 after 0.07 seconds
+[0m13:42:55.184781 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff94f68140>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff95ae3c20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eff98a4f0b0>]}
+[0m13:42:55.185323 [debug] [MainThread]: Flushing usage events
+[0m13:42:56.129765 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:49:48.459061 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066f430bc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066db26de0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066d7a2600>]}
+
+
+============================== 13:49:48.466039 | 0d38de5d-5b1f-433d-b023-adfb293547c3 ==============================
+[0m13:49:48.466039 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:49:48.467045 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'invocation_command': 'dbt clean', 'log_format': 'default', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m13:49:48.467879 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/egor/projects/TSM_DWH/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m13:49:48.469131 [debug] [MainThread]: Resource report: {"command_name": "clean", "command_success": false, "command_wall_clock_time": 0.068632185, "process_in_blocks": "72", "process_kernel_time": 0.123364, "process_mem_max_rss": "93656", "process_out_blocks": "8", "process_user_time": 1.52341}
+[0m13:49:48.469798 [debug] [MainThread]: Command `dbt clean` failed at 13:49:48.469663 after 0.07 seconds
+[0m13:49:48.470331 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066d0b6ab0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066db26de0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f066dac8f80>]}
+[0m13:49:48.470855 [debug] [MainThread]: Flushing usage events
+[0m13:49:49.435549 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:50:49.114288 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11f092690>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11edf9bb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11e7998b0>]}
+
+
+============================== 13:50:49.118858 | 5a22682b-e288-487e-ba5d-a7206b13edbe ==============================
+[0m13:50:49.118858 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:50:49.119971 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'debug': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt ', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:50:49.251130 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '5a22682b-e288-487e-ba5d-a7206b13edbe', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11e286de0>]}
+[0m13:50:49.272373 [info ] [MainThread]: Warning: No packages were found in packages.yml
+[0m13:50:49.273524 [info ] [MainThread]: Warning: No packages were found in packages.yml
+[0m13:50:49.275322 [debug] [MainThread]: Resource report: {"command_name": "deps", "command_success": true, "command_wall_clock_time": 0.22705263, "process_in_blocks": "128", "process_kernel_time": 0.167645, "process_mem_max_rss": "97400", "process_out_blocks": "8", "process_user_time": 1.713328}
+[0m13:50:49.275931 [debug] [MainThread]: Command `cli deps` succeeded at 13:50:49.275809 after 0.23 seconds
+[0m13:50:49.276395 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff1223ff380>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11e1018b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ff11e101340>]}
+[0m13:50:49.276875 [debug] [MainThread]: Flushing usage events
+[0m13:50:50.244100 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:50:50.662248 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613de698e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613f4210a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613fa0f170>]}
+
+
+============================== 13:50:50.666563 | f8f7b3bc-0296-4959-b307-43e20776dcfa ==============================
+[0m13:50:50.666563 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:50:50.667631 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/egor/.dbt', 'version_check': 'True', 'debug': 'False', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'introspect': 'True', 'invocation_command': 'dbt list', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m13:50:50.865423 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'f8f7b3bc-0296-4959-b307-43e20776dcfa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613dfded80>]}
+[0m13:50:50.943922 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'f8f7b3bc-0296-4959-b307-43e20776dcfa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613de3f050>]}
+[0m13:50:50.944893 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:50:51.066592 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:50:51.157566 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:50:51.158047 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:50:51.186965 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'f8f7b3bc-0296-4959-b307-43e20776dcfa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613c91a9c0>]}
+[0m13:50:51.261682 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:50:51.264446 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:50:51.277743 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'f8f7b3bc-0296-4959-b307-43e20776dcfa', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613df7a630>]}
+[0m13:50:51.279029 [info ] [MainThread]: tsm_dwh.dv.dv_hub_fact_journal
+[0m13:50:51.279642 [info ] [MainThread]: tsm_dwh.dv.dv_hub_fact_work
+[0m13:50:51.280289 [info ] [MainThread]: tsm_dwh.dv.dv_hub_tech
+[0m13:50:51.280854 [info ] [MainThread]: tsm_dwh.dv.dv_lnk_fact_journal_fact_work
+[0m13:50:51.281347 [info ] [MainThread]: tsm_dwh.dv.dv_lnk_fact_work_tech
+[0m13:50:51.281813 [info ] [MainThread]: tsm_dwh.dv.dv_msat_fact_materials
+[0m13:50:51.282284 [info ] [MainThread]: tsm_dwh.dv.dv_msat_fact_pikets
+[0m13:50:51.282769 [info ] [MainThread]: tsm_dwh.dv.dv_msat_norm_workload
+[0m13:50:51.283275 [info ] [MainThread]: tsm_dwh.dv.dv_sat_fact_journal
+[0m13:50:51.283759 [info ] [MainThread]: tsm_dwh.dv.dv_sat_fact_tech
+[0m13:50:51.284243 [info ] [MainThread]: tsm_dwh.dv.dv_sat_fact_work
+[0m13:50:51.284747 [info ] [MainThread]: tsm_dwh.stage.stg_1c_journal
+[0m13:50:51.285512 [info ] [MainThread]: tsm_dwh.stage.stg_1c_materials
+[0m13:50:51.286507 [info ] [MainThread]: tsm_dwh.stage.stg_1c_norm_workload
+[0m13:50:51.287332 [info ] [MainThread]: tsm_dwh.stage.stg_1c_pikets
+[0m13:50:51.288249 [info ] [MainThread]: tsm_dwh.stage.stg_1c_tech
+[0m13:50:51.289075 [info ] [MainThread]: tsm_dwh.stage.stg_1c_works
+[0m13:50:51.290809 [debug] [MainThread]: Resource report: {"command_name": "list", "command_success": true, "command_wall_clock_time": 0.69434863, "process_in_blocks": "0", "process_kernel_time": 0.204793, "process_mem_max_rss": "105904", "process_out_blocks": "1160", "process_user_time": 2.166456}
+[0m13:50:51.291982 [debug] [MainThread]: Command `dbt list` succeeded at 13:50:51.291730 after 0.70 seconds
+[0m13:50:51.293044 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613d84f7a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613c9197f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f613c91a7b0>]}
+[0m13:50:51.293735 [debug] [MainThread]: Flushing usage events
+[0m13:50:52.087521 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:50:58.683068 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65e9fef60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65d78dfd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65ce5a600>]}
+
+
+============================== 13:50:58.686946 | 06ea169f-0c05-479c-b02a-559fbd4fb60e ==============================
+[0m13:50:58.686946 [info ] [MainThread]: Running with dbt=1.9.3
+[0m13:50:58.687921 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '/home/egor/.dbt', 'log_path': '/home/egor/projects/TSM_DWH/logs', 'fail_fast': 'False', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'invocation_command': 'dbt compile', 'static_parser': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m13:50:59.011297 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65d0c3e30>]}
+[0m13:50:59.088954 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65c155520>]}
+[0m13:50:59.090143 [info ] [MainThread]: Registered adapter: postgres=1.9.0
+[0m13:50:59.228875 [debug] [MainThread]: checksum: 5671c00892cdbcef29c3b00cc5ba7510c3d18a35c883caeb9ab9ee266dc29c8f, vars: {}, profile: , target: , version: 1.9.3
+[0m13:50:59.317465 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:50:59.318052 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:50:59.348341 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65c1b09b0>]}
+[0m13:50:59.424746 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:50:59.427424 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:50:59.441557 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65b5f3fb0>]}
+[0m13:50:59.442450 [info ] [MainThread]: Found 17 models, 433 macros
+[0m13:50:59.443013 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65bd014f0>]}
+[0m13:50:59.445638 [info ] [MainThread]: 
+[0m13:50:59.446198 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m13:50:59.446784 [info ] [MainThread]: 
+[0m13:50:59.447682 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m13:50:59.460542 [debug] [ThreadPool]: Acquiring new postgres connection 'list_postgres_public'
+[0m13:50:59.581130 [debug] [ThreadPool]: Using postgres connection "list_postgres_public"
+[0m13:50:59.582277 [debug] [ThreadPool]: On list_postgres_public: BEGIN
+[0m13:50:59.583212 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:50:59.617626 [debug] [ThreadPool]: SQL status: BEGIN in 0.034 seconds
+[0m13:50:59.618229 [debug] [ThreadPool]: Using postgres connection "list_postgres_public"
+[0m13:50:59.619189 [debug] [ThreadPool]: On list_postgres_public: /* {"app": "dbt", "dbt_version": "1.9.3", "profile_name": "tsm_dwh", "target_name": "dev", "connection_name": "list_postgres_public"} */
+select
+      'postgres' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'public'
+    union all
+    select
+      'postgres' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'public'
+    union all
+    select
+      'postgres' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'public'
+  
+[0m13:50:59.622560 [debug] [ThreadPool]: SQL status: SELECT 2 in 0.003 seconds
+[0m13:50:59.624221 [debug] [ThreadPool]: On list_postgres_public: ROLLBACK
+[0m13:50:59.624820 [debug] [ThreadPool]: On list_postgres_public: Close
+[0m13:50:59.631302 [debug] [MainThread]: Using postgres connection "master"
+[0m13:50:59.631816 [debug] [MainThread]: On master: BEGIN
+[0m13:50:59.632353 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:50:59.640963 [debug] [MainThread]: SQL status: BEGIN in 0.009 seconds
+[0m13:50:59.641534 [debug] [MainThread]: Using postgres connection "master"
+[0m13:50:59.642264 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.9.3", "profile_name": "tsm_dwh", "target_name": "dev", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select distinct
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v', 'm')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+[0m13:50:59.646327 [debug] [MainThread]: SQL status: SELECT 0 in 0.004 seconds
+[0m13:50:59.647825 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '06ea169f-0c05-479c-b02a-559fbd4fb60e', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65c1b22a0>]}
+[0m13:50:59.648455 [debug] [MainThread]: On master: ROLLBACK
+[0m13:50:59.649073 [debug] [MainThread]: On master: Close
+[0m13:50:59.652800 [debug] [Thread-1 (]: Began running node model.tsm_dwh.dv_hub_fact_journal
+[0m13:50:59.653727 [debug] [Thread-2 (]: Began running node model.tsm_dwh.dv_hub_fact_work
+[0m13:50:59.654713 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_postgres_public, now model.tsm_dwh.dv_hub_fact_journal)
+[0m13:50:59.655565 [debug] [Thread-3 (]: Began running node model.tsm_dwh.dv_hub_tech
+[0m13:50:59.656351 [debug] [Thread-4 (]: Began running node model.tsm_dwh.dv_lnk_fact_journal_fact_work
+[0m13:50:59.657082 [debug] [Thread-2 (]: Acquiring new postgres connection 'model.tsm_dwh.dv_hub_fact_work'
+[0m13:50:59.658036 [debug] [Thread-1 (]: Began compiling node model.tsm_dwh.dv_hub_fact_journal
+[0m13:50:59.658860 [debug] [Thread-3 (]: Acquiring new postgres connection 'model.tsm_dwh.dv_hub_tech'
+[0m13:50:59.659639 [debug] [Thread-4 (]: Acquiring new postgres connection 'model.tsm_dwh.dv_lnk_fact_journal_fact_work'
+[0m13:50:59.660244 [debug] [Thread-2 (]: Began compiling node model.tsm_dwh.dv_hub_fact_work
+[0m13:50:59.666051 [debug] [Thread-3 (]: Began compiling node model.tsm_dwh.dv_hub_tech
+[0m13:50:59.671762 [debug] [Thread-4 (]: Began compiling node model.tsm_dwh.dv_lnk_fact_journal_fact_work
+[0m13:50:59.671301 [debug] [Thread-1 (]: Writing injected SQL for node "model.tsm_dwh.dv_hub_fact_journal"
+[0m13:50:59.673924 [debug] [Thread-2 (]: Writing injected SQL for node "model.tsm_dwh.dv_hub_fact_work"
+[0m13:50:59.675951 [debug] [Thread-3 (]: Writing injected SQL for node "model.tsm_dwh.dv_hub_tech"
+[0m13:50:59.678020 [debug] [Thread-4 (]: Writing injected SQL for node "model.tsm_dwh.dv_lnk_fact_journal_fact_work"
+[0m13:50:59.679925 [debug] [Thread-2 (]: Began executing node model.tsm_dwh.dv_hub_fact_work
+[0m13:50:59.681029 [debug] [Thread-3 (]: Began executing node model.tsm_dwh.dv_hub_tech
+[0m13:50:59.682007 [debug] [Thread-1 (]: Began executing node model.tsm_dwh.dv_hub_fact_journal
+[0m13:50:59.683072 [debug] [Thread-2 (]: Finished running node model.tsm_dwh.dv_hub_fact_work
+[0m13:50:59.683609 [debug] [Thread-4 (]: Began executing node model.tsm_dwh.dv_lnk_fact_journal_fact_work
+[0m13:50:59.684586 [debug] [Thread-3 (]: Finished running node model.tsm_dwh.dv_hub_tech
+[0m13:50:59.685496 [debug] [Thread-1 (]: Finished running node model.tsm_dwh.dv_hub_fact_journal
+[0m13:50:59.686059 [debug] [Thread-2 (]: Began running node model.tsm_dwh.dv_lnk_fact_work_tech
+[0m13:50:59.687226 [debug] [Thread-4 (]: Finished running node model.tsm_dwh.dv_lnk_fact_journal_fact_work
+[0m13:50:59.687878 [debug] [Thread-3 (]: Began running node model.tsm_dwh.dv_msat_fact_materials
+[0m13:50:59.688501 [debug] [Thread-1 (]: Began running node model.tsm_dwh.dv_msat_fact_pikets
+[0m13:50:59.689293 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_hub_fact_work, now model.tsm_dwh.dv_lnk_fact_work_tech)
+[0m13:50:59.690124 [debug] [Thread-4 (]: Began running node model.tsm_dwh.dv_msat_norm_workload
+[0m13:50:59.690876 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_hub_tech, now model.tsm_dwh.dv_msat_fact_materials)
+[0m13:50:59.691581 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_hub_fact_journal, now model.tsm_dwh.dv_msat_fact_pikets)
+[0m13:50:59.692229 [debug] [Thread-2 (]: Began compiling node model.tsm_dwh.dv_lnk_fact_work_tech
+[0m13:50:59.692904 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_lnk_fact_journal_fact_work, now model.tsm_dwh.dv_msat_norm_workload)
+[0m13:50:59.693622 [debug] [Thread-3 (]: Began compiling node model.tsm_dwh.dv_msat_fact_materials
+[0m13:50:59.694243 [debug] [Thread-1 (]: Began compiling node model.tsm_dwh.dv_msat_fact_pikets
+[0m13:50:59.696401 [debug] [Thread-2 (]: Writing injected SQL for node "model.tsm_dwh.dv_lnk_fact_work_tech"
+[0m13:50:59.696919 [debug] [Thread-4 (]: Began compiling node model.tsm_dwh.dv_msat_norm_workload
+[0m13:50:59.699191 [debug] [Thread-3 (]: Writing injected SQL for node "model.tsm_dwh.dv_msat_fact_materials"
+[0m13:50:59.701362 [debug] [Thread-1 (]: Writing injected SQL for node "model.tsm_dwh.dv_msat_fact_pikets"
+[0m13:50:59.703610 [debug] [Thread-4 (]: Writing injected SQL for node "model.tsm_dwh.dv_msat_norm_workload"
+[0m13:50:59.705090 [debug] [Thread-3 (]: Began executing node model.tsm_dwh.dv_msat_fact_materials
+[0m13:50:59.705761 [debug] [Thread-2 (]: Began executing node model.tsm_dwh.dv_lnk_fact_work_tech
+[0m13:50:59.707301 [debug] [Thread-3 (]: Finished running node model.tsm_dwh.dv_msat_fact_materials
+[0m13:50:59.707812 [debug] [Thread-4 (]: Began executing node model.tsm_dwh.dv_msat_norm_workload
+[0m13:50:59.708364 [debug] [Thread-1 (]: Began executing node model.tsm_dwh.dv_msat_fact_pikets
+[0m13:50:59.709600 [debug] [Thread-2 (]: Finished running node model.tsm_dwh.dv_lnk_fact_work_tech
+[0m13:50:59.710244 [debug] [Thread-3 (]: Began running node model.tsm_dwh.dv_sat_fact_journal
+[0m13:50:59.711560 [debug] [Thread-4 (]: Finished running node model.tsm_dwh.dv_msat_norm_workload
+[0m13:50:59.712949 [debug] [Thread-1 (]: Finished running node model.tsm_dwh.dv_msat_fact_pikets
+[0m13:50:59.713649 [debug] [Thread-2 (]: Began running node model.tsm_dwh.dv_sat_fact_tech
+[0m13:50:59.714295 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_msat_fact_materials, now model.tsm_dwh.dv_sat_fact_journal)
+[0m13:50:59.714996 [debug] [Thread-4 (]: Began running node model.tsm_dwh.dv_sat_fact_work
+[0m13:50:59.715719 [debug] [Thread-1 (]: Began running node model.tsm_dwh.stg_1c_journal
+[0m13:50:59.716420 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_lnk_fact_work_tech, now model.tsm_dwh.dv_sat_fact_tech)
+[0m13:50:59.717050 [debug] [Thread-3 (]: Began compiling node model.tsm_dwh.dv_sat_fact_journal
+[0m13:50:59.717696 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_msat_norm_workload, now model.tsm_dwh.dv_sat_fact_work)
+[0m13:50:59.718425 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_msat_fact_pikets, now model.tsm_dwh.stg_1c_journal)
+[0m13:50:59.719731 [debug] [Thread-2 (]: Began compiling node model.tsm_dwh.dv_sat_fact_tech
+[0m13:50:59.722324 [debug] [Thread-3 (]: Writing injected SQL for node "model.tsm_dwh.dv_sat_fact_journal"
+[0m13:50:59.722921 [debug] [Thread-4 (]: Began compiling node model.tsm_dwh.dv_sat_fact_work
+[0m13:50:59.723653 [debug] [Thread-1 (]: Began compiling node model.tsm_dwh.stg_1c_journal
+[0m13:50:59.725760 [debug] [Thread-2 (]: Writing injected SQL for node "model.tsm_dwh.dv_sat_fact_tech"
+[0m13:50:59.727886 [debug] [Thread-4 (]: Writing injected SQL for node "model.tsm_dwh.dv_sat_fact_work"
+[0m13:50:59.730204 [debug] [Thread-1 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_journal"
+[0m13:50:59.731069 [debug] [Thread-3 (]: Began executing node model.tsm_dwh.dv_sat_fact_journal
+[0m13:50:59.732306 [debug] [Thread-2 (]: Began executing node model.tsm_dwh.dv_sat_fact_tech
+[0m13:50:59.732973 [debug] [Thread-4 (]: Began executing node model.tsm_dwh.dv_sat_fact_work
+[0m13:50:59.734328 [debug] [Thread-3 (]: Finished running node model.tsm_dwh.dv_sat_fact_journal
+[0m13:50:59.735369 [debug] [Thread-2 (]: Finished running node model.tsm_dwh.dv_sat_fact_tech
+[0m13:50:59.736043 [debug] [Thread-1 (]: Began executing node model.tsm_dwh.stg_1c_journal
+[0m13:50:59.736833 [debug] [Thread-4 (]: Finished running node model.tsm_dwh.dv_sat_fact_work
+[0m13:50:59.737395 [debug] [Thread-3 (]: Began running node model.tsm_dwh.stg_1c_materials
+[0m13:50:59.738101 [debug] [Thread-2 (]: Began running node model.tsm_dwh.stg_1c_norm_workload
+[0m13:50:59.739032 [debug] [Thread-1 (]: Finished running node model.tsm_dwh.stg_1c_journal
+[0m13:50:59.739627 [debug] [Thread-4 (]: Began running node model.tsm_dwh.stg_1c_pikets
+[0m13:50:59.740333 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_sat_fact_journal, now model.tsm_dwh.stg_1c_materials)
+[0m13:50:59.740969 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_sat_fact_tech, now model.tsm_dwh.stg_1c_norm_workload)
+[0m13:50:59.741668 [debug] [Thread-1 (]: Began running node model.tsm_dwh.stg_1c_tech
+[0m13:50:59.742327 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.dv_sat_fact_work, now model.tsm_dwh.stg_1c_pikets)
+[0m13:50:59.742879 [debug] [Thread-3 (]: Began compiling node model.tsm_dwh.stg_1c_materials
+[0m13:50:59.743504 [debug] [Thread-2 (]: Began compiling node model.tsm_dwh.stg_1c_norm_workload
+[0m13:50:59.744239 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.stg_1c_journal, now model.tsm_dwh.stg_1c_tech)
+[0m13:50:59.745230 [debug] [Thread-4 (]: Began compiling node model.tsm_dwh.stg_1c_pikets
+[0m13:50:59.747698 [debug] [Thread-3 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_materials"
+[0m13:50:59.749766 [debug] [Thread-2 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_norm_workload"
+[0m13:50:59.750452 [debug] [Thread-1 (]: Began compiling node model.tsm_dwh.stg_1c_tech
+[0m13:50:59.754015 [debug] [Thread-4 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_pikets"
+[0m13:50:59.758460 [debug] [Thread-1 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_tech"
+[0m13:50:59.759697 [debug] [Thread-2 (]: Began executing node model.tsm_dwh.stg_1c_norm_workload
+[0m13:50:59.760436 [debug] [Thread-3 (]: Began executing node model.tsm_dwh.stg_1c_materials
+[0m13:50:59.761544 [debug] [Thread-2 (]: Finished running node model.tsm_dwh.stg_1c_norm_workload
+[0m13:50:59.762314 [debug] [Thread-1 (]: Began executing node model.tsm_dwh.stg_1c_tech
+[0m13:50:59.763518 [debug] [Thread-3 (]: Finished running node model.tsm_dwh.stg_1c_materials
+[0m13:50:59.764191 [debug] [Thread-2 (]: Began running node model.tsm_dwh.stg_1c_works
+[0m13:50:59.764769 [debug] [Thread-4 (]: Began executing node model.tsm_dwh.stg_1c_pikets
+[0m13:50:59.765704 [debug] [Thread-1 (]: Finished running node model.tsm_dwh.stg_1c_tech
+[0m13:50:59.766522 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly model.tsm_dwh.stg_1c_norm_workload, now model.tsm_dwh.stg_1c_works)
+[0m13:50:59.767495 [debug] [Thread-4 (]: Finished running node model.tsm_dwh.stg_1c_pikets
+[0m13:50:59.768378 [debug] [Thread-2 (]: Began compiling node model.tsm_dwh.stg_1c_works
+[0m13:50:59.771316 [debug] [Thread-2 (]: Writing injected SQL for node "model.tsm_dwh.stg_1c_works"
+[0m13:50:59.771968 [debug] [Thread-2 (]: Began executing node model.tsm_dwh.stg_1c_works
+[0m13:50:59.772838 [debug] [Thread-2 (]: Finished running node model.tsm_dwh.stg_1c_works
+[0m13:50:59.774382 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:50:59.774833 [debug] [MainThread]: Connection 'model.tsm_dwh.stg_1c_tech' was properly closed.
+[0m13:50:59.775404 [debug] [MainThread]: Connection 'model.tsm_dwh.stg_1c_works' was properly closed.
+[0m13:50:59.775824 [debug] [MainThread]: Connection 'model.tsm_dwh.stg_1c_materials' was properly closed.
+[0m13:50:59.776404 [debug] [MainThread]: Connection 'model.tsm_dwh.stg_1c_pikets' was properly closed.
+[0m13:50:59.779785 [debug] [MainThread]: Command end result
+[0m13:50:59.810935 [debug] [MainThread]: Wrote artifact WritableManifest to /home/egor/projects/TSM_DWH/target/manifest.json
+[0m13:50:59.812809 [debug] [MainThread]: Wrote artifact SemanticManifest to /home/egor/projects/TSM_DWH/target/semantic_manifest.json
+[0m13:50:59.822008 [debug] [MainThread]: Wrote artifact RunExecutionResult to /home/egor/projects/TSM_DWH/target/run_results.json
+[0m13:50:59.823702 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_success": true, "command_wall_clock_time": 1.1980419, "process_in_blocks": "2376", "process_kernel_time": 0.217958, "process_mem_max_rss": "115300", "process_out_blocks": "2784", "process_user_time": 2.411731}
+[0m13:50:59.824327 [debug] [MainThread]: Command `dbt compile` succeeded at 13:50:59.824199 after 1.20 seconds
+[0m13:50:59.824891 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65eb5c320>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65cc44980>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fb65a59f890>]}
+[0m13:50:59.825513 [debug] [MainThread]: Flushing usage events
+[0m13:51:00.587680 [debug] [MainThread]: An error was encountered while trying to flush usage events

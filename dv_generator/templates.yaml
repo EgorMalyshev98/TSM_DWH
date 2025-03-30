@@ -1,14 +1,18 @@
 insert:
     stage: |
-        INSERT INTO {target_table} (recsource, loadts, hkcode, {target_columns})
         SELECT
-            '{recsource}',
-            '{loadts}'::timestamptz,
-            '{hkcode}',
-            {select_cols}
+            recsource,
+            loadts,
+            {target_columns}
         FROM (
-            VALUES ({placeholders})
-        ) AS tmp ({src_columns});
+            SELECT
+                recsource,
+                loadts,
+                '{hkcode}',
+                {select_cols}
+            FROM 
+                {src_table}
+        ) AS tmp (recsource, loadts, hkcode, {target_columns});
 
     hub: |
         INSERT INTO {table_name} ({hk_name}, hkcode, recsource, loadts, {bk_cols})

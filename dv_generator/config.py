@@ -1,4 +1,3 @@
-import json
 from dataclasses import dataclass
 from os import environ as env
 from pathlib import Path
@@ -23,22 +22,6 @@ class DBConfig:
         return f"postgresql://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
 
-@dataclass(frozen=True)
-class RMQConfig:
-    MQ_URL = env.get('MQ_URL')
-    QUEUE = env.get('QUEUE')
-    HEARTBEAT = env.get('HEARTBEAT')
-
-
-def load_schema():
-    file = Path(__file__).parent / "schema.json"
-    with file.open("r", encoding="utf-8") as f:
-        journal_schema = json.load(f)
-
-    logger.debug("schema loaded from file")
-    return journal_schema
-
-
 def load_map_settings():
     map_settings = pd.read_csv(Path(__file__).parent / "metadata.csv", skiprows=[0])
     map_settings.loc[:, ["record_source", "source_table"]] = map_settings[["record_source", "source_table"]].ffill()
@@ -46,10 +29,7 @@ def load_map_settings():
     return map_settings
 
 
-JOURNAL_SCHEMA = load_schema()
-MAP_SETTINGS = load_map_settings()
-DB_CONFIG = DBConfig()
-RMQ_CONFIG = RMQConfig()
+DV_METADATA = load_map_settings()
 
 temp_file = Path(__file__).parent / "templates.yaml"
 
