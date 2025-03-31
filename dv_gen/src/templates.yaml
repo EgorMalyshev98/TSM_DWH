@@ -3,6 +3,7 @@ insert:
         SELECT
             recsource,
             loadts,
+            hkcode,
             {target_columns}
         FROM (
             SELECT
@@ -12,17 +13,34 @@ insert:
                 {select_cols}
             FROM 
                 {src_table}
-        ) AS tmp (recsource, loadts, hkcode, {target_columns});
+        ) AS tmp (recsource, loadts, hkcode, {target_columns})
 
     hub: |
-        SELECT DISTINCT
-            {hk_name},
-            hkcode,
-            recsource,
-            loadts,
-            {bk_cols}
-        FROM {{{{ ref('{stg_table}') }}}}
-        
+        {{{{
+            config(
+                materialized='incremental',
+                incremental_strategy='append',
+                tags=['dev', 'hub', '{source}']
+            )
+        }}}}
+
+        SELECT distinct on ({bk_cols})
+                {hk_name},
+                hkcode,
+                recsource,
+                loadts,
+                {bk_cols}
+        FROM {{{{ ref('{stg_table}') }}}} stg
+
+        {{% if is_incremental() %}}
+        where not exists (
+            select 1
+            from {{{{this}}}} target
+            where 
+                target.{hk_name} = stg.{hk_name} 
+        )
+        {{% endif %}}
+                
     link: |
         SELECT DISTINCT
             {hk_name},

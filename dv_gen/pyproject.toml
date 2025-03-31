@@ -1,0 +1,11 @@
+[project]
+name = "dv_gen"
+version = "0.1"
+dependencies = []
+
+[tool.setuptools]
+packages = { find = { where = ["src"] } }
+
+
+[project.scripts]
+dv_gen = "__main__:main"

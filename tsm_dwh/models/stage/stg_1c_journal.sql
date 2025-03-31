@@ -1,6 +1,7 @@
 SELECT
     recsource,
     loadts,
+    hkcode,
     hk_dv_hub_fact_journal,
 	bk_жуфвр_uuid,
 	hdiff_dv_sat_fact_journal,
@@ -38,8 +39,8 @@ FROM (
         recsource,
         loadts,
         'default',
-        digest('default' || '|' || LOWER(TRIM(COALESCE(value_Ссылка, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_journal,
-	LOWER(TRIM(COALESCE(value_Ссылка, '-1')::varchar)),
+        digest('default' || '|' || LOWER(TRIM(COALESCE(value_Ссылка::varchar, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_journal,
+	LOWER(TRIM(COALESCE(value_Ссылка::varchar, '-1')::varchar)),
 	digest(TRIM(COALESCE(uuid::varchar, 'N\A')) || '|' || TRIM(COALESCE(date::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Проведен::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Ссылка::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_ПометкаУдаления::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Дата::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Номер::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Территория_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Территория_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Территория_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Подразделение_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Подразделение_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Подразделение_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Смена_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Смена_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Смена_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Прораб_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Прораб_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Прораб_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Комментарий::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Ответственный_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Ответственный_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_Ответственный_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_АктуальнаяВерсияЖУФВР_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_АктуальнаяВерсияЖУФВР_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_АктуальнаяВерсияЖУФВР_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_НаправлениеДеятельности_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_НаправлениеДеятельности_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(value_НаправлениеДеятельности_name::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_fact_journal,
 	uuid::uuid,
 	date::timestamptz,
@@ -71,7 +72,7 @@ FROM (
 	value_НаправлениеДеятельности_codе::varchar,
 	value_НаправлениеДеятельности_name::varchar
     FROM 
-        journal
+        src_journal
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_journal,
 	bk_жуфвр_uuid,
 	hdiff_dv_sat_fact_journal,
@@ -103,4 +104,4 @@ FROM (
 	версия_жуфвр_name,
 	направление_деятельности_value,
 	направление_деятельности_codе,
-	направление_деятельности_name);
+	направление_деятельности_name)

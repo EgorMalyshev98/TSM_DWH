@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+import pprint
 from typing import Dict, OrderedDict
 from config import DV_METADATA, TEMPLATES
 from loguru import logger as lg
@@ -12,7 +13,7 @@ class DataVaultConfig:
     hk_divider = " || '|' || "
     hkcode = "'default'"
     hk_prefix = "hk_"
-    bk_template = "LOWER(TRIM(COALESCE({src_bk}, '-1')::varchar))"
+    bk_template = "LOWER(TRIM(COALESCE({src_bk}::varchar, '-1')::varchar))"
     hk_template = "digest({hkcode}{hk_divider}{bk}, 'sha1') as {hk_name}"
     hdiff_template = "digest({attrs}, 'sha1') as {hdiff_name}"
     attr_hdiff_template = r"TRIM(COALESCE({attr}::varchar, 'N\A'))"
@@ -34,7 +35,7 @@ class DataVaultGenerator:
         self.stg_cols_dict = OrderedDict()
         self.cnf = dv_conf
 
-    def hub_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str):
+    def hub_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, source: str):
         hk_name = self.cnf.hk_prefix + table_name
         bkeys_dict = OrderedDict(
             zip(table_group["stg_column"], table_group['source_column'].map(
@@ -57,6 +58,7 @@ class DataVaultGenerator:
             "hk_name": hk_name,
             "bk_cols": ",\n\t".join(bkeys_dict.keys()),
             "stg_table": stg_table_name,
+            "source": source
         }
 
         return sql_template.format_map(format_map)
@@ -187,10 +189,15 @@ class DataVaultGenerator:
         return sql_template.format_map(format_map)
         
 
-    def process_target_tabels(self, table_name, table_group: pd.DataFrame, stg_table_name: str, src_columns: list):
+    def process_target_tabels(self, 
+                              table_name, 
+                              table_group: pd.DataFrame, 
+                              stg_table_name: str, 
+                              src_columns: list,
+                              source: str):
         target_table_type = table_group["target_table_type"].to_numpy()[0]
         if target_table_type == "hub":
-            return self.hub_handle(table_name, table_group, stg_table_name)
+            return self.hub_handle(table_name, table_group, stg_table_name, source)
         if target_table_type == "link":
             return self.link_handle(table_name, table_group, stg_table_name)
         if target_table_type == "sat":
@@ -205,12 +212,15 @@ class DataVaultGenerator:
         for stg_table_name, stg_table_group in source_group.groupby("stg_table"):
             src_columns = stg_table_group["source_column"].values
             src_table = stg_table_group["source_table"].to_numpy()[0]
+            source = stg_table_group["record_source"].to_numpy()[0]
+            
             
             for target_table_name, target_table_group in stg_table_group.groupby("target_table"):
                 stmt = self.process_target_tabels(target_table_name,
                                            target_table_group,
                                            stg_table_name,
-                                           src_columns)
+                                           src_columns,
+                                           source)
                 
                 fp = (self.dv_dir / target_table_name).with_suffix('.sql')
                 
@@ -219,7 +229,6 @@ class DataVaultGenerator:
 
             stg_col_names = ",\n\t".join(self.stg_cols_dict.keys())
             stg_col_select = ",\n\t".join(self.stg_cols_dict.values())
-            
             src_str_columns = ",\n\t".join(src_columns)
             stg_format_map = {
                 "hkcode": "default",
@@ -230,7 +239,8 @@ class DataVaultGenerator:
                 "src_table": src_table}
             
             stage_sql_tmplate = TEMPLATES["insert"]["stage"]
-            stage_sql = stage_sql_tmplate.format_map(stg_format_map)
+            
+            stage_sql = stage_sql_tmplate.format_map(stg_format_map)            
             
             fp = (self.stg_dir / stg_table_name).with_suffix('.sql')
             
@@ -249,10 +259,6 @@ class DataVaultGenerator:
             self.generate_sql(source_group)
             
         
-if __name__ == '__main__':
-    stg_dir = Path(__file__).parent.parent / 'tsm_dwh' / 'models' /  'stage'
-    dv_dir = Path(__file__).parent.parent / 'tsm_dwh'/ 'models' /'dv'
-    DataVaultGenerator(stg_dir, dv_dir).run()
-    
+
 
 

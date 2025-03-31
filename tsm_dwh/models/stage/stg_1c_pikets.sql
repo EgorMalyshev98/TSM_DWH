@@ -1,6 +1,7 @@
 SELECT
     recsource,
     loadts,
+    hkcode,
     hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_fact_pikets,
@@ -24,8 +25,8 @@ FROM (
         recsource,
         loadts,
         'default',
-        digest('default' || '|' || LOWER(TRIM(COALESCE(КлючСвязи, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_work,
-	LOWER(TRIM(COALESCE(КлючСвязи, '-1')::varchar)),
+        digest('default' || '|' || LOWER(TRIM(COALESCE(КлючСвязи::varchar, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_work,
+	LOWER(TRIM(COALESCE(КлючСвязи::varchar, '-1')::varchar)),
 	digest(TRIM(COALESCE(КлючСтроки::varchar, 'N\A')) || '|' || TRIM(COALESCE(ПикетС::varchar, 'N\A')) || '|' || TRIM(COALESCE(ПикетПо::varchar, 'N\A')) || '|' || TRIM(COALESCE(СмещениеС::varchar, 'N\A')) || '|' || TRIM(COALESCE(СмещениеПо::varchar, 'N\A')) || '|' || TRIM(COALESCE(Объем::varchar, 'N\A')) || '|' || TRIM(COALESCE(ВидПикета_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(ВидПикета_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(ВидПикета_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(ТипПикета_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(ТипПикета_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(ТипПикета_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(ГруппаПикетовSpider_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(ГруппаПикетовSpider_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(ГруппаПикетовSpider_name::varchar, 'N\A')), 'sha1') as hdiff_dv_msat_fact_pikets,
 	КлючСтроки::uuid,
 	ПикетС::numeric,
@@ -43,7 +44,7 @@ FROM (
 	ГруппаПикетовSpider_codе::varchar,
 	ГруппаПикетовSpider_name::varchar
     FROM 
-        pikets
+        src_pikets
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_fact_pikets,
@@ -61,4 +62,4 @@ FROM (
 	тип_пикета_name,
 	группа_пикетов_spider_value,
 	группа_пикетов_spider_codе,
-	группа_пикетов_spider_name);
+	группа_пикетов_spider_name)

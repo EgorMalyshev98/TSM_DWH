@@ -1,6 +1,7 @@
 SELECT
     recsource,
     loadts,
+    hkcode,
     hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_norm_workload,
@@ -29,8 +30,8 @@ FROM (
         recsource,
         loadts,
         'default',
-        digest('default' || '|' || LOWER(TRIM(COALESCE(Регистратор, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_work,
-	LOWER(TRIM(COALESCE(Регистратор, '-1')::varchar)),
+        digest('default' || '|' || LOWER(TRIM(COALESCE(Регистратор::varchar, '-1')::varchar)), 'sha1') as hk_dv_hub_fact_work,
+	LOWER(TRIM(COALESCE(Регистратор::varchar, '-1')::varchar)),
 	digest(TRIM(COALESCE(Период::varchar, 'N\A')) || '|' || TRIM(COALESCE(РассчетныйОбъем::varchar, 'N\A')) || '|' || TRIM(COALESCE(ТрудоемкостьНормативная::varchar, 'N\A')) || '|' || TRIM(COALESCE(ТрудоемкостьФактическая::varchar, 'N\A')) || '|' || TRIM(COALESCE(НаемныйРесурс::varchar, 'N\A')) || '|' || TRIM(COALESCE(КлючевойРесурс_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(КлючевойРесурс_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(КлючевойРесурс_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(НесколькоКлючевыхРесурсов::varchar, 'N\A')) || '|' || TRIM(COALESCE(ЖУФВР::varchar, 'N\A')) || '|' || TRIM(COALESCE(КлючДокументаРесурс::varchar, 'N\A')) || '|' || TRIM(COALESCE(СтруктураРабот_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(СтруктураРабот_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(СтруктураРабот_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(РесурсSpider_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(РесурсSpider_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(РесурсSpider_name::varchar, 'N\A')) || '|' || TRIM(COALESCE(Аналитика_value::varchar, 'N\A')) || '|' || TRIM(COALESCE(Аналитика_codе::varchar, 'N\A')) || '|' || TRIM(COALESCE(Аналитика_name::varchar, 'N\A')), 'sha1') as hdiff_dv_msat_norm_workload,
 	Период::timestamptz,
 	РассчетныйОбъем::numeric,
@@ -53,7 +54,7 @@ FROM (
 	Аналитика_codе::varchar,
 	Аналитика_name::varchar
     FROM 
-        norm_workload
+        src_norm_workload
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_norm_workload,
@@ -76,4 +77,4 @@ FROM (
 	ресурс_spider_name,
 	аналитика_value,
 	аналитика_codе,
-	аналитика_name);
+	аналитика_name)
