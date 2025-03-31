@@ -2,7 +2,7 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        tags=['dev', 'hub', 'жуфвр_1с']
+        tags=['hub', 'жуфвр_1с']
     )
 }}
 

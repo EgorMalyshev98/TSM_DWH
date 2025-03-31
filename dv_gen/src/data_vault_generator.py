@@ -64,7 +64,7 @@ class DataVaultGenerator:
         return sql_template.format_map(format_map)
 
 
-    def link_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str):
+    def link_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, source: str):
         hk_name = self.cnf.hk_prefix + table_name
         bkeys_dict = OrderedDict(
             zip(table_group["stg_column"], table_group["source_column"].map(
@@ -104,7 +104,8 @@ class DataVaultGenerator:
             "table_name": table_name,
             "hk_name": hk_name,
             "parent_hkeys": ",\n\t".join(parent_hkeys),
-            "stg_table": stg_table_name
+            "stg_table": stg_table_name,
+            "source": source
         }
 
         return sql_template.format_map(format_map)
@@ -199,7 +200,7 @@ class DataVaultGenerator:
         if target_table_type == "hub":
             return self.hub_handle(table_name, table_group, stg_table_name, source)
         if target_table_type == "link":
-            return self.link_handle(table_name, table_group, stg_table_name)
+            return self.link_handle(table_name, table_group, stg_table_name, source)
         if target_table_type == "sat":
             return self.sat_handle(table_name, table_group,
                             stg_table_name, src_columns)

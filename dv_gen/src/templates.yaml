@@ -20,7 +20,7 @@ insert:
             config(
                 materialized='incremental',
                 incremental_strategy='append',
-                tags=['dev', 'hub', '{source}']
+                tags=['hub', '{source}']
             )
         }}}}
 
@@ -42,12 +42,30 @@ insert:
         {{% endif %}}
                 
     link: |
-        SELECT DISTINCT
-            {hk_name},
-            recsource,
-            loadts,
-            {parent_hkeys}
-        FROM ref{{{{ '{stg_table}' }}}}
+        {{{{
+            config(
+                materialized='incremental',
+                incremental_strategy='append',
+                tags=['link', '{source}']
+            )
+        }}}}
+
+        SELECT distinct on ({parent_hkeys})
+                {hk_name},
+                hkcode,
+                recsource,
+                loadts,
+                {parent_hkeys}
+        FROM {{{{ ref('{stg_table}') }}}} stg
+
+        {{% if is_incremental() %}}
+        where not exists (
+            select 1
+            from {{{{this}}}} target
+            where 
+                target.{hk_name} = stg.{hk_name} 
+        )
+        {{% endif %}}
 
     sat: |
         WITH active_sat AS (
