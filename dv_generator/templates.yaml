@@ -15,25 +15,21 @@ insert:
         ) AS tmp (recsource, loadts, hkcode, {target_columns});
 
     hub: |
-        INSERT INTO {table_name} ({hk_name}, hkcode, recsource, loadts, {bk_cols})
         SELECT DISTINCT
             {hk_name},
             hkcode,
             recsource,
             loadts,
             {bk_cols}
-        FROM {stg_table}
-        ON CONFLICT DO NOTHING;
-
+        FROM {{{{ ref('{stg_table}') }}}}
+        
     link: |
-        INSERT INTO {table_name}
         SELECT DISTINCT
             {hk_name},
             recsource,
             loadts,
             {parent_hkeys}
-        FROM {stg_table}
-        ON CONFLICT DO NOTHING;
+        FROM ref{{{{ '{stg_table}' }}}}
 
     sat: |
         WITH active_sat AS (
