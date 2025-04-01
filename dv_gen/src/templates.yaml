@@ -1,5 +1,12 @@
 insert:
     stage: |
+
+        {{{{
+            config(
+                tags=['stage', '{source}']
+            )
+        }}}}
+
         SELECT
             recsource,
             loadts,
@@ -68,18 +75,28 @@ insert:
         {{% endif %}}
 
     sat: |
-        WITH active_sat AS (
-        SELECT DISTINCT ON ({hk_parent_name}) {hk_parent_name}, {hdiff_name}, loadts
-        FROM {target_table_name}
-        ORDER BY {hk_parent_name}, loadts DESC)
+        {{{{
+            config(
+                materialized='incremental',
+                incremental_strategy='append',
+                tags=['sat', '{source}']
+            )
+        }}}}
 
-        , max_load AS (
-        SELECT max(loadts) AS max_loadts
-        FROM {target_table_name}
-        )
 
-        , stage_cte AS (
-            SELECT
+        {{% if is_incremental() %}}
+            WITH active_sat AS (
+            SELECT DISTINCT ON ({hk_parent_name}) {hk_parent_name}, {hdiff_name}, loadts
+            FROM {target_table_name}
+            ORDER BY {hk_parent_name}, loadts DESC)
+
+            , max_load AS (
+            SELECT max(loadts) AS max_loadts
+            FROM {target_table_name}
+            )
+            , stage_cte AS (
+
+                SELECT
                 s.{hk_parent_name},
                 s.{hdiff_name},
                 s.loadts,
@@ -98,27 +115,72 @@ insert:
                     {stg_cols}
                 FROM {stg_table} s
                 CROSS JOIN max_load ml
-                WHERE s.loadts > ml.max_loadts) s
-
+                WHERE s.loadts > ml.max_loadts
+                ) s
             LEFT JOIN active_sat a ON a.{hk_parent_name} = s.{hk_parent_name})
 
+            SELECT DISTINCT
+                {hk_parent_name},
+                recsource,
+                loadts,
+                {hdiff_name},
+                {stg_cols}
+            FROM stage_cte
+            WHERE 
+                {hdiff_name} <> lag_hdiff 
+                    OR ({hdiff_name} <> sat_hdiff AND lag_hdiff IS NULL) 
+                    OR sat_hdiff IS NULL
+            ORDER BY loadts
 
-        INSERT INTO {target_table_name} ({hk_parent_name}, recsource, loadts, {hdiff_name}, {stg_cols})
-        SELECT DISTINCT
-            {hk_parent_name},
-            recsource,
-            loadts,
-            {hdiff_name},
-            {stg_cols}
-        FROM stage_cte
-        WHERE {hdiff_name} <> lag_hdiff or ({hdiff_name} <> sat_hdiff AND lag_hdiff IS NULL) OR sat_hdiff IS NULL
-        ORDER BY loadts
-        ON CONFLICT DO NOTHING;
+        {{% else %}}
+            WITH stage_cte AS (
+                SELECT
+                s.{hk_parent_name},
+                s.{hdiff_name},
+                s.loadts,
+                s.recsource,
+                lag(s.{hdiff_name}) over(PARTITION BY s.{hk_parent_name} ORDER BY s.loadts) AS lag_hdiff,
+                {stg_cols}
+
+            FROM
+                (SELECT
+                    s.{hk_parent_name},
+                    s.{hdiff_name},
+                    s.loadts,
+                    s.recsource,
+                    {stg_cols}
+                FROM {stg_table} s
+                ) s
+            )
+
+            SELECT DISTINCT
+                {hk_parent_name},
+                recsource,
+                loadts,
+                {hdiff_name},
+                {stg_cols}
+            FROM stage_cte
+            WHERE 
+                {hdiff_name} <> lag_hdiff 
+                OR lag_hdiff IS NULL
+            ORDER BY loadts
+        {{% endif %}}
+
+
 
     msat: |
-        WITH active_sat AS (
-        SELECT *
-        FROM (
+        {{{{
+            config(
+                materialized='incremental',
+                incremental_strategy='append',
+                tags=['msat', '{source}']
+            )
+        }}}}
+
+        {{% if is_incremental() %}}
+            WITH active_sat AS (
+            SELECT *
+            FROM (
                 SELECT 
                     {hk_parent_name},
                     {hdiff_name},
@@ -130,108 +192,175 @@ insert:
                         ORDER BY loadts DESC
                     ) AS rnk
                 FROM {target_table_name}
-            ) a (
-                sat_id,
-                sat_hdiff,
-                sat_loadts,
-                sat_sub_seq,
-                sat_count,
-                sat_rnk
-            )
-        WHERE sat_rnk = 1
-        ),
-        stage_cte AS (
-            SELECT 
-                stg_id,
-                stg_hdiff,
-                stg_loadts,
-                stg_recsource,
-                stg_sub_seq,
-                {stg_cols},
-                COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
-                lag(stg_hdiff) over(
-                    PARTITION BY stg_id, stg_sub_seq
-                    ORDER BY stg_loadts
-                ) AS 
-                    stg_lag_hdiff,
+                ) a (
+                    sat_id,
                     sat_hdiff,
-                    sat_count,
+                    sat_loadts,
                     sat_sub_seq,
+                    sat_count,
                     sat_rnk
-            FROM (
-                    SELECT 
-                        s.{hk_parent_name},
-                        s.{hdiff_name},
-                        s.loadts,
-                        s.recsource,
-                        row_number() OVER(PARTITION BY s.{hk_parent_name}, s.loadts) AS sub_seq,
-                        {stg_cols}
-                    FROM {stg_table} s
-                        CROSS JOIN (
-                            SELECT max(loadts) AS max_loadts
-                            FROM {target_table_name}
-                        ) ml
-                    WHERE s.loadts > ml.max_loadts
-                ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
-            LEFT JOIN active_sat a ON sat_id = stg_id
-            AND sat_sub_seq = stg_sub_seq
-        ),
-        stage_for_insert AS (
-            SELECT DISTINCT 
-                stg_id,
-                stg_loadts
-            FROM (
-                    SELECT stg_id,
-                        stg_loadts,
-                        stg_hdiff,
+                )
+            WHERE sat_rnk = 1
+            ),
+            stage_cte AS (
+                SELECT 
+                    stg_id,
+                    stg_hdiff,
+                    stg_loadts,
+                    stg_recsource,
+                    stg_sub_seq,
+                    {stg_cols},
+                    COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
+                    lag(stg_hdiff) over(
+                        PARTITION BY stg_id, stg_sub_seq
+                        ORDER BY stg_loadts
+                    ) AS 
                         stg_lag_hdiff,
-                        stg_count,
-                        lag(stg_count) over(
-                            PARTITION BY stg_id,
-                            stg_sub_seq
-                            ORDER BY stg_loadts
-                        ) AS stg_lag_count,
                         sat_hdiff,
                         sat_count,
                         sat_sub_seq,
                         sat_rnk
-                    FROM stage_cte
-                ) t
-            WHERE (
-                    stg_hdiff <> stg_lag_hdiff
-                    OR stg_count <> stg_lag_count
-                )
-                OR (
-                    (
-                        stg_hdiff <> sat_hdiff
-                        AND stg_lag_hdiff IS NULL
+                FROM (
+                        SELECT 
+                            s.{hk_parent_name},
+                            s.{hdiff_name},
+                            s.loadts,
+                            s.recsource,
+                            row_number() OVER(PARTITION BY s.{hk_parent_name}, s.loadts) AS sub_seq,
+                            {stg_cols}
+                        FROM {stg_table} s
+                            CROSS JOIN (
+                                SELECT max(loadts) AS max_loadts
+                                FROM {target_table_name}
+                            ) ml
+                        WHERE s.loadts > ml.max_loadts
+                    ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
+                LEFT JOIN active_sat a ON sat_id = stg_id
+                AND sat_sub_seq = stg_sub_seq
+            ),
+            stage_for_insert AS (
+                SELECT DISTINCT 
+                    stg_id,
+                    stg_loadts
+                FROM (
+                        SELECT stg_id,
+                            stg_loadts,
+                            stg_hdiff,
+                            stg_lag_hdiff,
+                            stg_count,
+                            lag(stg_count) over(
+                                PARTITION BY stg_id,
+                                stg_sub_seq
+                                ORDER BY stg_loadts
+                            ) AS stg_lag_count,
+                            sat_hdiff,
+                            sat_count,
+                            sat_sub_seq,
+                            sat_rnk
+                        FROM stage_cte
+                    ) t
+                WHERE (
+                        stg_hdiff <> stg_lag_hdiff
+                        OR stg_count <> stg_lag_count
                     )
                     OR (
-                        stg_count <> sat_count
-                        AND stg_lag_count IS NULL
+                        (
+                            stg_hdiff <> sat_hdiff
+                            AND stg_lag_hdiff IS NULL
+                        )
+                        OR (
+                            stg_count <> sat_count
+                            AND stg_lag_count IS NULL
+                        )
                     )
-                )
-        )
-
-        
-        INSERT INTO {target_table_name} ({hk_parent_name}, recsource, loadts, {hdiff_name}, sub_seq, {stg_cols})
-        SELECT DISTINCT 
-            stg_id,
-            stg_recsource,
-            stg_loadts,
-            stg_hdiff,
-            stg_sub_seq,
-            {stg_cols}
-        FROM stage_cte s
-        WHERE EXISTS(
-                SELECT 1
-                FROM stage_for_insert si
-                WHERE si.stg_id = s.stg_id
-                    AND si.stg_loadts = s.stg_loadts
             )
-        ORDER BY stg_loadts,
-            stg_id,
-            stg_sub_seq
-        ON CONFLICT DO NOTHING;
+
+            SELECT DISTINCT 
+                stg_id,
+                stg_recsource,
+                stg_loadts,
+                stg_hdiff,
+                stg_sub_seq,
+                {stg_cols}
+            FROM stage_cte s
+            WHERE EXISTS(
+                    SELECT 1
+                    FROM stage_for_insert si
+                    WHERE si.stg_id = s.stg_id
+                        AND si.stg_loadts = s.stg_loadts
+                )
+            ORDER BY stg_loadts,
+                stg_id,
+                stg_sub_seq
+
+        {{% else %}}
+            WITH stage_cte AS (
+                SELECT 
+                    stg_id,
+                    stg_hdiff,
+                    stg_loadts,
+                    stg_recsource,
+                    stg_sub_seq,
+                    {stg_cols},
+                    COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
+                    lag(stg_hdiff) over(
+                        PARTITION BY stg_id, stg_sub_seq
+                        ORDER BY stg_loadts
+                    ) AS stg_lag_hdiff
+                FROM (
+                        SELECT 
+                            s.{hk_parent_name},
+                            s.{hdiff_name},
+                            s.loadts,
+                            s.recsource,
+                            row_number() OVER(PARTITION BY s.{hk_parent_name}, s.loadts) AS sub_seq,
+                            {stg_cols}
+                        FROM {stg_table} s
+                    ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
+            ),
+            stage_for_insert AS (
+                SELECT DISTINCT 
+                    stg_id,
+                    stg_loadts
+                FROM (
+                        SELECT stg_id,
+                            stg_loadts,
+                            stg_hdiff,
+                            stg_lag_hdiff,
+                            stg_count,
+                            lag(stg_count) over(
+                                PARTITION BY stg_id,
+                                stg_sub_seq
+                                ORDER BY stg_loadts
+                            ) AS stg_lag_count
+                        FROM stage_cte
+                    ) t
+                WHERE (
+                        stg_hdiff <> stg_lag_hdiff
+                        OR stg_count <> stg_lag_count
+                    )
+                    
+                    OR stg_lag_hdiff IS null
+
+            )
+
+            SELECT DISTINCT 
+                stg_id,
+                stg_recsource,
+                stg_loadts,
+                stg_hdiff,
+                stg_sub_seq,
+                {stg_cols}
+            FROM stage_cte s
+            WHERE EXISTS(
+                    SELECT 1
+                    FROM stage_for_insert si
+                    WHERE si.stg_id = s.stg_id
+                        AND si.stg_loadts = s.stg_loadts
+                )
+            ORDER BY stg_loadts,
+                stg_id,
+                stg_sub_seq
+        {{% endif %}}
 
 

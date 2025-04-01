@@ -111,7 +111,7 @@ class DataVaultGenerator:
         return sql_template.format_map(format_map)
 
 
-    def sat_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, src_columns: list):
+    def sat_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, src_columns: list, source: str):
         # stage
         attrs_df = table_group[(table_group.target_key_type == "attr") & (table_group.source_column.isin(src_columns))]
         hdiff_name = 'hdiff_' + table_name
@@ -143,7 +143,8 @@ class DataVaultGenerator:
             "hdiff_name": hdiff_name,
             "hk_parent_name": hk_parent_name,
             "stg_table": stg_table_name,
-            "stg_cols": stg_cols
+            "stg_cols": stg_cols,
+            "source": source
         }
 
         sql_template = TEMPLATES['insert']['sat']
@@ -152,7 +153,7 @@ class DataVaultGenerator:
 
         
     
-    def msat_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, src_columns: list):
+    def msat_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, src_columns: list, source: str):
         # stage
         attrs_df = table_group[(table_group.target_key_type == "attr") & (table_group.source_column.isin(src_columns))]
         hdiff_name = 'hdiff_' + table_name
@@ -183,7 +184,8 @@ class DataVaultGenerator:
             "hdiff_name": hdiff_name,
             "hk_parent_name": hk_parent_name,
             "stg_table": stg_table_name,
-            "stg_cols": stg_cols
+            "stg_cols": stg_cols,
+            "source": source
         }
 
         sql_template = TEMPLATES['insert']['msat']
@@ -203,10 +205,10 @@ class DataVaultGenerator:
             return self.link_handle(table_name, table_group, stg_table_name, source)
         if target_table_type == "sat":
             return self.sat_handle(table_name, table_group,
-                            stg_table_name, src_columns)
+                            stg_table_name, src_columns, source)
         if target_table_type == "msat":
             return self.msat_handle(table_name, table_group,
-                            stg_table_name, src_columns)
+                            stg_table_name, src_columns, source)
             
 
     def generate_sql(self, source_group: pd.DataFrame):
@@ -237,12 +239,12 @@ class DataVaultGenerator:
                 "target_columns": stg_col_names,
                 "select_cols": stg_col_select,
                 "src_columns": src_str_columns,
-                "src_table": src_table}
+                "src_table": src_table,
+                "source": source
+                }
             
             stage_sql_tmplate = TEMPLATES["insert"]["stage"]
-            
             stage_sql = stage_sql_tmplate.format_map(stg_format_map)            
-            
             fp = (self.stg_dir / stg_table_name).with_suffix('.sql')
             
             with open(fp, 'w', encoding='utf-8') as f:

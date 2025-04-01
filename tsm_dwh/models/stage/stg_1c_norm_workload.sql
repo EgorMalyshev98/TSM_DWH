@@ -1,3 +1,10 @@
+
+{{
+    config(
+        tags=['stage', 'жуфвр_1с']
+    )
+}}
+
 SELECT
     recsource,
     loadts,
