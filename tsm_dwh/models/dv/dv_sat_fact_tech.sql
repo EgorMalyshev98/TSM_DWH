@@ -10,12 +10,12 @@
 {% if is_incremental() %}
     WITH active_sat AS (
     SELECT DISTINCT ON (hk_dv_lnk_fact_work_tech) hk_dv_lnk_fact_work_tech, hdiff_dv_sat_fact_tech, loadts
-    FROM dv_sat_fact_tech
+    FROM {{this}}
     ORDER BY hk_dv_lnk_fact_work_tech, loadts DESC)
 
     , max_load AS (
     SELECT max(loadts) AS max_loadts
-    FROM dv_sat_fact_tech
+    FROM {{this}}
     )
     , stage_cte AS (
 
@@ -58,7 +58,7 @@
 	контрагент_value,
 	контрагент_codе,
 	контрагент_name
-        FROM stg_1c_tech s
+        FROM {{ ref('stg_1c_tech') }} s
         CROSS JOIN max_load ml
         WHERE s.loadts > ml.max_loadts
         ) s
@@ -127,7 +127,7 @@
 	контрагент_value,
 	контрагент_codе,
 	контрагент_name
-        FROM stg_1c_tech s
+        FROM {{ ref('stg_1c_tech') }} s
         ) s
     )
 

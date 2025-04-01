@@ -20,7 +20,7 @@
                 PARTITION BY hk_dv_hub_fact_work
                 ORDER BY loadts DESC
             ) AS rnk
-        FROM dv_msat_norm_workload
+        FROM {{ this }}
         ) a (
             sat_id,
             sat_hdiff,
@@ -95,10 +95,10 @@
 	аналитика_value,
 	аналитика_codе,
 	аналитика_name
-                FROM stg_1c_norm_workload s
+                FROM {{ ref('stg_1c_norm_workload') }} s
                     CROSS JOIN (
                         SELECT max(loadts) AS max_loadts
-                        FROM dv_msat_norm_workload
+                        FROM {{ this }}
                     ) ml
                 WHERE s.loadts > ml.max_loadts
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
@@ -239,7 +239,7 @@
 	аналитика_value,
 	аналитика_codе,
 	аналитика_name
-                FROM stg_1c_norm_workload s
+                FROM {{ ref('stg_1c_norm_workload') }} s
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
     ),
     stage_for_insert AS (

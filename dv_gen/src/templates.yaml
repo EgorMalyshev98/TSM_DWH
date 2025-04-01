@@ -87,12 +87,12 @@ insert:
         {{% if is_incremental() %}}
             WITH active_sat AS (
             SELECT DISTINCT ON ({hk_parent_name}) {hk_parent_name}, {hdiff_name}, loadts
-            FROM {target_table_name}
+            FROM {{{{this}}}}
             ORDER BY {hk_parent_name}, loadts DESC)
 
             , max_load AS (
             SELECT max(loadts) AS max_loadts
-            FROM {target_table_name}
+            FROM {{{{this}}}}
             )
             , stage_cte AS (
 
@@ -113,7 +113,7 @@ insert:
                     s.loadts,
                     s.recsource,
                     {stg_cols}
-                FROM {stg_table} s
+                FROM {{{{ ref('{stg_table}') }}}} s
                 CROSS JOIN max_load ml
                 WHERE s.loadts > ml.max_loadts
                 ) s
@@ -149,7 +149,7 @@ insert:
                     s.loadts,
                     s.recsource,
                     {stg_cols}
-                FROM {stg_table} s
+                FROM {{{{ ref('{stg_table}') }}}} s
                 ) s
             )
 
@@ -191,7 +191,7 @@ insert:
                         PARTITION BY {hk_parent_name}
                         ORDER BY loadts DESC
                     ) AS rnk
-                FROM {target_table_name}
+                FROM {{{{ this }}}}
                 ) a (
                     sat_id,
                     sat_hdiff,
@@ -228,10 +228,10 @@ insert:
                             s.recsource,
                             row_number() OVER(PARTITION BY s.{hk_parent_name}, s.loadts) AS sub_seq,
                             {stg_cols}
-                        FROM {stg_table} s
+                        FROM {{{{ ref('{stg_table}') }}}} s
                             CROSS JOIN (
                                 SELECT max(loadts) AS max_loadts
-                                FROM {target_table_name}
+                                FROM {{{{ this }}}}
                             ) ml
                         WHERE s.loadts > ml.max_loadts
                     ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
@@ -315,7 +315,7 @@ insert:
                             s.recsource,
                             row_number() OVER(PARTITION BY s.{hk_parent_name}, s.loadts) AS sub_seq,
                             {stg_cols}
-                        FROM {stg_table} s
+                        FROM {{{{ ref('{stg_table}') }}}} s
                     ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
             ),
             stage_for_insert AS (

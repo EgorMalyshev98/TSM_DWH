@@ -20,7 +20,7 @@
                 PARTITION BY hk_dv_hub_fact_work
                 ORDER BY loadts DESC
             ) AS rnk
-        FROM dv_msat_fact_pikets
+        FROM {{ this }}
         ) a (
             sat_id,
             sat_hdiff,
@@ -85,10 +85,10 @@
 	группа_пикетов_spider_value,
 	группа_пикетов_spider_codе,
 	группа_пикетов_spider_name
-                FROM stg_1c_pikets s
+                FROM {{ ref('stg_1c_pikets') }} s
                     CROSS JOIN (
                         SELECT max(loadts) AS max_loadts
-                        FROM dv_msat_fact_pikets
+                        FROM {{ this }}
                     ) ml
                 WHERE s.loadts > ml.max_loadts
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
@@ -214,7 +214,7 @@
 	группа_пикетов_spider_value,
 	группа_пикетов_spider_codе,
 	группа_пикетов_spider_name
-                FROM stg_1c_pikets s
+                FROM {{ ref('stg_1c_pikets') }} s
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
     ),
     stage_for_insert AS (

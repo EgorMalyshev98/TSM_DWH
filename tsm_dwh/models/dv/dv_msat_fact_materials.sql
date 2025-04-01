@@ -20,7 +20,7 @@
                 PARTITION BY hk_dv_hub_fact_work
                 ORDER BY loadts DESC
             ) AS rnk
-        FROM dv_msat_fact_materials
+        FROM {{ this }}
         ) a (
             sat_id,
             sat_hdiff,
@@ -67,10 +67,10 @@
 	ресурс_value,
 	ресурс_codе,
 	ресурс_name
-                FROM stg_1c_materials s
+                FROM {{ ref('stg_1c_materials') }} s
                     CROSS JOIN (
                         SELECT max(loadts) AS max_loadts
-                        FROM dv_msat_fact_materials
+                        FROM {{ this }}
                     ) ml
                 WHERE s.loadts > ml.max_loadts
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
@@ -169,7 +169,7 @@
 	ресурс_value,
 	ресурс_codе,
 	ресурс_name
-                FROM stg_1c_materials s
+                FROM {{ ref('stg_1c_materials') }} s
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
     ),
     stage_for_insert AS (

@@ -10,12 +10,12 @@
 {% if is_incremental() %}
     WITH active_sat AS (
     SELECT DISTINCT ON (hk_dv_hub_fact_journal) hk_dv_hub_fact_journal, hdiff_dv_sat_fact_journal, loadts
-    FROM dv_sat_fact_journal
+    FROM {{this}}
     ORDER BY hk_dv_hub_fact_journal, loadts DESC)
 
     , max_load AS (
     SELECT max(loadts) AS max_loadts
-    FROM dv_sat_fact_journal
+    FROM {{this}}
     )
     , stage_cte AS (
 
@@ -92,7 +92,7 @@
 	направление_деятельности_value,
 	направление_деятельности_codе,
 	направление_деятельности_name
-        FROM stg_1c_journal s
+        FROM {{ ref('stg_1c_journal') }} s
         CROSS JOIN max_load ml
         WHERE s.loadts > ml.max_loadts
         ) s
@@ -212,7 +212,7 @@
 	направление_деятельности_value,
 	направление_деятельности_codе,
 	направление_деятельности_name
-        FROM stg_1c_journal s
+        FROM {{ ref('stg_1c_journal') }} s
         ) s
     )
 
