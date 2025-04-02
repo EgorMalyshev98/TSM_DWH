@@ -1,8 +1,8 @@
 __pycache__
 
+.env
+.vscode
+
 venv
 target
 logs
-
-.env
-.vscode

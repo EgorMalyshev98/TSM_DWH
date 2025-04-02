@@ -1,0 +1,12 @@
+tsm_dwh:
+  outputs:
+    prod:
+      dbname: postgres
+      host: "{{ env_var('DBT_HOST', 'localhost') }}"
+      pass: "{{ env_var('DBT_PASS', 'postgres') }}"
+      port: "{{ env_var('DBT_PORT', 5432) }}"
+      schema: public
+      threads: 4
+      type: postgres
+      user: "{{ env_var('DBT_USER', 'postgres') }}"
+  target: prod
