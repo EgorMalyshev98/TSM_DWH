@@ -167,7 +167,6 @@ insert:
         {{% endif %}}
 
 
-
     msat: |
         {{{{
             config(
@@ -276,11 +275,11 @@ insert:
             )
 
             SELECT DISTINCT 
-                stg_id,
-                stg_recsource,
-                stg_loadts,
-                stg_hdiff,
-                stg_sub_seq,
+                stg_id as {hk_parent_name},
+                stg_recsource as recsource,
+                stg_loadts as loadts,
+                stg_hdiff as {hdiff_name},
+                stg_sub_seq as sub_seq,
                 {stg_cols}
             FROM stage_cte s
             WHERE EXISTS(
@@ -345,11 +344,11 @@ insert:
             )
 
             SELECT DISTINCT 
-                stg_id,
-                stg_recsource,
-                stg_loadts,
-                stg_hdiff,
-                stg_sub_seq,
+                stg_id as {hk_parent_name},
+                stg_recsource as recsource,
+                stg_loadts as loadts,
+                stg_hdiff as {hdiff_name},
+                stg_sub_seq as sub_seq,
                 {stg_cols}
             FROM stage_cte s
             WHERE EXISTS(

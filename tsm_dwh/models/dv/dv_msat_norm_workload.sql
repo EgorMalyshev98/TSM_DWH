@@ -143,11 +143,11 @@
     )
 
     SELECT DISTINCT 
-        stg_id,
-        stg_recsource,
-        stg_loadts,
-        stg_hdiff,
-        stg_sub_seq,
+        stg_id as hk_dv_hub_fact_work,
+        stg_recsource as recsource,
+        stg_loadts as loadts,
+        stg_hdiff as hdiff_dv_msat_norm_workload,
+        stg_sub_seq as sub_seq,
         период,
 	рассчетный_объем,
 	трудоемкость_нормативная,
@@ -269,11 +269,11 @@
     )
 
     SELECT DISTINCT 
-        stg_id,
-        stg_recsource,
-        stg_loadts,
-        stg_hdiff,
-        stg_sub_seq,
+        stg_id as hk_dv_hub_fact_work,
+        stg_recsource as recsource,
+        stg_loadts as loadts,
+        stg_hdiff as hdiff_dv_msat_norm_workload,
+        stg_sub_seq as sub_seq,
         период,
 	рассчетный_объем,
 	трудоемкость_нормативная,
