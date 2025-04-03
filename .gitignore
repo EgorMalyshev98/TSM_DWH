@@ -2,6 +2,7 @@ __pycache__
 
 .env
 .vscode
+.user.yml
 
 venv
 target
