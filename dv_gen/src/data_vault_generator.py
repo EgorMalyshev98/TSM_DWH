@@ -1,7 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime, timezone
-from pathlib import Path
-import pprint
 from typing import Dict, OrderedDict
 from config import DV_METADATA, TEMPLATES
 from loguru import logger as lg
@@ -190,6 +187,31 @@ class DataVaultGenerator:
 
         sql_template = TEMPLATES['insert']['msat']
         return sql_template.format_map(format_map)
+
+
+    def esat_handle(self, table_name: str, table_group: pd.DataFrame):
+ 
+
+        parent_hk = 'hk_' + table_group['parent_table'].values[0]
+        drive_bk = table_group[table_group.target_key_type == "drive"]['stg_column'].values[0]
+        depend_bk = table_group[table_group.target_key_type == "depend"]['stg_column'].values[0]
+        
+        stg_table = table_group['stg_table'].values[0]
+        parent_table = table_group['parent_table'].values[0]
+        record_source = table_group['record_source'].values[0]
+            
+        format_map = {
+            "parent_hk": parent_hk,
+            "drive_bk": drive_bk,
+            "depend_bk": depend_bk,
+            "stg_table": stg_table,
+            "source": record_source, 
+            "parent_table": parent_table, 
+        }
+
+        sql_template = TEMPLATES['insert']['esat']
+        
+        return sql_template.format_map(format_map)
         
 
     def process_target_tabels(self, 
@@ -209,6 +231,8 @@ class DataVaultGenerator:
         if target_table_type == "msat":
             return self.msat_handle(table_name, table_group,
                             stg_table_name, src_columns, source)
+        if target_table_type == "esat":
+            return self.esat_handle(table_name, table_group)       
             
 
     def generate_sql(self, source_group: pd.DataFrame):

@@ -363,3 +363,160 @@ insert:
         {{% endif %}}
 
 
+    esat: |
+        -- depends_on: {{{{ ref('{parent_table}') }}}}
+
+        {{{{
+            config(
+                materialized='incremental',
+                incremental_strategy='append',
+                tags=['esat', '{source}']
+            )
+        }}}}
+
+
+        {{% if is_incremental() %}}
+        -- aктивные записи
+        WITH active_esat as(
+            SELECT
+                t.{parent_hk},
+                t.loadts,
+                t.start_date,
+                l.{drive_bk},
+                l.{depend_bk}
+            FROM 
+                (SELECT 
+                    e.*,
+                    dense_rank() over(PARTITION BY {parent_hk} ORDER BY loadts desc) AS rnk
+                FROM {{{{ this }}}} e) t
+            JOIN {{{{ ref('{parent_table}') }}}} l ON t.{parent_hk} = l.{parent_hk}
+            WHERE rnk = 1 AND end_date IS NULL
+        )
+
+        -- stage + активные записи
+        , stage AS (
+            SELECT 
+                {parent_hk},
+                {drive_bk},
+                {depend_bk},
+                loadts,
+                start_date,
+                'active esat' AS select_source
+                
+            FROM active_esat a
+            
+            UNION ALL
+            
+            SELECT 
+                {parent_hk},
+                {drive_bk},
+                {depend_bk},
+                loadts,
+                loadts AS start_date,
+                'stage' AS select_source
+                
+            FROM {{{{ ref('{stg_table}') }}}} stg
+            CROSS JOIN (SELECT max(loadts) FROM active_esat) m (max_loadts)
+            WHERE loadts > max_loadts
+        )
+
+        -- агрегированные в одной строке зависимые ключи по каждому bk
+        , stage_agg AS (
+            SELECT 
+                {drive_bk},
+                loadts,
+                string_agg({depend_bk}::varchar, ',' ORDER BY {depend_bk}) AS dep_keys,
+                select_source
+            FROM stage
+            GROUP BY {drive_bk}, loadts, select_source
+        )
+
+        -- сравнение зависимых ключей между партиями вставки
+        , compared_stage_agg AS (
+            SELECT 
+                {drive_bk},
+                loadts,
+                dep_keys,
+                lead(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lead_dep_keys,
+                lead(loadts) OVER(PARTITION BY {drive_bk} order BY loadts) AS end_date,
+                select_source
+            FROM stage_agg s
+        )
+
+        -- фильтрация
+        , parts_for_insert AS (
+            SELECT DISTINCT {drive_bk}, loadts, end_date
+            FROM compared_stage_agg
+            WHERE 
+                dep_keys <> lead_dep_keys 
+                OR (end_date IS NULL AND select_source <> 'active esat')
+        )
+            
+        SELECT 
+            s.{parent_hk},
+            s.loadts,
+            s.start_date,
+            p.end_date
+        FROM stage s
+        JOIN parts_for_insert p
+            ON s.{drive_bk} = p.{drive_bk}
+            AND s.loadts = p.loadts
+
+
+        {{% else %}}
+
+
+        with stage as (
+            SELECT 
+                {parent_hk},
+                {drive_bk},
+                {depend_bk},
+                loadts,
+                loadts AS start_date
+                
+            FROM {{{{ ref('{stg_table}') }}}} stg
+
+        )
+
+        -- агрегированные в одной строке зависимые ключи по каждому bk
+        , stage_agg AS (
+            SELECT 
+                {drive_bk},
+                loadts,
+                string_agg({depend_bk}::varchar, ',' ORDER BY {depend_bk}) AS dep_keys
+            FROM stage
+            GROUP BY {drive_bk}, loadts
+        )
+
+        -- сравнение зависимых ключей между партиями вставки
+        , compared_stage_agg AS (
+            SELECT 
+                {drive_bk},
+                loadts,
+                dep_keys,
+                lead(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lead_dep_keys,
+                lead(loadts) OVER(PARTITION BY {drive_bk} order BY loadts) AS end_date
+
+            FROM stage_agg s
+        )
+
+        -- фильтрация
+        , parts_for_insert AS (
+            SELECT DISTINCT {drive_bk}, loadts, end_date
+            FROM compared_stage_agg
+            WHERE 
+                dep_keys <> lead_dep_keys 
+                OR end_date IS NULL
+        )
+            
+        SELECT 
+            s.{parent_hk},
+            s.loadts,
+            s.start_date,
+            p.end_date
+        FROM stage s
+        JOIN parts_for_insert p
+            ON s.{drive_bk} = p.{drive_bk}
+            AND s.loadts = p.loadts
+        {{% endif %}}
+

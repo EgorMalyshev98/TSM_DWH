@@ -2,7 +2,7 @@ tsm_dwh:
   outputs:
     prod:
       dbname: postgres
-      host: "{{ env_var('DBT_HOST', 'localhost') }}"
+      host: "{{ env_var('DBT_HOST', '127.0.0.1') }}"
       pass: "{{ env_var('DBT_PASS', 'postgres') }}"
       port: "{{ env_var('DBT_PORT', 5432) }}"
       schema: public
