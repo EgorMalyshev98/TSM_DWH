@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing import Dict, OrderedDict
+from typing import OrderedDict
 from config import DV_METADATA, TEMPLATES
-from loguru import logger as lg
 import pandas as pd
 
 

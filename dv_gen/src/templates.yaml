@@ -433,14 +433,23 @@ insert:
 
         -- сравнение зависимых ключей между партиями вставки
         , compared_stage_agg AS (
-            SELECT 
+          SELECT
                 {drive_bk},
                 loadts,
                 dep_keys,
                 lead(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lead_dep_keys,
                 lead(loadts) OVER(PARTITION BY {drive_bk} order BY loadts) AS end_date,
+                lag_dep_keys,
                 select_source
-            FROM stage_agg s
+          FROM (
+              SELECT
+                  {drive_bk},
+                  loadts,
+                  dep_keys,
+                  lag(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lag_dep_keys,
+                  select_source
+              FROM stage_agg s) s
+          WHERE dep_keys <> lag_dep_keys OR lag_dep_keys IS null
         )
 
         -- фильтрация
@@ -490,14 +499,21 @@ insert:
 
         -- сравнение зависимых ключей между партиями вставки
         , compared_stage_agg AS (
-            SELECT 
+          SELECT
                 {drive_bk},
                 loadts,
                 dep_keys,
                 lead(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lead_dep_keys,
-                lead(loadts) OVER(PARTITION BY {drive_bk} order BY loadts) AS end_date
-
-            FROM stage_agg s
+                lead(loadts) OVER(PARTITION BY {drive_bk} order BY loadts) AS end_date,
+                lag_dep_keys
+          FROM (
+              SELECT
+                  {drive_bk},
+                  loadts,
+                  dep_keys,
+                  lag(dep_keys) OVER(PARTITION BY {drive_bk} order BY loadts) AS lag_dep_keys
+              FROM stage_agg s) s
+          WHERE dep_keys <> lag_dep_keys OR lag_dep_keys IS null
         )
 
         -- фильтрация

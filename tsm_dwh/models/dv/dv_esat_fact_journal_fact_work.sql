@@ -67,14 +67,23 @@ WITH active_esat as(
 
 -- сравнение зависимых ключей между партиями вставки
 , compared_stage_agg AS (
-    SELECT 
+  SELECT
         hk_dv_hub_fact_journal,
         loadts,
         dep_keys,
         lead(dep_keys) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS lead_dep_keys,
         lead(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS end_date,
+        lag_dep_keys,
         select_source
-    FROM stage_agg s
+  FROM (
+      SELECT
+          hk_dv_hub_fact_journal,
+          loadts,
+          dep_keys,
+          lag(dep_keys) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS lag_dep_keys,
+          select_source
+      FROM stage_agg s) s
+  WHERE dep_keys <> lag_dep_keys OR lag_dep_keys IS null
 )
 
 -- фильтрация
@@ -124,14 +133,21 @@ with stage as (
 
 -- сравнение зависимых ключей между партиями вставки
 , compared_stage_agg AS (
-    SELECT 
+  SELECT
         hk_dv_hub_fact_journal,
         loadts,
         dep_keys,
         lead(dep_keys) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS lead_dep_keys,
-        lead(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS end_date
-
-    FROM stage_agg s
+        lead(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS end_date,
+        lag_dep_keys
+  FROM (
+      SELECT
+          hk_dv_hub_fact_journal,
+          loadts,
+          dep_keys,
+          lag(dep_keys) OVER(PARTITION BY hk_dv_hub_fact_journal order BY loadts) AS lag_dep_keys
+      FROM stage_agg s) s
+  WHERE dep_keys <> lag_dep_keys OR lag_dep_keys IS null
 )
 
 -- фильтрация
