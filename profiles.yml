@@ -4,7 +4,7 @@ tsm_dwh:
       dbname: postgres
       host: "{{ env_var('DBT_HOST', '127.0.0.1') }}"
       pass: "{{ env_var('DBT_PASS', 'postgres') }}"
-      port: "{{ env_var('DBT_PORT', 5432) }}"
+      port: "{{ env_var('DBT_PORT', 5432) | int }}"
       schema: public
       threads: 4
       type: postgres
