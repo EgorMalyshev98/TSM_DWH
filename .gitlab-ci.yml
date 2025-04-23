@@ -1,0 +1,13 @@
+# stages:
+#   - deploy
+
+
+# deploy-job:
+#   stage: deploy
+#   script:
+#     - docker build -t tsm-dwh-dbt:test .
+#     - docker run tsm-dwh-dbt:test \
+#       dbt --warn-error compile \
+#       dbt build    
+
+
