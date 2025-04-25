@@ -112,6 +112,7 @@
                     AND stg_lag_count IS NULL
                 )
             )
+            OR stg_lag_hdiff IS null
     )
 
     SELECT DISTINCT 
