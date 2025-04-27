@@ -19,7 +19,7 @@ insert:
                 '{hkcode}',
                 {select_cols}
             FROM 
-                {src_table}
+                {{{{ source('public', '{src_table}') }}}}
         ) AS tmp (recsource, loadts, hkcode, {target_columns})
 
     hub: |

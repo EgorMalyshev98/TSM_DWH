@@ -61,7 +61,7 @@ FROM (
 	Аналитика_codе::varchar,
 	Аналитика_name::varchar
     FROM 
-        src_norm_workload
+        {{ source('public', 'src_norm_workload') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_norm_workload,

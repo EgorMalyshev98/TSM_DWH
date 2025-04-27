@@ -1,0 +1,261 @@
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: src_journal
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: uuid
+            data_type: uuid
+          - name: date
+            data_type: timestamp with time zone
+          - name: value_проведен
+            data_type: boolean
+          - name: value_ссылка
+            data_type: uuid
+          - name: value_пометкаудаления
+            data_type: boolean
+          - name: value_дата
+            data_type: timestamp with time zone
+          - name: value_номер
+            data_type: character varying
+          - name: value_территория_value
+            data_type: uuid
+          - name: value_территория_codе
+            data_type: character varying
+          - name: value_территория_name
+            data_type: character varying
+          - name: value_подразделение_value
+            data_type: uuid
+          - name: value_подразделение_codе
+            data_type: character varying
+          - name: value_подразделение_name
+            data_type: character varying
+          - name: value_смена_value
+            data_type: uuid
+          - name: value_смена_codе
+            data_type: character varying
+          - name: value_смена_name
+            data_type: character varying
+          - name: value_прораб_value
+            data_type: uuid
+          - name: value_прораб_codе
+            data_type: character varying
+          - name: value_прораб_name
+            data_type: character varying
+          - name: value_комментарий
+            data_type: character varying
+          - name: value_ответственный_value
+            data_type: uuid
+          - name: value_ответственный_codе
+            data_type: character varying
+          - name: value_ответственный_name
+            data_type: character varying
+          - name: value_актуальнаяверсияжуфвр_value
+            data_type: uuid
+          - name: value_актуальнаяверсияжуфвр_codе
+            data_type: character varying
+          - name: value_актуальнаяверсияжуфвр_name
+            data_type: character varying
+          - name: value_направлениедеятельности_value
+            data_type: uuid
+          - name: value_направлениедеятельности_codе
+            data_type: character varying
+          - name: value_направлениедеятельности_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+
+      - name: src_materials
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: ключсвязи
+            data_type: uuid
+          - name: номерстроки
+            data_type: integer
+          - name: примечание
+            data_type: character varying
+          - name: объемматериала
+            data_type: numeric
+          - name: ресурс_value
+            data_type: uuid
+          - name: ресурс_codе
+            data_type: character varying
+          - name: ресурс_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+
+      - name: src_norm_workload
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: регистратор
+            data_type: uuid
+          - name: период
+            data_type: timestamp with time zone
+          - name: рассчетныйобъем
+            data_type: numeric
+          - name: трудоемкостьнормативная
+            data_type: numeric
+          - name: трудоемкостьфактическая
+            data_type: numeric
+          - name: наемныйресурс
+            data_type: boolean
+          - name: ключевойресурс_value
+            data_type: uuid
+          - name: ключевойресурс_codе
+            data_type: character varying
+          - name: ключевойресурс_name
+            data_type: character varying
+          - name: несколькоключевыхресурсов
+            data_type: boolean
+          - name: жуфвр
+            data_type: uuid
+          - name: ключдокументаресурс
+            data_type: uuid
+          - name: структураработ_value
+            data_type: uuid
+          - name: структураработ_codе
+            data_type: character varying
+          - name: структураработ_name
+            data_type: character varying
+          - name: ресурсspider_value
+            data_type: uuid
+          - name: ресурсspider_codе
+            data_type: character varying
+          - name: ресурсspider_name
+            data_type: character varying
+          - name: аналитика_value
+            data_type: uuid
+          - name: аналитика_codе
+            data_type: character varying
+          - name: аналитика_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+
+      - name: src_pikets
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: ключсвязи
+            data_type: uuid
+          - name: ключстроки
+            data_type: uuid
+          - name: пикетс
+            data_type: numeric
+          - name: пикетпо
+            data_type: numeric
+          - name: смещениес
+            data_type: numeric
+          - name: смещениепо
+            data_type: numeric
+          - name: объем
+            data_type: numeric
+          - name: видпикета_value
+            data_type: uuid
+          - name: видпикета_codе
+            data_type: character varying
+          - name: видпикета_name
+            data_type: character varying
+          - name: типпикета_value
+            data_type: uuid
+          - name: типпикета_codе
+            data_type: character varying
+          - name: типпикета_name
+            data_type: character varying
+          - name: группапикетовspider_value
+            data_type: uuid
+          - name: группапикетовspider_codе
+            data_type: character varying
+          - name: группапикетовspider_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+
+      - name: src_tech
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: ключсвязи
+            data_type: uuid
+          - name: примечание
+            data_type: character varying
+          - name: госномертехниканенайдена
+            data_type: character varying
+          - name: количество
+            data_type: integer
+          - name: часы
+            data_type: numeric
+          - name: ресурс_value
+            data_type: uuid
+          - name: ресурс_codе
+            data_type: character varying
+          - name: ресурс_name
+            data_type: character varying
+          - name: аналитика_value
+            data_type: uuid
+          - name: аналитика_codе
+            data_type: character varying
+          - name: аналитика_name
+            data_type: character varying
+          - name: контрагент_value
+            data_type: character varying
+          - name: контрагент_codе
+            data_type: character varying
+          - name: контрагент_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+
+      - name: src_works
+        columns:
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: value_ссылка
+            data_type: uuid
+          - name: ключсвязи
+            data_type: uuid
+          - name: структураработидентификатор
+            data_type: character varying
+          - name: объемработы
+            data_type: numeric
+          - name: примечание
+            data_type: character varying
+          - name: структураработномерпоконтрактно
+            data_type: character varying
+          - name: структураработпометкаудаления
+            data_type: boolean
+          - name: видработуровеньоперации
+            data_type: character varying
+          - name: структураработ_value
+            data_type: uuid
+          - name: структураработ_codе
+            data_type: character varying
+          - name: структураработ_name
+            data_type: character varying
+          - name: видработ_value
+            data_type: uuid
+          - name: видработ_codе
+            data_type: character varying
+          - name: видработ_name
+            data_type: character varying
+          - name: id
+            data_type: integer
+

@@ -33,7 +33,7 @@ FROM (
 	Ресурс_codе::varchar,
 	Ресурс_name::varchar
     FROM 
-        src_materials
+        {{ source('public', 'src_materials') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hdiff_dv_msat_fact_materials,

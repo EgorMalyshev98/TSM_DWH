@@ -51,7 +51,7 @@ FROM (
 	Контрагент_codе::varchar,
 	Контрагент_name::varchar
     FROM 
-        src_tech
+        {{ source('public', 'src_tech') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hk_dv_hub_tech,

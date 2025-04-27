@@ -51,7 +51,7 @@ FROM (
 	ВидРабот_codе::varchar,
 	ВидРабот_name::varchar
     FROM 
-        src_works
+        {{ source('public', 'src_works') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,
 	hk_dv_lnk_fact_journal_fact_work,
