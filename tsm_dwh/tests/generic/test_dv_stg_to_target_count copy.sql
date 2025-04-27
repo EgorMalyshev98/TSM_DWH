@@ -23,6 +23,7 @@ SELECT
 	    stg_count.src_count,
 	    target_count.target_count
 FROM stg_count, target_count
+WHERE src_count != target_count
 
 {% endtest %}
 
