@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from typing import OrderedDict
+
+from loguru import logger
 from config import DV_METADATA, TEMPLATES
 import pandas as pd
 
@@ -255,13 +257,13 @@ class DataVaultGenerator:
 
             stg_col_names = ",\n\t".join(self.stg_cols_dict.keys())
             stg_col_select = ",\n\t".join(self.stg_cols_dict.values())
-            src_str_columns = ",\n\t".join(src_columns)
+            # src_str_columns = ",\n\t".join(src_columns)
             stg_format_map = {
                 "hkcode": "default",
                 "target_table": stg_table_name,
                 "target_columns": stg_col_names,
                 "select_cols": stg_col_select,
-                "src_columns": src_str_columns,
+                # "src_columns": src_str_columns,
                 "src_table": src_table,
                 "source": source
                 }

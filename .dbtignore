@@ -1,2 +1,2 @@
-dbt_packages
-dv_gen
+dbt_packages/**
+dv_gen/**

@@ -15,4 +15,13 @@ models:
           hk_name: "hk_dv_lnk_fact_work_tech"
           hdiff_name: "hdiff_dv_sat_fact_tech"
           sum_col: "часы"
+
+  - name: dv_sat_fact_work
+    tests:
+      - test_dv_stg_to_target_sum:
+          column_name: "-"
+          stg_model: ref('stg_1c_works')
+          hk_name: "hk_dv_hub_fact_work"
+          hdiff_name: "hdiff_dv_sat_fact_work"
+          sum_col: "объем_работы"
   
