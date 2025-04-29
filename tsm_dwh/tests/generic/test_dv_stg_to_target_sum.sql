@@ -19,6 +19,10 @@ WITH
                 {{ hdiff_name }},
                 {{ sum_col }}
             FROM {{ stg_model }}
+            where 
+                loadts >= (SELECT min(loadts) FROM {{ model }} )
+                AND
+                loadts <= (SELECT max(loadts) FROM {{ model }} )
         ) t
     ),
     target AS (

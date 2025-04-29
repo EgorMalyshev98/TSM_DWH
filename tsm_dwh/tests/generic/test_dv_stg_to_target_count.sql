@@ -13,6 +13,10 @@ WITH
 	stg_count AS (
 	    SELECT COUNT(DISTINCT ({{ hk_name }}, {{ hdiff_name }})) AS src_count
 	    FROM {{ stg_model }}
+		WHERE 
+			loadts >= (SELECT min(loadts) FROM {{ model }})
+			AND
+			loadts <= (SELECT max(loadts) FROM {{ model }})
 	),
 	target_count AS (
 	    SELECT COUNT(DISTINCT ({{ hk_name }}, {{ hdiff_name }})) AS target_count
