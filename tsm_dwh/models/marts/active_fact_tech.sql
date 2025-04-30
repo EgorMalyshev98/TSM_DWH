@@ -1,7 +1,7 @@
 {{
     config(
-        materialized='table',
-        tags=['жуфвр_1с']
+        materialized='table'
+        -- tags=['жуфвр_1с']
     )
 }}
 
