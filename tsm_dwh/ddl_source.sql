@@ -3,11 +3,13 @@
 -----------------------
 DROP TABLE IF EXISTS src_journal CASCADE;
 CREATE TABLE src_journal(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 
-	uuid uuid,
-	date timestamptz,
+	"uuid" uuid,
+	"date" timestamptz,
 	"value_Проведен" boolean,
 	"value_Ссылка" uuid,
 	"value_ПометкаУдаления" boolean,
@@ -39,6 +41,8 @@ CREATE TABLE src_journal(
 
 DROP TABLE IF EXISTS src_works CASCADE;
 CREATE TABLE src_works(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 	--
@@ -47,7 +51,7 @@ CREATE TABLE src_works(
 	"СтруктураРаботИдентификатор" varchar,
 	"ОбъемРаботы" numeric,
 	"Примечание" varchar,
-	"СтруктураРаботНомерПоКонтрактнойВедомости" varchar,
+	"СтруктураРаботНомерКВ" varchar,
 	"СтруктураРаботПометкаУдаления" bool,
 	"ВидРаботУровеньОперации" varchar,
 	"СтруктураРабот_value" uuid,
@@ -60,6 +64,8 @@ CREATE TABLE src_works(
 
 DROP TABLE IF EXISTS src_pikets CASCADE;
 CREATE TABLE src_pikets(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 	--
@@ -83,6 +89,8 @@ CREATE TABLE src_pikets(
 
 DROP TABLE IF EXISTS src_tech CASCADE;
 CREATE TABLE src_tech(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 	--
@@ -104,6 +112,8 @@ CREATE TABLE src_tech(
 
 DROP TABLE IF EXISTS src_materials CASCADE;
 CREATE TABLE src_materials(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 	--
@@ -118,6 +128,8 @@ CREATE TABLE src_materials(
 
 DROP TABLE IF EXISTS src_norm_workload CASCADE;
 CREATE TABLE src_norm_workload(
+	id serial primary key,
+	--
 	recsource varchar,
 	loadts timestamptz,
 	--

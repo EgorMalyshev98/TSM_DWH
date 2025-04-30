@@ -5,6 +5,8 @@ sources:
     tables:
       - name: src_journal
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -67,11 +69,11 @@ sources:
             data_type: character varying
           - name: value_направлениедеятельности_name
             data_type: character varying
-          - name: id
-            data_type: integer
 
       - name: src_materials
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -90,11 +92,11 @@ sources:
             data_type: character varying
           - name: ресурс_name
             data_type: character varying
-          - name: id
-            data_type: integer
 
       - name: src_norm_workload
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -141,11 +143,11 @@ sources:
             data_type: character varying
           - name: аналитика_name
             data_type: character varying
-          - name: id
-            data_type: integer
 
       - name: src_pikets
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -182,11 +184,11 @@ sources:
             data_type: character varying
           - name: группапикетовspider_name
             data_type: character varying
-          - name: id
-            data_type: integer
 
       - name: src_tech
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -219,11 +221,11 @@ sources:
             data_type: character varying
           - name: контрагент_name
             data_type: character varying
-          - name: id
-            data_type: integer
 
       - name: src_works
         columns:
+          - name: id
+            data_type: integer
           - name: recsource
             data_type: character varying
           - name: loadts
@@ -238,7 +240,7 @@ sources:
             data_type: numeric
           - name: примечание
             data_type: character varying
-          - name: структураработномерпоконтрактно
+          - name: структураработномеркв
             data_type: character varying
           - name: структураработпометкаудаления
             data_type: boolean
@@ -256,6 +258,4 @@ sources:
             data_type: character varying
           - name: видработ_name
             data_type: character varying
-          - name: id
-            data_type: integer
 

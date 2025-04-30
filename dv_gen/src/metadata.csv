@@ -14,7 +14,7 @@ sat,dv_sat_fact_work,,bk,,stg_1c_works,bk_работа_uuid,varchar,жуфвр_1
 sat,dv_sat_fact_work,,attr,,stg_1c_works,идентификатор,varchar,жуфвр_1с,src_works,"""СтруктураРаботИдентификатор""",,,,,,,
 sat,dv_sat_fact_work,,attr,,stg_1c_works,объем_работы,numeric,жуфвр_1с,src_works,"""ОбъемРаботы""",,,,,,,
 sat,dv_sat_fact_work,,attr,,stg_1c_works,примечание,varchar,жуфвр_1с,src_works,"""Примечание""",,,,,,,
-sat,dv_sat_fact_work,,attr,,stg_1c_works,кв,varchar,жуфвр_1с,src_works,"""СтруктураРаботНомерПоКонтрактнойВедомости""",,,,,,,
+sat,dv_sat_fact_work,,attr,,stg_1c_works,кв,varchar,жуфвр_1с,src_works,"""СтруктураРаботНомерКВ""",,,,,,,
 sat,dv_sat_fact_work,,attr,,stg_1c_works,пометка_удаления,bool,жуфвр_1с,src_works,"""СтруктураРаботПометкаУдаления""",,,,,,,
 sat,dv_sat_fact_work,,attr,,stg_1c_works,тип_spider,varchar,жуфвр_1с,src_works,"""ВидРаботУровеньОперации""",,,,,,,
 sat,dv_sat_fact_work,,attr,,stg_1c_works,структура_работ_value,uuid,жуфвр_1с,src_works,"""СтруктураРабот_value""",,,,,,,
