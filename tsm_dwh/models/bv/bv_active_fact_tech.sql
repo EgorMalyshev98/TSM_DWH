@@ -1,12 +1,4 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
-
-
-
-WITH active_lnk AS (
+WITH active_lnk_fact_work_tech AS (
 	SELECT hk_dv_lnk_fact_work_tech
 	FROM (
 		SELECT 
@@ -44,7 +36,7 @@ FROM
 		
 	FROM {{ ref('dv_sat_fact_tech') }} sat) sat
 	
-JOIN active_lnk act_ln USING(hk_dv_lnk_fact_work_tech)
+JOIN active_lnk_fact_work_tech alnk USING(hk_dv_lnk_fact_work_tech)
 JOIN {{ ref('dv_lnk_fact_work_tech') }} lnk USING(hk_dv_lnk_fact_work_tech)
 WHERE rn = 1
 
