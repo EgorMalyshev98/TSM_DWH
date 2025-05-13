@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: ref_object_names
+        columns:
+          - name: территория_value
+          - name: территория_name
+          - name: spider_name
+          - name: is_active
+
+ 

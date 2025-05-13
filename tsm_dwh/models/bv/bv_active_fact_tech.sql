@@ -13,6 +13,8 @@ SELECT
 	lnk.hk_dv_lnk_fact_work_tech,
 	lnk.hk_dv_hub_fact_work,
 	lnk.hk_dv_hub_tech,
+
+	hub.bk_ресурс_uuid,
 	
 	sat.госномер_техника_не_найдена,
 	sat.количество,
@@ -38,5 +40,7 @@ FROM
 	
 JOIN active_lnk_fact_work_tech alnk USING(hk_dv_lnk_fact_work_tech)
 JOIN {{ ref('dv_lnk_fact_work_tech') }} lnk USING(hk_dv_lnk_fact_work_tech)
+JOIN {{ ref('dv_hub_tech') }} hub USING(hk_dv_hub_tech)
+
 WHERE rn = 1
 
