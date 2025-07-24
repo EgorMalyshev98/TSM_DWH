@@ -167,11 +167,13 @@ SELECT
     w.объект,
 
 	abs(
-	sum(трудоемкость_нормативная) OVER(PARTITION BY hk_dv_hub_fact_work)
-	/
-	NULLIF(sum(трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work), 0)
-	* 100
-	- 100) as абс_отклонение
+		((sum(nw.трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work)
+		-
+		sum(nw.трудоемкость_нормативная) OVER(PARTITION BY hk_dv_hub_fact_work))
+		/
+		NULLIF(sum(nw.трудоемкость_нормативная) OVER(PARTITION BY hk_dv_hub_fact_work), 0))
+		* 100
+		) as абс_отклонение
     
 FROM active_norm_wld nw
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
