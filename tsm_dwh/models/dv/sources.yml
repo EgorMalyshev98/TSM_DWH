@@ -259,3 +259,24 @@ sources:
           - name: видработ_name
             data_type: character varying
 
+      - name: src_pu_mat_supply
+        columns:
+          - name: id
+            data_type: integer
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: наименование объекта
+            data_type: character varying
+          - name: наименование материала
+            data_type: character varying
+          - name: date
+            data_type: date
+          - name: единица измерения
+            data_type: character varying
+          - name: volume
+            data_type: numeric
+          - name: план суточный
+            data_type: numeric
+

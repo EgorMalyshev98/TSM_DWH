@@ -18,7 +18,7 @@ def run_dbt_macro_gen_sources(dv_source_path: Path):
     with open(dv_source_path, "w", encoding='utf-8') as f:
         f.write(result.stdout)
     
-    logger.info('sources generated')
+    logger.info('sources.yml generated')
     
         
     
