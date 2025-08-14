@@ -16,7 +16,7 @@ SELECT
 	hk_dv_hub_object,
 	bk_объект,
 	hk_dv_lnk_object_material_date,
-	hdiff_dv_sat_pu_fact_supply,
+	hdiff_dv_sat_pu_mat_supply,
 	ед_измерения,
 	факт_объем,
 	план_объем_суточный
@@ -32,7 +32,7 @@ FROM (
 	digest('default' || '|' || LOWER(TRIM(COALESCE("Наименование объекта"::varchar, '-1')::varchar)), 'sha1') as hk_dv_hub_object,
 	LOWER(TRIM(COALESCE("Наименование объекта"::varchar, '-1')::varchar)),
 	digest('default' || '|' || LOWER(TRIM(COALESCE("Наименование объекта"::varchar, '-1')::varchar)) || '|' || LOWER(TRIM(COALESCE("Наименование материала"::varchar, '-1')::varchar)) || '|' || LOWER(TRIM(COALESCE("date"::varchar, '-1')::varchar)), 'sha1') as hk_dv_lnk_object_material_date,
-	digest(TRIM(COALESCE("Единица измерения"::varchar, 'N\A')) || '|' || TRIM(COALESCE("volume"::varchar, 'N\A')) || '|' || TRIM(COALESCE("План суточный"::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_pu_fact_supply,
+	digest(TRIM(COALESCE("Единица измерения"::varchar, 'N\A')) || '|' || TRIM(COALESCE("volume"::varchar, 'N\A')) || '|' || TRIM(COALESCE("План суточный"::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_pu_mat_supply,
 	"Единица измерения"::varchar,
 	"volume"::numeric,
 	"План суточный"::varchar
@@ -45,7 +45,7 @@ FROM (
 	hk_dv_hub_object,
 	bk_объект,
 	hk_dv_lnk_object_material_date,
-	hdiff_dv_sat_pu_fact_supply,
+	hdiff_dv_sat_pu_mat_supply,
 	ед_измерения,
 	факт_объем,
 	план_объем_суточный)

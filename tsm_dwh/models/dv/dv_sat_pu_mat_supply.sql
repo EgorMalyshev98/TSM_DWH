@@ -9,7 +9,7 @@
 
 {% if is_incremental() %}
     WITH active_sat AS (
-    SELECT DISTINCT ON (hk_dv_lnk_object_material_date) hk_dv_lnk_object_material_date, hdiff_dv_sat_pu_fact_supply, loadts
+    SELECT DISTINCT ON (hk_dv_lnk_object_material_date) hk_dv_lnk_object_material_date, hdiff_dv_sat_pu_mat_supply, loadts
     FROM {{this}}
     ORDER BY hk_dv_lnk_object_material_date, loadts DESC)
 
@@ -21,12 +21,12 @@
 
         SELECT
         s.hk_dv_lnk_object_material_date,
-        s.hdiff_dv_sat_pu_fact_supply,
+        s.hdiff_dv_sat_pu_mat_supply,
         s.loadts,
         s.recsource,
-        lag(s.hdiff_dv_sat_pu_fact_supply) over(PARTITION BY s.hk_dv_lnk_object_material_date ORDER BY s.loadts) AS lag_hdiff,
+        lag(s.hdiff_dv_sat_pu_mat_supply) over(PARTITION BY s.hk_dv_lnk_object_material_date ORDER BY s.loadts) AS lag_hdiff,
         a.loadts AS sat_loadts,
-        a.hdiff_dv_sat_pu_fact_supply AS sat_hdiff,
+        a.hdiff_dv_sat_pu_mat_supply AS sat_hdiff,
         ед_измерения,
 	факт_объем,
 	план_объем_суточный
@@ -34,7 +34,7 @@
     FROM
         (SELECT
             s.hk_dv_lnk_object_material_date,
-            s.hdiff_dv_sat_pu_fact_supply,
+            s.hdiff_dv_sat_pu_mat_supply,
             s.loadts,
             s.recsource,
             ед_измерения,
@@ -50,14 +50,14 @@
         hk_dv_lnk_object_material_date,
         recsource,
         loadts,
-        hdiff_dv_sat_pu_fact_supply,
+        hdiff_dv_sat_pu_mat_supply,
         ед_измерения,
 	факт_объем,
 	план_объем_суточный
     FROM stage_cte
     WHERE 
-        hdiff_dv_sat_pu_fact_supply <> lag_hdiff 
-            OR (hdiff_dv_sat_pu_fact_supply <> sat_hdiff AND lag_hdiff IS NULL) 
+        hdiff_dv_sat_pu_mat_supply <> lag_hdiff 
+            OR (hdiff_dv_sat_pu_mat_supply <> sat_hdiff AND lag_hdiff IS NULL) 
             OR sat_hdiff IS NULL
     ORDER BY loadts
 
@@ -65,10 +65,10 @@
     WITH stage_cte AS (
         SELECT
         s.hk_dv_lnk_object_material_date,
-        s.hdiff_dv_sat_pu_fact_supply,
+        s.hdiff_dv_sat_pu_mat_supply,
         s.loadts,
         s.recsource,
-        lag(s.hdiff_dv_sat_pu_fact_supply) over(PARTITION BY s.hk_dv_lnk_object_material_date ORDER BY s.loadts) AS lag_hdiff,
+        lag(s.hdiff_dv_sat_pu_mat_supply) over(PARTITION BY s.hk_dv_lnk_object_material_date ORDER BY s.loadts) AS lag_hdiff,
         ед_измерения,
 	факт_объем,
 	план_объем_суточный
@@ -76,7 +76,7 @@
     FROM
         (SELECT
             s.hk_dv_lnk_object_material_date,
-            s.hdiff_dv_sat_pu_fact_supply,
+            s.hdiff_dv_sat_pu_mat_supply,
             s.loadts,
             s.recsource,
             ед_измерения,
@@ -90,13 +90,13 @@
         hk_dv_lnk_object_material_date,
         recsource,
         loadts,
-        hdiff_dv_sat_pu_fact_supply,
+        hdiff_dv_sat_pu_mat_supply,
         ед_измерения,
 	факт_объем,
 	план_объем_суточный
     FROM stage_cte
     WHERE 
-        hdiff_dv_sat_pu_fact_supply <> lag_hdiff 
+        hdiff_dv_sat_pu_mat_supply <> lag_hdiff 
         OR lag_hdiff IS NULL
     ORDER BY loadts
 {% endif %}
