@@ -142,4 +142,4 @@ sat,dv_sat_pu_mat_supply,,bk,,stg_pu_mat_supply,bk_материал,varchar,ПУ
 sat,dv_sat_pu_mat_supply,,bk,,stg_pu_mat_supply,bk_факт_дата,varchar,ПУ_xl_поставки_материалов,src_pu_mat_supply,"""date""",dv_lnk_object_material_date
 sat,dv_sat_pu_mat_supply,,attr,,stg_pu_mat_supply,ед_измерения,varchar,ПУ_xl_поставки_материалов,src_pu_mat_supply,"""Единица измерения""",
 sat,dv_sat_pu_mat_supply,,attr,,stg_pu_mat_supply,факт_объем,numeric,ПУ_xl_поставки_материалов,src_pu_mat_supply,"""volume""",
-sat,dv_sat_pu_mat_supply,,attr,,stg_pu_mat_supply,план_объем_суточный,varchar,ПУ_xl_поставки_материалов,src_pu_mat_supply,"""План суточный""",
+sat,dv_sat_pu_mat_supply,,attr,,stg_pu_mat_supply,план_объем_суточный,numeric,ПУ_xl_поставки_материалов,src_pu_mat_supply,"""План суточный""",

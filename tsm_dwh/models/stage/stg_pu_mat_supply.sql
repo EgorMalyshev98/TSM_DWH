@@ -35,7 +35,7 @@ FROM (
 	digest(TRIM(COALESCE("Единица измерения"::varchar, 'N\A')) || '|' || TRIM(COALESCE("volume"::varchar, 'N\A')) || '|' || TRIM(COALESCE("План суточный"::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_pu_mat_supply,
 	"Единица измерения"::varchar,
 	"volume"::numeric,
-	"План суточный"::varchar
+	"План суточный"::numeric
     FROM 
         {{ source('public', 'src_pu_mat_supply') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_date,
