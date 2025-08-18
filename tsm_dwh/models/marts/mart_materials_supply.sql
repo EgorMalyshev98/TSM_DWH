@@ -30,7 +30,11 @@ SELECT a.hk_dv_lnk_object_material_date,
     a.hdiff_dv_sat_pu_mat_supply,
     a.ед_измерения,
     a.факт_объем,
-    a.план_объем_суточный
+    a.план_объем_суточный::numeric,
+
+    sum(a.факт_объем) OVER(PARTITION BY bk_объект, bk_материал ORDER BY bk_факт_дата) as факт_накопительно,
+    sum(a.план_объем_суточный::numeric) OVER(PARTITION BY bk_объект, bk_материал ORDER BY bk_факт_дата) as план_накопительно
+
     
 FROM active_sat a
     JOIN {{ ref('dv_lnk_object_material_date') }}  l USING(hk_dv_lnk_object_material_date)
