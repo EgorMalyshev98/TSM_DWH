@@ -11,14 +11,14 @@ WITH active_norm_wld AS (
 SELECT
 	hk_dv_hub_fact_work,
 	аналитика_value,
-	
 	наемный_ресурс,
 	ресурс_spider_name,
 	ресурс_spider_codе,
 	ключевой_ресурс_value,
 	ключевой_ресурс_name,
 	несколько_ключевых_ресурсов,
-	
+
+	sum(рассчетный_объем) AS рассчетный_объем,
 	sum(трудоемкость_нормативная) AS трудоемкость_нормативная,
 	sum(трудоемкость_фактическая) AS трудоемкость_фактическая
 	
@@ -36,6 +36,7 @@ SELECT
 	ключевой_ресурс_value,
 	ключевой_ресурс_name,
 	несколько_ключевых_ресурсов,
+	рассчетный_объем,
 	
 	RANK() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) rk
 	
@@ -45,7 +46,6 @@ WHERE rk = 1
 GROUP BY 
 	hk_dv_hub_fact_work,
 	аналитика_value,
-	
 	наемный_ресурс,
 	ресурс_spider_name,
 	ресурс_spider_codе,
@@ -71,6 +71,12 @@ GROUP BY
 			направление_деятельности_name,
 			проведен,
 			пометка_удаления,
+			CASE
+				WHEN версия_жуфвр_name = 'Версия 01.01.2022'
+				THEN 3
+				WHEN версия_жуфвр_name = 'Версия 01.10.2025'
+				THEN 4
+			END AS енрп_версия,
 			
 			row_number() OVER(PARTITION BY hk_dv_hub_fact_journal ORDER BY loadts DESC) rn
 			
@@ -113,6 +119,7 @@ WHERE t.rn = 1)
 	j.смена_name,
 	j.ответственный_name,
 	j.направление_деятельности_name,
+	j.енрп_версия,
 	
 	w.идентификатор,
 	w.кв,
@@ -131,6 +138,7 @@ FROM sat_work w
 JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
 JOIN active_journal j USING(hk_dv_hub_fact_journal)
 JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
+
 WHERE 
 	j.проведен IS TRUE
 	AND j.пометка_удаления IS FALSE
@@ -150,6 +158,7 @@ SELECT
 	nw.несколько_ключевых_ресурсов,
 	nw.трудоемкость_нормативная,
 	nw.трудоемкость_фактическая,
+	nw.рассчетный_объем,
 
     w.версия_жуфвр_name,
 	w.дата,
@@ -165,6 +174,11 @@ SELECT
 	w.видработ_name,
 	w.объем_работы,
     w.объект,
+
+	a.prod,
+	a.res_cnt,
+	a."load",
+	a.enrp_version,
 
 	abs(
 		((sum(nw.трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work)
@@ -196,6 +210,11 @@ SELECT
     
 FROM active_norm_wld nw
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
+
+LEFT JOIN {{ source('public', 'ref_enrp_assign') }} a ON 
+	    w.тип_spider = a.oper_type
+	    AND nw.ресурс_spider_codе = a.res_code   
+	    AND w.енрп_версия = a.enrp_version
 
 
 
