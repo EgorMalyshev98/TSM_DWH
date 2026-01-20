@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS ref_glossary_object;
 CREATE TABLE ref_glossary_object(
 	id serial primary key,
 	код varchar,
+	bk varchar,
 	имя_эу varchar,
 	имя_пу varchar,
 	имя_оуп varchar,

@@ -173,7 +173,26 @@ SELECT
 		/
 		NULLIF(sum(nw.трудоемкость_нормативная) OVER(PARTITION BY hk_dv_hub_fact_work), 0))
 		* 100
-		) as абс_отклонение
+		) as абс_отклонение,
+
+	abs(
+	    (
+	      sum(nw.трудоемкость_фактическая)
+	        FILTER (WHERE nw.ключевой_ресурс_value = nw.аналитика_value)
+	        OVER (PARTITION BY hk_dv_hub_fact_work)
+	      -
+	      sum(nw.трудоемкость_нормативная)
+	        FILTER (WHERE nw.ключевой_ресурс_value = nw.аналитика_value)
+	        OVER (PARTITION BY hk_dv_hub_fact_work)
+	    )
+	    /
+	    NULLIF(
+	      sum(nw.трудоемкость_нормативная)
+	        FILTER (WHERE nw.ключевой_ресурс_value = nw.аналитика_value)
+	        OVER (PARTITION BY hk_dv_hub_fact_work),
+	      0
+	    )
+	  ) * 100 AS абс_откл_ключ_ресурс
     
 FROM active_norm_wld nw
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
