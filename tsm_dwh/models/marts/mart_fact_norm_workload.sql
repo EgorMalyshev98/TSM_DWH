@@ -176,6 +176,7 @@ SELECT
 	a.res_cnt,
 	a."load",
 	a.enrp_version,
+	a.unit,
 
 -- абс % отклонения трудоемкости от нормы
 	abs(
