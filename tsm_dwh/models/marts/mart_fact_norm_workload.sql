@@ -18,7 +18,6 @@ SELECT
 	ключевой_ресурс_name,
 	несколько_ключевых_ресурсов,
 
-	sum(рассчетный_объем) AS рассчетный_объем,
 	sum(трудоемкость_нормативная) AS трудоемкость_нормативная,
 	sum(трудоемкость_фактическая) AS трудоемкость_фактическая
 	
@@ -36,7 +35,6 @@ SELECT
 	ключевой_ресурс_value,
 	ключевой_ресурс_name,
 	несколько_ключевых_ресурсов,
-	рассчетный_объем,
 	
 	RANK() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) rk
 	
@@ -158,7 +156,6 @@ SELECT
 	nw.несколько_ключевых_ресурсов,
 	nw.трудоемкость_нормативная,
 	nw.трудоемкость_фактическая,
-	nw.рассчетный_объем,
 
     w.версия_жуфвр_name,
 	w.дата,
@@ -180,6 +177,7 @@ SELECT
 	a."load",
 	a.enrp_version,
 
+-- абс % отклонения трудоемкости от нормы
 	abs(
 		((sum(nw.трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work)
 		-
@@ -189,6 +187,7 @@ SELECT
 		* 100
 		) as абс_отклонение,
 
+-- абс % отклонения трудоемкости от нормы только по ключевым ресурсам
 	abs(
 	    (
 	      sum(nw.трудоемкость_фактическая)
@@ -206,7 +205,36 @@ SELECT
 	        OVER (PARTITION BY hk_dv_hub_fact_work),
 	      0
 	    )
-	  ) * 100 AS абс_откл_ключ_ресурс
+	  ) * 100 AS абс_откл_ключ_ресурс,
+
+--	расчетный объем - объем, распределенный по ключевым ресурсам в каждой работе,
+--	учитывая их фактическую трудоемкость и производительность
+	
+    ROUND(
+        объем_работы
+        *
+        (
+            CASE
+                WHEN ключевой_ресурс_value = аналитика_value
+                THEN prod * трудоемкость_фактическая
+            END
+            /
+            SUM(
+                CASE
+                    WHEN ключевой_ресурс_value = аналитика_value
+                    THEN prod * трудоемкость_фактическая
+                END
+            ) OVER (PARTITION BY hk_dv_hub_fact_work)
+        ),
+        3
+    ) AS calc_vol,
+    
+-- 	нормативный ключевой ресурс по работам
+    CASE 
+    	WHEN COUNT(*) FILTER(WHERE prod IS NOT NULL and трудоемкость_фактическая > 0) OVER(PARTITION BY hk_dv_hub_fact_work) > 0
+    	THEN TRUE
+    	ELSE FALSE
+    END AS is_std_key_res
     
 FROM active_norm_wld nw
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
