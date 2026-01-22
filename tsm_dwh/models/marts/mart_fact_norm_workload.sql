@@ -177,7 +177,8 @@ SELECT
 	a."load",
 	a.enrp_version,
 	a.unit,
-
+	a.work_group,
+	
 -- абс % отклонения трудоемкости от нормы
 	abs(
 		((sum(nw.трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work)
