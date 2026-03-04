@@ -1,0 +1,2 @@
+[console_scripts]
+dvgen = dv_gen_cli:main

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import OrderedDict
 
 from loguru import logger
-from config import DV_METADATA, TEMPLATES
+from config import TEMPLATES
 import pandas as pd
 
 
@@ -19,11 +19,11 @@ class DataVaultConfig:
 
 
 class DataVaultGenerator:
-    def __init__(self, 
+    def __init__(self,
                  stg_dir,
                  dv_dir,
-                 dv_conf = DataVaultConfig, 
-                 metadata = DV_METADATA
+                 metadata,
+                 dv_conf = DataVaultConfig,
                  ):
         
         # self.loadts = datetime.now(timezone.utc).isoformat()
