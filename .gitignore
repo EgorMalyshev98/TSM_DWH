@@ -12,3 +12,4 @@ logs
 grants.sql
 
 dbt_packages
+dbt_internal_packages/

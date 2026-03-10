@@ -3,12 +3,12 @@ name = "tsm-dwh"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
-    "dbt-core==1.9.3",
-    "dbt-postgres==1.9.0",
     "loguru==0.7.3",
     "pandas==2.2.3",
     "python-dotenv==1.0.1",
     "dv-gen",
+    "dbt-core>=1.11.7",
+    "dbt-postgres>=1.10.0",
 ]
 
 [tool.uv.sources]

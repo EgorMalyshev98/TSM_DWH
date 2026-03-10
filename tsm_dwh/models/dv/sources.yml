@@ -70,6 +70,27 @@ sources:
           - name: value_направлениедеятельности_name
             data_type: character varying
 
+      - name: src_journal_time
+        columns:
+          - name: id
+            data_type: integer
+          - name: recsource
+            data_type: character varying
+          - name: loadts
+            data_type: timestamp with time zone
+          - name: жуфвр_value
+            data_type: character varying
+          - name: период
+            data_type: timestamp with time zone
+          - name: uidзаписи
+            data_type: uuid
+          - name: пользователь_value
+            data_type: uuid
+          - name: пользователь_name
+            data_type: character varying
+          - name: дельтавременисек
+            data_type: numeric
+
       - name: src_materials
         columns:
           - name: id
@@ -83,6 +104,8 @@ sources:
           - name: номерстроки
             data_type: integer
           - name: примечание
+            data_type: character varying
+          - name: единицаизмерения
             data_type: character varying
           - name: объемматериала
             data_type: numeric
@@ -215,6 +238,10 @@ sources:
             data_type: character varying
           - name: аналитика_name
             data_type: character varying
+          - name: госномер
+            data_type: character varying
+          - name: гаражныйномер
+            data_type: character varying
           - name: контрагент_value
             data_type: character varying
           - name: контрагент_codе
@@ -239,6 +266,8 @@ sources:
           - name: объемработы
             data_type: numeric
           - name: примечание
+            data_type: character varying
+          - name: структураработуникальныйкод
             data_type: character varying
           - name: структураработномеркв
             data_type: character varying
@@ -279,5 +308,4 @@ sources:
             data_type: numeric
           - name: план суточный
             data_type: numeric
-      - name: src_journal_time
 

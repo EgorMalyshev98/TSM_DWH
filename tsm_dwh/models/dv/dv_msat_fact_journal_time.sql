@@ -1,3 +1,4 @@
+
 {{
     config(
         materialized='incremental',
@@ -8,211 +9,221 @@
 
 {% if is_incremental() %}
     WITH active_sat AS (
-    SELECT *
-    FROM (
-        SELECT 
-            hk_dv_hub_fact_journal,
-            hdiff_dv_msat_fact_journal_time,
-            loadts,
-            sub_seq,
-            COUNT(*) OVER (PARTITION BY hk_dv_hub_fact_journal, loadts) AS cnt,
-            rank() OVER (
-                PARTITION BY hk_dv_hub_fact_journal
-                ORDER BY loadts DESC
-            ) AS rnk
-        FROM {{ this }}
-        ) a (
-            sat_id,
-            sat_hdiff,
-            sat_loadts,
-            sat_sub_seq,
-            sat_count,
-            sat_rnk
-        )
-    WHERE sat_rnk = 1
-    ),
-    stage_cte AS (
-        SELECT 
-            stg_id,
-            stg_hdiff,
-            stg_loadts,
-            stg_recsource,
-            stg_sub_seq,
-            период,
-	id_записи,
-	пользователь_value,
-	пользователь_name,
-	время_сек,
-            COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
-            lag(stg_hdiff) over(
-                PARTITION BY stg_id, stg_sub_seq
-                ORDER BY stg_loadts
-            ) AS 
-                stg_lag_hdiff,
+        SELECT *
+        FROM (
+            SELECT
+                hk_dv_hub_fact_journal,
+                hdiff_dv_msat_fact_journal_time,
+                loadts,
+                sub_seq,
+                rank() OVER (
+                    PARTITION BY hk_dv_hub_fact_journal
+                    ORDER BY loadts DESC
+                ) AS rnk
+            FROM {{ this }}
+            ) a (
+                sat_id,
                 sat_hdiff,
-                sat_count,
+                sat_loadts,
                 sat_sub_seq,
                 sat_rnk
-        FROM (
-                SELECT 
-                    s.hk_dv_hub_fact_journal,
-                    s.hdiff_dv_msat_fact_journal_time,
-                    s.loadts,
-                    s.recsource,
-                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_journal, s.loadts) AS sub_seq,
-                    период,
-	id_записи,
-	пользователь_value,
-	пользователь_name,
-	время_сек
-                FROM {{ ref('stg_1c_journal_time') }} s
-                    CROSS JOIN (
-                        SELECT max(loadts) AS max_loadts
-                        FROM {{ this }}
-                    ) ml
-                WHERE s.loadts > ml.max_loadts
-            ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
-        LEFT JOIN active_sat a ON sat_id = stg_id
-        AND sat_sub_seq = stg_sub_seq
+            )
+        WHERE sat_rnk = 1
     ),
-    stage_for_insert AS (
-        SELECT DISTINCT 
-            stg_id,
-            stg_loadts
-        FROM (
-                SELECT stg_id,
-                    stg_loadts,
-                    stg_hdiff,
-                    stg_lag_hdiff,
-                    stg_count,
-                    lag(stg_count) over(
-                        PARTITION BY stg_id,
-                        stg_sub_seq
-                        ORDER BY stg_loadts
-                    ) AS stg_lag_count,
-                    sat_hdiff,
-                    sat_count,
-                    sat_sub_seq,
-                    sat_rnk
-                FROM stage_cte
-            ) t
-        WHERE (
-                stg_hdiff <> stg_lag_hdiff
-                OR stg_count <> stg_lag_count
-            )
-            OR (
-                (
-                    stg_hdiff <> sat_hdiff
-                    AND stg_lag_hdiff IS NULL
-                )
-                OR (
-                    stg_count <> sat_count
-                    AND stg_lag_count IS NULL
-                )
-            )
-            OR stg_lag_hdiff IS null
-    )
-
-    SELECT DISTINCT 
-        stg_id as hk_dv_hub_fact_journal,
-        stg_recsource as recsource,
-        stg_loadts as loadts,
-        stg_hdiff as hdiff_dv_msat_fact_journal_time,
-        stg_sub_seq as sub_seq,
-        период,
-	id_записи,
-	пользователь_value,
-	пользователь_name,
-	время_сек
-    FROM stage_cte s
-    WHERE EXISTS(
-            SELECT 1
-            FROM stage_for_insert si
-            WHERE si.stg_id = s.stg_id
-                AND si.stg_loadts = s.stg_loadts
-        )
-    ORDER BY stg_loadts,
-        stg_id,
-        stg_sub_seq
-
-{% else %}
-    WITH stage_cte AS (
-        SELECT 
-            stg_id,
-            stg_hdiff,
-            stg_loadts,
-            stg_recsource,
-            stg_sub_seq,
+    -- Хеш активного блока: GROUP BY — string_agg с ORDER BY работает только в агрегатах
+    active_blocks AS (
+        SELECT
+            sat_id,
+            COUNT(*)                                                        AS sat_count,
+            string_agg(sat_hdiff::varchar, ',' ORDER BY sat_hdiff)          AS sat_block_hash
+        FROM active_sat
+        GROUP BY sat_id
+    ),
+    stage_raw AS (
+        SELECT
+            s.hk_dv_hub_fact_journal,
+            s.hdiff_dv_msat_fact_journal_time,
+            s.loadts,
+            s.recsource,
             период,
 	id_записи,
 	пользователь_value,
 	пользователь_name,
-	время_сек,
-            COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
-            lag(stg_hdiff) over(
-                PARTITION BY stg_id, stg_sub_seq
-                ORDER BY stg_loadts
-            ) AS stg_lag_hdiff
-        FROM (
-                SELECT 
-                    s.hk_dv_hub_fact_journal,
-                    s.hdiff_dv_msat_fact_journal_time,
-                    s.loadts,
-                    s.recsource,
-                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_journal, s.loadts) AS sub_seq,
-                    период,
+	время_сек
+        FROM {{ ref('stg_1c_journal_time') }} s
+        CROSS JOIN (
+            SELECT max(loadts) AS max_loadts
+            FROM {{ this }}
+        ) ml
+        WHERE s.loadts > ml.max_loadts
+    ),
+    -- Хеш блока stage: GROUP BY
+    stage_block_hashes AS (
+        SELECT
+            hk_dv_hub_fact_journal,
+            loadts,
+            COUNT(*)                                                                AS stg_count,
+            string_agg(hdiff_dv_msat_fact_journal_time::varchar, ',' ORDER BY hdiff_dv_msat_fact_journal_time)            AS stg_block_hash
+        FROM stage_raw
+        GROUP BY hk_dv_hub_fact_journal, loadts
+    ),
+    stage_with_seq AS (
+        SELECT
+            hk_dv_hub_fact_journal  AS stg_id,
+            hdiff_dv_msat_fact_journal_time      AS stg_hdiff,
+            loadts            AS stg_loadts,
+            recsource         AS stg_recsource,
+            -- ORDER BY hdiff делает sub_seq детерминированным
+            row_number() OVER (
+                PARTITION BY hk_dv_hub_fact_journal, loadts
+                ORDER BY hdiff_dv_msat_fact_journal_time
+            ) AS sub_seq,
+            stg_count,
+            stg_block_hash,
+            период,
 	id_записи,
 	пользователь_value,
 	пользователь_name,
 	время_сек
-                FROM {{ ref('stg_1c_journal_time') }} s
-            ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
+        FROM (
+            SELECT r.*, h.stg_count, h.stg_block_hash
+            FROM stage_raw r
+            JOIN stage_block_hashes h
+                ON h.hk_dv_hub_fact_journal = r.hk_dv_hub_fact_journal
+                AND h.loadts = r.loadts
+        ) t
+    ),
+    -- Сравнение: текущий батч в stg / предыдущий батч в stg / активный sat
+    block_cte AS (
+        SELECT
+            h.hk_dv_hub_fact_journal  AS stg_id,
+            h.loadts            AS stg_loadts,
+            h.stg_block_hash,
+            lag(h.stg_block_hash) OVER (
+                PARTITION BY h.hk_dv_hub_fact_journal
+                ORDER BY h.loadts
+            ) AS lag_block_hash,
+            a.sat_block_hash
+        FROM stage_block_hashes h
+        LEFT JOIN active_blocks a ON a.sat_id = h.hk_dv_hub_fact_journal
     ),
     stage_for_insert AS (
-        SELECT DISTINCT 
-            stg_id,
-            stg_loadts
-        FROM (
-                SELECT stg_id,
-                    stg_loadts,
-                    stg_hdiff,
-                    stg_lag_hdiff,
-                    stg_count,
-                    lag(stg_count) over(
-                        PARTITION BY stg_id,
-                        stg_sub_seq
-                        ORDER BY stg_loadts
-                    ) AS stg_lag_count
-                FROM stage_cte
-            ) t
-        WHERE (
-                stg_hdiff <> stg_lag_hdiff
-                OR stg_count <> stg_lag_count
+        SELECT stg_id, stg_loadts
+        FROM block_cte
+        WHERE
+            -- блок изменился относительно предыдущего батча в stage
+            stg_block_hash <> lag_block_hash
+            -- первый батч для ключа в stage: сравнение с активным блоком в sat
+            -- вставка только при отличии или если ключа в sat ещё нет
+            OR (
+                lag_block_hash IS NULL
+                AND (sat_block_hash IS NULL OR stg_block_hash <> sat_block_hash)
             )
-            
-            OR stg_lag_hdiff IS null
-
     )
 
-    SELECT DISTINCT 
-        stg_id as hk_dv_hub_fact_journal,
-        stg_recsource as recsource,
-        stg_loadts as loadts,
-        stg_hdiff as hdiff_dv_msat_fact_journal_time,
-        stg_sub_seq as sub_seq,
+    SELECT DISTINCT
+        stg_id        AS hk_dv_hub_fact_journal,
+        stg_recsource AS recsource,
+        stg_loadts    AS loadts,
+        stg_hdiff     AS hdiff_dv_msat_fact_journal_time,
+        sub_seq,
         период,
 	id_записи,
 	пользователь_value,
 	пользователь_name,
 	время_сек
-    FROM stage_cte s
-    WHERE EXISTS(
-            SELECT 1
-            FROM stage_for_insert si
-            WHERE si.stg_id = s.stg_id
-                AND si.stg_loadts = s.stg_loadts
-        )
-    ORDER BY stg_loadts,
-        stg_id,
-        stg_sub_seq
+    FROM stage_with_seq s
+    WHERE EXISTS (
+        SELECT 1
+        FROM stage_for_insert si
+        WHERE si.stg_id = s.stg_id
+            AND si.stg_loadts = s.stg_loadts
+    )
+    ORDER BY stg_loadts, stg_id, sub_seq
+
+{% else %}
+    WITH stage_raw AS (
+        SELECT
+            s.hk_dv_hub_fact_journal,
+            s.hdiff_dv_msat_fact_journal_time,
+            s.loadts,
+            s.recsource,
+            период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
+        FROM {{ ref('stg_1c_journal_time') }} s
+    ),
+    stage_block_hashes AS (
+        SELECT
+            hk_dv_hub_fact_journal,
+            loadts,
+            COUNT(*)                                                                AS stg_count,
+            string_agg(hdiff_dv_msat_fact_journal_time::varchar, ',' ORDER BY hdiff_dv_msat_fact_journal_time)            AS stg_block_hash
+        FROM stage_raw
+        GROUP BY hk_dv_hub_fact_journal, loadts
+    ),
+    stage_with_seq AS (
+        SELECT
+            hk_dv_hub_fact_journal  AS stg_id,
+            hdiff_dv_msat_fact_journal_time      AS stg_hdiff,
+            loadts            AS stg_loadts,
+            recsource         AS stg_recsource,
+            row_number() OVER (
+                PARTITION BY hk_dv_hub_fact_journal, loadts
+                ORDER BY hdiff_dv_msat_fact_journal_time
+            ) AS sub_seq,
+            stg_count,
+            stg_block_hash,
+            период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
+        FROM (
+            SELECT r.*, h.stg_count, h.stg_block_hash
+            FROM stage_raw r
+            JOIN stage_block_hashes h
+                ON h.hk_dv_hub_fact_journal = r.hk_dv_hub_fact_journal
+                AND h.loadts = r.loadts
+        ) t
+    ),
+    block_cte AS (
+        SELECT
+            hk_dv_hub_fact_journal    AS stg_id,
+            loadts              AS stg_loadts,
+            stg_block_hash,
+            lag(stg_block_hash) OVER (
+                PARTITION BY hk_dv_hub_fact_journal
+                ORDER BY loadts
+            ) AS lag_block_hash
+        FROM stage_block_hashes
+    ),
+    stage_for_insert AS (
+        SELECT stg_id, stg_loadts
+        FROM block_cte
+        WHERE stg_block_hash <> lag_block_hash
+            OR lag_block_hash IS NULL
+    )
+
+    SELECT DISTINCT
+        stg_id        AS hk_dv_hub_fact_journal,
+        stg_recsource AS recsource,
+        stg_loadts    AS loadts,
+        stg_hdiff     AS hdiff_dv_msat_fact_journal_time,
+        sub_seq,
+        период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
+    FROM stage_with_seq s
+    WHERE EXISTS (
+        SELECT 1
+        FROM stage_for_insert si
+        WHERE si.stg_id = s.stg_id
+            AND si.stg_loadts = s.stg_loadts
+    )
+    ORDER BY stg_loadts, stg_id, sub_seq
 {% endif %}
