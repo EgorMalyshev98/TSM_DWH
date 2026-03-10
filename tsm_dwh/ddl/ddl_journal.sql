@@ -161,8 +161,8 @@ CREATE TABLE src_norm_workload(
 );
 
 
-DROP TABLE IF EXISTS src_norm_workload CASCADE;
-CREATE TABLE src_norm_workload(
+DROP TABLE IF EXISTS src_journal_time CASCADE;
+CREATE TABLE src_journal_time(
 	id serial primary key,
 	--
 	recsource varchar,
