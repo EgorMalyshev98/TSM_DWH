@@ -1,0 +1,22 @@
+stage: |
+
+    {{{{
+        config(
+            tags=['stage', '{source}']
+        )
+    }}}}
+
+    SELECT
+        recsource,
+        loadts,
+        hkcode,
+        {target_columns}
+    FROM (
+        SELECT
+            recsource,
+            loadts,
+            '{hkcode}',
+            {select_cols}
+        FROM
+            {{{{ source('public', '{src_table}') }}}}
+    ) AS tmp (recsource, loadts, hkcode, {target_columns})

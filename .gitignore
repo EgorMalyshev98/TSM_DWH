@@ -2,6 +2,7 @@ __pycache__
 
 .env
 .vscode
+.claude
 .user.yml
 
 venv
@@ -11,3 +12,4 @@ logs
 grants.sql
 
 dbt_packages
+dbt_internal_packages/

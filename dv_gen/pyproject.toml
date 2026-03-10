@@ -8,4 +8,4 @@ packages = { find = { where = ["src"] } }
 
 
 [project.scripts]
-dv_gen = "__main__:main"
+dvgen = "dv_gen_cli:main"

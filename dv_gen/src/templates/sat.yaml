@@ -1,0 +1,91 @@
+sat: |
+    {{{{
+        config(
+            materialized='incremental',
+            incremental_strategy='append',
+            tags=['sat', '{source}']
+        )
+    }}}}
+
+
+    {{% if is_incremental() %}}
+        WITH active_sat AS (
+        SELECT DISTINCT ON ({hk_parent_name}) {hk_parent_name}, {hdiff_name}, loadts
+        FROM {{{{this}}}}
+        ORDER BY {hk_parent_name}, loadts DESC)
+
+        , max_load AS (
+        SELECT max(loadts) AS max_loadts
+        FROM {{{{this}}}}
+        )
+        , stage_cte AS (
+
+            SELECT
+            s.{hk_parent_name},
+            s.{hdiff_name},
+            s.loadts,
+            s.recsource,
+            lag(s.{hdiff_name}) over(PARTITION BY s.{hk_parent_name} ORDER BY s.loadts) AS lag_hdiff,
+            a.loadts AS sat_loadts,
+            a.{hdiff_name} AS sat_hdiff,
+            {stg_cols}
+
+        FROM
+            (SELECT
+                s.{hk_parent_name},
+                s.{hdiff_name},
+                s.loadts,
+                s.recsource,
+                {stg_cols}
+            FROM {{{{ ref('{stg_table}') }}}} s
+            CROSS JOIN max_load ml
+            WHERE s.loadts > ml.max_loadts
+            ) s
+        LEFT JOIN active_sat a ON a.{hk_parent_name} = s.{hk_parent_name})
+
+        SELECT DISTINCT
+            {hk_parent_name},
+            recsource,
+            loadts,
+            {hdiff_name},
+            {stg_cols}
+        FROM stage_cte
+        WHERE
+            {hdiff_name} <> lag_hdiff
+                OR ({hdiff_name} <> sat_hdiff AND lag_hdiff IS NULL)
+                OR sat_hdiff IS NULL
+        ORDER BY loadts
+
+    {{% else %}}
+        WITH stage_cte AS (
+            SELECT
+            s.{hk_parent_name},
+            s.{hdiff_name},
+            s.loadts,
+            s.recsource,
+            lag(s.{hdiff_name}) over(PARTITION BY s.{hk_parent_name} ORDER BY s.loadts) AS lag_hdiff,
+            {stg_cols}
+
+        FROM
+            (SELECT
+                s.{hk_parent_name},
+                s.{hdiff_name},
+                s.loadts,
+                s.recsource,
+                {stg_cols}
+            FROM {{{{ ref('{stg_table}') }}}} s
+            ) s
+        )
+
+        SELECT DISTINCT
+            {hk_parent_name},
+            recsource,
+            loadts,
+            {hdiff_name},
+            {stg_cols}
+        FROM stage_cte
+        WHERE
+            {hdiff_name} <> lag_hdiff
+            OR lag_hdiff IS NULL
+        ORDER BY loadts
+    {{% endif %}}
