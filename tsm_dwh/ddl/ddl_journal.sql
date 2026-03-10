@@ -51,6 +51,7 @@ CREATE TABLE src_works(
 	"СтруктураРаботИдентификатор" varchar,
 	"ОбъемРаботы" numeric,
 	"Примечание" varchar,
+	"СтруктураРаботУникальныйКод" varchar,
 	"СтруктураРаботНомерКВ" varchar,
 	"СтруктураРаботПометкаУдаления" bool,
 	"ВидРаботУровеньОперации" varchar,
@@ -105,6 +106,8 @@ CREATE TABLE src_tech(
 	"Аналитика_value" uuid,
 	"Аналитика_codе" varchar,
 	"Аналитика_name" varchar,
+	"ГосНомер" varchar,
+	"ГаражныйНомер" varchar,
 	"Контрагент_value" varchar,
 	"Контрагент_codе" varchar,
 	"Контрагент_name" varchar
@@ -120,6 +123,7 @@ CREATE TABLE src_materials(
 	"КлючСвязи" uuid,
 	"НомерСтроки" int,
 	"Примечание" varchar,
+	"ЕдиницаИзмерения" varchar,
 	"ОбъемМатериала" numeric,
 	"Ресурс_value" uuid,
 	"Ресурс_codе" varchar,
@@ -156,6 +160,21 @@ CREATE TABLE src_norm_workload(
 	"Аналитика_name" varchar
 );
 
+
+DROP TABLE IF EXISTS src_norm_workload CASCADE;
+CREATE TABLE src_norm_workload(
+	id serial primary key,
+	--
+	recsource varchar,
+	loadts timestamptz,
+	--
+	"ЖУФВР_value" varchar,
+	"Период" timestamptz,
+	"UIDЗаписи" uuid,
+	"Пользователь_value" uuid,
+	"Пользователь_name" varchar,
+	"ДельтаВремениСек" numeric
+);
 
 	
 	

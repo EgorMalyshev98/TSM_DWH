@@ -24,6 +24,8 @@ SELECT
 	ресурс_name,
 	аналитика_codе,
 	аналитика_name,
+	гос_номер,
+	гараж_номер,
 	контрагент_value,
 	контрагент_codе,
 	контрагент_name
@@ -37,7 +39,7 @@ FROM (
 	digest('default' || '|' || LOWER(TRIM(COALESCE("Аналитика_value"::varchar, '-1')::varchar)), 'sha1') as hk_dv_hub_tech,
 	LOWER(TRIM(COALESCE("Аналитика_value"::varchar, '-1')::varchar)),
 	digest('default' || '|' || LOWER(TRIM(COALESCE("КлючСвязи"::varchar, '-1')::varchar)) || '|' || LOWER(TRIM(COALESCE("Аналитика_value"::varchar, '-1')::varchar)), 'sha1') as hk_dv_lnk_fact_work_tech,
-	digest(TRIM(COALESCE("Примечание"::varchar, 'N\A')) || '|' || TRIM(COALESCE("ГосНомерТехникаНеНайдена"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Количество"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Часы"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_value"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_name"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Аналитика_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Аналитика_name"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_value"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_name"::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_fact_tech,
+	digest(TRIM(COALESCE("Примечание"::varchar, 'N\A')) || '|' || TRIM(COALESCE("ГосНомерТехникаНеНайдена"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Количество"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Часы"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_value"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Ресурс_name"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Аналитика_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Аналитика_name"::varchar, 'N\A')) || '|' || TRIM(COALESCE("ГосНомер"::varchar, 'N\A')) || '|' || TRIM(COALESCE("ГаражныйНомер"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_value"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_codе"::varchar, 'N\A')) || '|' || TRIM(COALESCE("Контрагент_name"::varchar, 'N\A')), 'sha1') as hdiff_dv_sat_fact_tech,
 	"Примечание"::varchar,
 	"ГосНомерТехникаНеНайдена"::varchar,
 	"Количество"::int,
@@ -47,6 +49,8 @@ FROM (
 	"Ресурс_name"::varchar,
 	"Аналитика_codе"::varchar,
 	"Аналитика_name"::varchar,
+	"ГосНомер"::varchar,
+	"ГаражныйНомер"::varchar,
 	"Контрагент_value"::varchar,
 	"Контрагент_codе"::varchar,
 	"Контрагент_name"::varchar
@@ -67,6 +71,8 @@ FROM (
 	ресурс_name,
 	аналитика_codе,
 	аналитика_name,
+	гос_номер,
+	гараж_номер,
 	контрагент_value,
 	контрагент_codе,
 	контрагент_name)

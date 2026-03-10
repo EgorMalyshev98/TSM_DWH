@@ -11,13 +11,13 @@
     SELECT *
     FROM (
         SELECT 
-            hk_dv_hub_fact_work,
-            hdiff_dv_msat_fact_materials,
+            hk_dv_hub_fact_journal,
+            hdiff_dv_msat_fact_journal_time,
             loadts,
             sub_seq,
-            COUNT(*) OVER (PARTITION BY hk_dv_hub_fact_work, loadts) AS cnt,
+            COUNT(*) OVER (PARTITION BY hk_dv_hub_fact_journal, loadts) AS cnt,
             rank() OVER (
-                PARTITION BY hk_dv_hub_fact_work
+                PARTITION BY hk_dv_hub_fact_journal
                 ORDER BY loadts DESC
             ) AS rnk
         FROM {{ this }}
@@ -38,13 +38,11 @@
             stg_loadts,
             stg_recsource,
             stg_sub_seq,
-            номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name,
+            период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек,
             COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
             lag(stg_hdiff) over(
                 PARTITION BY stg_id, stg_sub_seq
@@ -57,19 +55,17 @@
                 sat_rnk
         FROM (
                 SELECT 
-                    s.hk_dv_hub_fact_work,
-                    s.hdiff_dv_msat_fact_materials,
+                    s.hk_dv_hub_fact_journal,
+                    s.hdiff_dv_msat_fact_journal_time,
                     s.loadts,
                     s.recsource,
-                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_work, s.loadts) AS sub_seq,
-                    номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name
-                FROM {{ ref('stg_1c_materials') }} s
+                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_journal, s.loadts) AS sub_seq,
+                    период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
+                FROM {{ ref('stg_1c_journal_time') }} s
                     CROSS JOIN (
                         SELECT max(loadts) AS max_loadts
                         FROM {{ this }}
@@ -118,18 +114,16 @@
     )
 
     SELECT DISTINCT 
-        stg_id as hk_dv_hub_fact_work,
+        stg_id as hk_dv_hub_fact_journal,
         stg_recsource as recsource,
         stg_loadts as loadts,
-        stg_hdiff as hdiff_dv_msat_fact_materials,
+        stg_hdiff as hdiff_dv_msat_fact_journal_time,
         stg_sub_seq as sub_seq,
-        номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name
+        период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
     FROM stage_cte s
     WHERE EXISTS(
             SELECT 1
@@ -149,13 +143,11 @@
             stg_loadts,
             stg_recsource,
             stg_sub_seq,
-            номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name,
+            период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек,
             COUNT(*) OVER (PARTITION BY stg_id, stg_loadts) AS stg_count,
             lag(stg_hdiff) over(
                 PARTITION BY stg_id, stg_sub_seq
@@ -163,19 +155,17 @@
             ) AS stg_lag_hdiff
         FROM (
                 SELECT 
-                    s.hk_dv_hub_fact_work,
-                    s.hdiff_dv_msat_fact_materials,
+                    s.hk_dv_hub_fact_journal,
+                    s.hdiff_dv_msat_fact_journal_time,
                     s.loadts,
                     s.recsource,
-                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_work, s.loadts) AS sub_seq,
-                    номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name
-                FROM {{ ref('stg_1c_materials') }} s
+                    row_number() OVER(PARTITION BY s.hk_dv_hub_fact_journal, s.loadts) AS sub_seq,
+                    период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
+                FROM {{ ref('stg_1c_journal_time') }} s
             ) s (stg_id, stg_hdiff, stg_loadts, stg_recsource, stg_sub_seq)
     ),
     stage_for_insert AS (
@@ -205,18 +195,16 @@
     )
 
     SELECT DISTINCT 
-        stg_id as hk_dv_hub_fact_work,
+        stg_id as hk_dv_hub_fact_journal,
         stg_recsource as recsource,
         stg_loadts as loadts,
-        stg_hdiff as hdiff_dv_msat_fact_materials,
+        stg_hdiff as hdiff_dv_msat_fact_journal_time,
         stg_sub_seq as sub_seq,
-        номер_строки,
-	примечание,
-	объем_материала,
-	ед_изм,
-	ресурс_value,
-	ресурс_codе,
-	ресурс_name
+        период,
+	id_записи,
+	пользователь_value,
+	пользователь_name,
+	время_сек
     FROM stage_cte s
     WHERE EXISTS(
             SELECT 1

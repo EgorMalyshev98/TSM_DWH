@@ -279,4 +279,5 @@ sources:
             data_type: numeric
           - name: план суточный
             data_type: numeric
+      - name: src_journal_time
 
