@@ -5,8 +5,8 @@ from pathlib import Path
 
 from loguru import logger
 
-from config import load_map_settings, TEMPLATES
-from data_vault_generator import DataVaultGenerator
+from config import load_map_settings
+from data_vault_generator import ALL_MODEL_TYPES, DataVaultGenerator
 
 
 def _dbt_exe() -> Path:
@@ -59,6 +59,17 @@ def main():
         action="store_true",
         help="Skip generating sources.yml via dbt macro",
     )
+    parser.add_argument(
+        "--model-type",
+        nargs="+",
+        metavar="TYPE",
+        choices=sorted(ALL_MODEL_TYPES),
+        help=(
+            "Model types to generate (default: all). "
+            f"Choices: {', '.join(sorted(ALL_MODEL_TYPES))}. "
+            "Example: --model-type hub sat"
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -77,8 +88,10 @@ def main():
 
     metadata = load_map_settings(metadata_path)
 
+    model_types = set(args.model_type) if args.model_type else None
+
     if not args.no_sources:
         run_dbt_macro_gen_sources(dv_source_path, target_dir)
 
-    DataVaultGenerator(stg_dir, dv_dir, metadata).run()
+    DataVaultGenerator(stg_dir, dv_dir, metadata, model_types=model_types).run()
     logger.info("data vault generated")

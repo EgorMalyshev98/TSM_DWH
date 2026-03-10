@@ -18,12 +18,16 @@ class DataVaultConfig:
     col_process_template = "{proc_func}({col_name})"
 
 
+ALL_MODEL_TYPES = {"src", "hub", "link", "sat", "msat", "esat"}
+
+
 class DataVaultGenerator:
     def __init__(self,
                  stg_dir,
                  dv_dir,
                  metadata,
                  dv_conf = DataVaultConfig,
+                 model_types: set | None = None,
                  ):
         
         # self.loadts = datetime.now(timezone.utc).isoformat()
@@ -32,6 +36,7 @@ class DataVaultGenerator:
         self.dv_dir = dv_dir
         self.stg_cols_dict = OrderedDict()
         self.cnf = dv_conf
+        self.model_types: set = model_types if model_types is not None else ALL_MODEL_TYPES
 
     def hub_handle(self, table_name: str, table_group: pd.DataFrame, stg_table_name: str, source: str):
         hk_name = self.cnf.hk_prefix + table_name
@@ -242,38 +247,36 @@ class DataVaultGenerator:
             src_table = stg_table_group["source_table"].to_numpy()[0]
             source = stg_table_group["record_source"].to_numpy()[0]
             
-            
             for target_table_name, target_table_group in stg_table_group.groupby("target_table"):
+                target_type = target_table_group["target_table_type"].to_numpy()[0]
                 stmt = self.process_target_tabels(target_table_name,
                                            target_table_group,
                                            stg_table_name,
                                            src_columns,
                                            source)
-                
-                fp = (self.dv_dir / target_table_name).with_suffix('.sql')
-                
-                with open(fp, 'w', encoding='utf-8') as f:
-                    f.write(stmt)
 
-            stg_col_names = ",\n\t".join(self.stg_cols_dict.keys())
-            stg_col_select = ",\n\t".join(self.stg_cols_dict.values())
-            # src_str_columns = ",\n\t".join(src_columns)
-            stg_format_map = {
-                "hkcode": "default",
-                "target_table": stg_table_name,
-                "target_columns": stg_col_names,
-                "select_cols": stg_col_select,
-                # "src_columns": src_str_columns,
-                "src_table": src_table,
-                "source": source
-                }
-            
-            stage_sql_tmplate = TEMPLATES["insert"]["stage"]
-            stage_sql = stage_sql_tmplate.format_map(stg_format_map)            
-            fp = (self.stg_dir / stg_table_name).with_suffix('.sql')
-            
-            with open(fp, 'w', encoding='utf-8') as f:
-                f.write(stage_sql)
+                if target_type in self.model_types:
+                    fp = (self.dv_dir / target_table_name).with_suffix('.sql')
+                    with open(fp, 'w', encoding='utf-8') as f:
+                        f.write(stmt)
+
+            if "src" in self.model_types:
+                stg_col_names = ",\n\t".join(self.stg_cols_dict.keys())
+                stg_col_select = ",\n\t".join(self.stg_cols_dict.values())
+                stg_format_map = {
+                    "hkcode": "default",
+                    "target_table": stg_table_name,
+                    "target_columns": stg_col_names,
+                    "select_cols": stg_col_select,
+                    "src_table": src_table,
+                    "source": source
+                    }
+
+                stage_sql_tmplate = TEMPLATES["insert"]["stage"]
+                stage_sql = stage_sql_tmplate.format_map(stg_format_map)
+                fp = (self.stg_dir / stg_table_name).with_suffix('.sql')
+                with open(fp, 'w', encoding='utf-8') as f:
+                    f.write(stage_sql)
  
             self.stg_cols_dict = OrderedDict()
             
