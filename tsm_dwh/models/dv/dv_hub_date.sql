@@ -18,8 +18,7 @@ FROM {{ ref('stg_pu_mat_supply') }} stg
 where not exists (
     select 1
     from {{this}} target
-    where 
-        target.hk_dv_hub_date = stg.hk_dv_hub_date 
+    where
+        target.hk_dv_hub_date = stg.hk_dv_hub_date
 )
 {% endif %}
-        

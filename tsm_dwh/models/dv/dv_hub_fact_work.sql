@@ -18,8 +18,7 @@ FROM {{ ref('stg_1c_works') }} stg
 where not exists (
     select 1
     from {{this}} target
-    where 
-        target.hk_dv_hub_fact_work = stg.hk_dv_hub_fact_work 
+    where
+        target.hk_dv_hub_fact_work = stg.hk_dv_hub_fact_work
 )
 {% endif %}
-        

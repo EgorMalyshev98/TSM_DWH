@@ -33,6 +33,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   +grants: 
     select: ['viewer', 'redactor']
+    insert: ['redactor']
+    update: ['redactor']
+    delete: ['redactor']
 #     # Config indicated by + and applies to all files under models/example/
 #     example:
 #       +materialized: view

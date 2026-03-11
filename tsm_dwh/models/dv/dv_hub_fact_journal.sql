@@ -12,14 +12,13 @@ SELECT distinct on (bk_жуфвр_uuid)
         recsource,
         loadts,
         bk_жуфвр_uuid
-FROM {{ ref('stg_1c_journal_time') }} stg
+FROM {{ ref('stg_1c_journal') }} stg
 
 {% if is_incremental() %}
 where not exists (
     select 1
     from {{this}} target
-    where 
-        target.hk_dv_hub_fact_journal = stg.hk_dv_hub_fact_journal 
+    where
+        target.hk_dv_hub_fact_journal = stg.hk_dv_hub_fact_journal
 )
 {% endif %}
-        
