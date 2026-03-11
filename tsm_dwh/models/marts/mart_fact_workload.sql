@@ -1,20 +1,60 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key=['hk_dv_hub_fact_work', 'hk_dv_hub_tech'],
+        incremental_strategy='merge',
+        on_schema_change='sync_all_columns',
+        pre_hook="SET LOCAL enable_nestloop = off",
+        tags=['mart'],
+        indexes=[
+            {
+                'columns': ['hk_dv_hub_fact_work', 'hk_dv_hub_tech'],
+                'unique': true
+            },
+            {
+                'columns': ['дата']
+            },
+            {
+                'columns': ['_dbt_loaded_at']
+            }
+        ]
     )
 }}
 
+WITH
 
-WITH active_lnk_fact_work_tech AS (
+{% if is_incremental() %}
+changed_works AS (
+    SELECT hk_dv_hub_fact_work
+    FROM {{ ref('dv_sat_fact_work') }}
+    WHERE loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+
+    UNION
+
+    SELECT lnk.hk_dv_hub_fact_work
+    FROM {{ ref('dv_lnk_fact_journal_fact_work') }} lnk
+    JOIN {{ ref('dv_sat_fact_journal') }} j USING(hk_dv_hub_fact_journal)
+    WHERE j.loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+
+    UNION
+
+    SELECT lnk.hk_dv_hub_fact_work
+    FROM {{ ref('dv_lnk_fact_work_tech') }} lnk
+    JOIN {{ ref('dv_sat_fact_tech') }} t USING(hk_dv_lnk_fact_work_tech)
+    WHERE t.loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+),
+{% endif %}
+
+active_lnk_fact_work_tech AS (
 	SELECT hk_dv_lnk_fact_work_tech
 	FROM (
-		SELECT 
+		SELECT
 			hk_dv_lnk_fact_work_tech,
 			end_date,
 			ROW_NUMBER() OVER(PARTITION BY hk_dv_lnk_fact_work_tech ORDER BY loadts desc) rn
 		FROM {{ ref('dv_esat_fact_work_tech') }}) t
 	WHERE rn = 1 AND end_date IS NULL)
-	
+
 , active_tech AS MATERIALIZED(
 SELECT
 	lnk.hk_dv_lnk_fact_work_tech,
@@ -22,43 +62,48 @@ SELECT
 	lnk.hk_dv_hub_tech,
 
 	hub.bk_ресурс_uuid,
-	
+
 	sat.госномер_техника_не_найдена,
 	sat.количество,
 	sat.часы,
 	sat.ресурс_name,
 	sat.аналитика_name,
-	sat.контрагент_name
+	sat.контрагент_name,
+	sat.max_loadts
 
-FROM 
+FROM
 	(SELECT
 		hk_dv_lnk_fact_work_tech,
-		
+
 		госномер_техника_не_найдена,
 		количество,
 		часы,
 		ресурс_name,
 		аналитика_name,
 		контрагент_name,
-		
+
+		MAX(loadts) OVER(PARTITION BY hk_dv_lnk_fact_work_tech) AS max_loadts,
 		ROW_NUMBER() OVER(PARTITION BY hk_dv_lnk_fact_work_tech ORDER BY loadts desc) rn
-		
+
 	FROM {{ ref('dv_sat_fact_tech') }} sat) sat
-	
+
 JOIN active_lnk_fact_work_tech alnk USING(hk_dv_lnk_fact_work_tech)
 JOIN {{ ref('dv_lnk_fact_work_tech') }} lnk USING(hk_dv_lnk_fact_work_tech)
 JOIN {{ ref('dv_hub_tech') }} hub USING(hk_dv_hub_tech)
 
 WHERE rn = 1 AND bk_ресурс_uuid != '-1'
+{% if is_incremental() %}
+  AND lnk.hk_dv_hub_fact_work IN (SELECT hk_dv_hub_fact_work FROM changed_works)
+{% endif %}
 )
 
 
 , active_journal AS (
 	SELECT *
 	FROM
-		(SELECT 
+		(SELECT
 			hk_dv_hub_fact_journal,
-			
+
 			версия_жуфвр_name,
 			дата,
 			территория_name,
@@ -69,9 +114,10 @@ WHERE rn = 1 AND bk_ресурс_uuid != '-1'
 			направление_деятельности_name,
 			проведен,
 			пометка_удаления,
-			
+
+			MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal) AS max_loadts,
 			row_number() OVER(PARTITION BY hk_dv_hub_fact_journal ORDER BY loadts DESC) rn
-			
+
 		FROM {{ ref('dv_sat_fact_journal') }} j
 		WHERE проведен is TRUE AND пометка_удаления is FALSE
 		) t
@@ -83,7 +129,7 @@ SELECT *
 	FROM (
 	SELECT
 		w.hk_dv_hub_fact_work,
-		
+
 		w.идентификатор,
 		w.кв,
 		w.тип_spider,
@@ -91,19 +137,24 @@ SELECT *
 		w.видработ_name,
 		w.объем_работы,
 		w.пометка_удаления,
-		
-		row_number() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) rn
-		
+
+		MAX(w.loadts) OVER(PARTITION BY w.hk_dv_hub_fact_work) AS max_loadts,
+		row_number() OVER(PARTITION BY w.hk_dv_hub_fact_work ORDER BY w.loadts DESC) rn
+
 	FROM {{ ref('dv_sat_fact_work') }} w
 WHERE пометка_удаления IS FALSE
 ) t
-WHERE t.rn = 1)
+WHERE t.rn = 1
+{% if is_incremental() %}
+  AND hk_dv_hub_fact_work IN (SELECT hk_dv_hub_fact_work FROM changed_works)
+{% endif %}
+)
 
 , active_fact_works AS MATERIALIZED
 (SELECT
 	w.hk_dv_hub_fact_work,
 	j.hk_dv_hub_fact_journal,
-	
+
 	j.версия_жуфвр_name,
 	j.дата,
 	j.территория_name,
@@ -111,7 +162,7 @@ WHERE t.rn = 1)
 	j.смена_name,
 	j.ответственный_name,
 	j.направление_деятельности_name,
-	
+
 	w.идентификатор,
 	w.кв,
 	w.тип_spider,
@@ -120,26 +171,28 @@ WHERE t.rn = 1)
 	w.объем_работы,
 
     r.наименование as объект,
-  	
+
     (nw.нормируемая IS NOT NULL) AS нормируемая,
-	
+
 	w.пометка_удаления AS работа_пометка_удаления,
 	j.проведен,
-	j.пометка_удаления AS журнал_пометка_удаления
-	
+	j.пометка_удаления AS журнал_пометка_удаления,
+
+	GREATEST(w.max_loadts, j.max_loadts) AS max_loadts
+
 FROM sat_work w
 JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
 JOIN active_journal j USING(hk_dv_hub_fact_journal)
 JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
 LEFT JOIN (
-	SELECT DISTINCT 
+	SELECT DISTINCT
 		тип_spider,
 		TRUE::boolean AS нормируемая
 	FROM dv_msat_norm_workload
     JOIN sat_work USING(hk_dv_hub_fact_work)
 ) nw USING(тип_spider)
 
-WHERE 
+WHERE
 	j.проведен IS TRUE
 	AND j.пометка_удаления IS FALSE
 	AND w.пометка_удаления IS FALSE
@@ -152,7 +205,7 @@ SELECT
     encode(t.hk_dv_hub_fact_work, 'hex') as hk_dv_hub_fact_work,
     encode(t.hk_dv_hub_tech, 'hex') as hk_dv_hub_tech,
 	t.bk_ресурс_uuid,
-	
+
 	t.госномер_техника_не_найдена,
 	t.количество,
 	t.часы,
@@ -174,8 +227,9 @@ SELECT
 	w.видработ_name,
 	w.объем_работы,
     w.объект,
-    w.нормируемая
-    
+    w.нормируемая,
+
+    GREATEST(t.max_loadts, w.max_loadts) AS _dbt_loaded_at
+
 FROM active_tech t
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
-

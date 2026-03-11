@@ -4,6 +4,8 @@
         unique_key=['направление_деятельности_name', 'ресурс_name', 'ресурс_codе', 'дата', 'смена_name'],
         incremental_strategy='merge',
         on_schema_change='sync_all_columns',
+        pre_hook="SET LOCAL enable_nestloop = off",
+        tags=['mart'],
         indexes=[
             {
                 'columns': ['направление_деятельности_name', 'ресурс_name', 'ресурс_codе', 'дата', 'смена_name'],
@@ -11,6 +13,9 @@
             },
             {
                 'columns': ['дата']
+            },
+            {
+                'columns': ['_dbt_loaded_at']
             }
         ]
     )

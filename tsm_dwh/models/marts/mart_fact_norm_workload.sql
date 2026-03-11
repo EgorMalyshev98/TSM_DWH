@@ -1,12 +1,52 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key=['hk_dv_hub_fact_work', 'аналитика_value', 'наемный_ресурс', 'ресурс_spider_name', 'ресурс_spider_codе', 'ключевой_ресурс_value', 'ключевой_ресурс_name', 'несколько_ключевых_ресурсов'],
+        incremental_strategy='merge',
+        on_schema_change='sync_all_columns',
+        pre_hook="SET LOCAL enable_nestloop = off",
+        tags=['mart'],
+        indexes=[
+            {
+                'columns': ['hk_dv_hub_fact_work', 'аналитика_value', 'наемный_ресурс', 'ресурс_spider_name', 'ресурс_spider_codе', 'ключевой_ресурс_value', 'ключевой_ресурс_name', 'несколько_ключевых_ресурсов'],
+                'unique': true
+            },
+            {
+                'columns': ['дата']
+            },
+            {
+                'columns': ['_dbt_loaded_at']
+            }
+        ]
     )
 }}
 
 -- нормативные работы с трудоемкостью по ресурсам
 
-WITH active_norm_wld AS (
+WITH
+
+{% if is_incremental() %}
+changed_works AS (
+    SELECT hk_dv_hub_fact_work
+    FROM {{ ref('dv_msat_norm_workload') }}
+    WHERE loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+
+    UNION
+
+    SELECT hk_dv_hub_fact_work
+    FROM {{ ref('dv_sat_fact_work') }}
+    WHERE loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+
+    UNION
+
+    SELECT lnk.hk_dv_hub_fact_work
+    FROM {{ ref('dv_lnk_fact_journal_fact_work') }} lnk
+    JOIN {{ ref('dv_sat_fact_journal') }} j USING(hk_dv_hub_fact_journal)
+    WHERE j.loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+),
+{% endif %}
+
+active_norm_wld AS (
 
 SELECT
 	hk_dv_hub_fact_work,
@@ -19,14 +59,15 @@ SELECT
 	несколько_ключевых_ресурсов,
 
 	sum(трудоемкость_нормативная) AS трудоемкость_нормативная,
-	sum(трудоемкость_фактическая) AS трудоемкость_фактическая
-	
+	sum(трудоемкость_фактическая) AS трудоемкость_фактическая,
+	MAX(max_loadts) AS max_loadts
+
 FROM (
 SELECT
 	hk_dv_hub_fact_work,
 	-- для join с bk LOWER(TRIM(COALESCE(аналитика_value::varchar, '-1'))) AS аналитика_value,
 	аналитика_value,
-	
+
 	трудоемкость_нормативная,
 	трудоемкость_фактическая,
 	наемный_ресурс,
@@ -35,13 +76,17 @@ SELECT
 	ключевой_ресурс_value,
 	ключевой_ресурс_name,
 	несколько_ключевых_ресурсов,
-	
+
+	MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_work) AS max_loadts,
 	RANK() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) rk
-	
+
 FROM {{ ref('dv_msat_norm_workload') }}
-	) t 
+	) t
 WHERE rk = 1
-GROUP BY 
+{% if is_incremental() %}
+  AND hk_dv_hub_fact_work IN (SELECT hk_dv_hub_fact_work FROM changed_works)
+{% endif %}
+GROUP BY
 	hk_dv_hub_fact_work,
 	аналитика_value,
 	наемный_ресурс,
@@ -56,9 +101,9 @@ GROUP BY
 , active_journal AS (
 	SELECT *
 	FROM
-		(SELECT 
+		(SELECT
 			hk_dv_hub_fact_journal,
-			
+
 			версия_жуфвр_name,
 			дата,
 			территория_name,
@@ -75,9 +120,10 @@ GROUP BY
 				WHEN версия_жуфвр_name = 'Версия 01.10.2025'
 				THEN 4
 			END AS енрп_версия,
-			
+
+			MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal) AS max_loadts,
 			row_number() OVER(PARTITION BY hk_dv_hub_fact_journal ORDER BY loadts DESC) rn
-			
+
 		FROM {{ ref('dv_sat_fact_journal') }} j
 		WHERE проведен is TRUE AND пометка_удаления is FALSE
 		) t
@@ -89,7 +135,7 @@ SELECT *
 	FROM (
 	SELECT
 		w.hk_dv_hub_fact_work,
-		
+
 		w.идентификатор,
 		w.кв,
 		w.тип_spider,
@@ -97,19 +143,24 @@ SELECT *
 		w.видработ_name,
 		w.объем_работы,
 		w.пометка_удаления,
-		
-		row_number() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) rn
-		
+
+		MAX(w.loadts) OVER(PARTITION BY w.hk_dv_hub_fact_work) AS max_loadts,
+		row_number() OVER(PARTITION BY w.hk_dv_hub_fact_work ORDER BY w.loadts DESC) rn
+
 	FROM {{ ref('dv_sat_fact_work') }} w
 WHERE пометка_удаления IS FALSE
 ) t
-WHERE t.rn = 1)
+WHERE t.rn = 1
+{% if is_incremental() %}
+  AND hk_dv_hub_fact_work IN (SELECT hk_dv_hub_fact_work FROM changed_works)
+{% endif %}
+)
 
 , active_fact_works AS MATERIALIZED
 (SELECT
 	w.hk_dv_hub_fact_work,
 	j.hk_dv_hub_fact_journal,
-	
+
 	j.версия_жуфвр_name,
 	j.дата,
 	j.территория_name,
@@ -118,7 +169,7 @@ WHERE t.rn = 1)
 	j.ответственный_name,
 	j.направление_деятельности_name,
 	j.енрп_версия,
-	
+
 	w.идентификатор,
 	w.кв,
 	w.тип_spider,
@@ -127,17 +178,19 @@ WHERE t.rn = 1)
 	w.объем_работы,
 
     r.наименование as объект,
-	
+
 	w.пометка_удаления AS работа_пометка_удаления,
 	j.проведен,
-	j.пометка_удаления AS журнал_пометка_удаления
-	
+	j.пометка_удаления AS журнал_пометка_удаления,
+
+	GREATEST(w.max_loadts, j.max_loadts) AS max_loadts
+
 FROM sat_work w
 JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
 JOIN active_journal j USING(hk_dv_hub_fact_journal)
 JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
 
-WHERE 
+WHERE
 	j.проведен IS TRUE
 	AND j.пометка_удаления IS FALSE
 	AND w.пометка_удаления IS FALSE
@@ -178,7 +231,7 @@ SELECT
 	a.enrp_version,
 	a.unit,
 	a.work_group,
-	
+
 -- абс % отклонения трудоемкости от нормы
 	abs(
 		((sum(nw.трудоемкость_фактическая) OVER(PARTITION BY hk_dv_hub_fact_work)
@@ -211,7 +264,7 @@ SELECT
 
 --	расчетный объем - объем, распределенный по ключевым ресурсам в каждой работе,
 --	учитывая их фактическую трудоемкость и производительность
-	
+
     ROUND(
         объем_работы
         *
@@ -230,22 +283,20 @@ SELECT
         ),
         3
     ) AS calc_vol,
-    
+
 -- 	нормативный ключевой ресурс по работам
-    CASE 
+    CASE
     	WHEN COUNT(*) FILTER(WHERE prod IS NOT NULL and трудоемкость_фактическая > 0) OVER(PARTITION BY hk_dv_hub_fact_work) > 0
     	THEN TRUE
     	ELSE FALSE
-    END AS is_std_key_res
-    
+    END AS is_std_key_res,
+
+    GREATEST(nw.max_loadts, w.max_loadts) AS _dbt_loaded_at
+
 FROM active_norm_wld nw
 JOIN active_fact_works w USING(hk_dv_hub_fact_work)
 
-LEFT JOIN {{ source('public', 'ref_enrp_assign') }} a ON 
+LEFT JOIN {{ source('public', 'ref_enrp_assign') }} a ON
 	    w.тип_spider = a.oper_type
-	    AND nw.ресурс_spider_codе = a.res_code   
+	    AND nw.ресурс_spider_codе = a.res_code
 	    AND w.енрп_версия = a.enrp_version
-
-
-
-
