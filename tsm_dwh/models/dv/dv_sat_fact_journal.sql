@@ -2,7 +2,12 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        tags=['sat', 'жуфвр_1с']
+        tags=['sat', 'жуфвр_1с'],
+        indexes=[
+            {
+                'columns': ['loadts']
+            }
+        ]
     )
 }}
 
@@ -127,9 +132,9 @@
 	направление_деятельности_codе,
 	направление_деятельности_name
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_fact_journal <> lag_hdiff 
-            OR (hdiff_dv_sat_fact_journal <> sat_hdiff AND lag_hdiff IS NULL) 
+    WHERE
+        hdiff_dv_sat_fact_journal <> lag_hdiff
+            OR (hdiff_dv_sat_fact_journal <> sat_hdiff AND lag_hdiff IS NULL)
             OR sat_hdiff IS NULL
     ORDER BY loadts
 
@@ -239,8 +244,8 @@
 	направление_деятельности_codе,
 	направление_деятельности_name
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_fact_journal <> lag_hdiff 
+    WHERE
+        hdiff_dv_sat_fact_journal <> lag_hdiff
         OR lag_hdiff IS NULL
     ORDER BY loadts
 {% endif %}

@@ -3,7 +3,12 @@ sat: |
         config(
             materialized='incremental',
             incremental_strategy='append',
-            tags=['sat', '{source}']
+            tags=['sat', '{source}'],
+            indexes=[
+                {{
+                    'columns': ['loadts']
+                }}
+            ]
         )
     }}}}
 

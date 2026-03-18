@@ -2,7 +2,12 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        tags=['sat', 'ПУ_xl_поставки_материалов']
+        tags=['sat', 'ПУ_xl_поставки_материалов'],
+        indexes=[
+            {
+                'columns': ['loadts']
+            }
+        ]
     )
 }}
 
@@ -55,9 +60,9 @@
 	факт_объем,
 	план_объем_суточный
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_pu_mat_supply <> lag_hdiff 
-            OR (hdiff_dv_sat_pu_mat_supply <> sat_hdiff AND lag_hdiff IS NULL) 
+    WHERE
+        hdiff_dv_sat_pu_mat_supply <> lag_hdiff
+            OR (hdiff_dv_sat_pu_mat_supply <> sat_hdiff AND lag_hdiff IS NULL)
             OR sat_hdiff IS NULL
     ORDER BY loadts
 
@@ -95,8 +100,8 @@
 	факт_объем,
 	план_объем_суточный
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_pu_mat_supply <> lag_hdiff 
+    WHERE
+        hdiff_dv_sat_pu_mat_supply <> lag_hdiff
         OR lag_hdiff IS NULL
     ORDER BY loadts
 {% endif %}

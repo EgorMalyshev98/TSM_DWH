@@ -34,7 +34,7 @@ FROM (
 	"Ресурс_value"::uuid,
 	"Ресурс_codе"::varchar,
 	"Ресурс_name"::varchar
-    FROM 
+    FROM
         {{ source('public', 'src_materials') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,

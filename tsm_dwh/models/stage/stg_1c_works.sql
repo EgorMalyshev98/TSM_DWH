@@ -52,7 +52,7 @@ FROM (
 	"ВидРабот_value"::uuid,
 	"ВидРабот_codе"::varchar,
 	"ВидРабот_name"::varchar
-    FROM 
+    FROM
         {{ source('public', 'src_works') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,

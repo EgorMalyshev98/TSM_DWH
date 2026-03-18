@@ -4,7 +4,12 @@ msat: |
         config(
             materialized='incremental',
             incremental_strategy='append',
-            tags=['msat', '{source}']
+            tags=['msat', '{source}'],
+            indexes=[
+                {{
+                    'columns': ['loadts']
+                }}
+            ]
         )
     }}}}
 

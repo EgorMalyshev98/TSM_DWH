@@ -60,7 +60,7 @@ FROM (
 	"Аналитика_value"::uuid,
 	"Аналитика_codе"::varchar,
 	"Аналитика_name"::varchar
-    FROM 
+    FROM
         {{ source('public', 'src_norm_workload') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_work,
 	bk_работа_uuid,

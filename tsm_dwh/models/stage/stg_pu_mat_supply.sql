@@ -36,7 +36,7 @@ FROM (
 	"Единица измерения"::varchar,
 	"volume"::numeric,
 	"План суточный"::numeric
-    FROM 
+    FROM
         {{ source('public', 'src_pu_mat_supply') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_date,
 	bk_факт_дата,

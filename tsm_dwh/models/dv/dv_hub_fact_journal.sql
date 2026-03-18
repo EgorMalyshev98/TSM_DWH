@@ -12,7 +12,7 @@ SELECT distinct on (bk_жуфвр_uuid)
         recsource,
         loadts,
         bk_жуфвр_uuid
-FROM {{ ref('stg_1c_journal') }} stg
+FROM {{ ref('stg_1c_journal_time') }} stg
 
 {% if is_incremental() %}
 where not exists (

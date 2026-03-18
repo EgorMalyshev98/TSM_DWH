@@ -18,8 +18,8 @@ WITH active_esat as(
         t.start_date,
         l.hk_dv_hub_fact_journal,
         l.hk_dv_hub_fact_work
-    FROM 
-        (SELECT 
+    FROM
+        (SELECT
             e.*,
             dense_rank() over(PARTITION BY hk_dv_lnk_fact_journal_fact_work ORDER BY loadts desc) AS rnk
         FROM {{ this }} e) t
@@ -29,26 +29,26 @@ WITH active_esat as(
 
 -- stage + активные записи
 , stage AS (
-    SELECT 
+    SELECT
         hk_dv_lnk_fact_journal_fact_work,
         hk_dv_hub_fact_journal,
         hk_dv_hub_fact_work,
         loadts,
         start_date,
         'active esat' AS select_source
-        
+
     FROM active_esat a
-    
+
     UNION ALL
-    
-    SELECT 
+
+    SELECT
         hk_dv_lnk_fact_journal_fact_work,
         hk_dv_hub_fact_journal,
         hk_dv_hub_fact_work,
         loadts,
         loadts AS start_date,
         'stage' AS select_source
-        
+
     FROM {{ ref('stg_1c_works') }} stg
     CROSS JOIN (SELECT max(loadts) FROM active_esat) m (max_loadts)
     WHERE loadts > max_loadts
@@ -56,7 +56,7 @@ WITH active_esat as(
 
 -- агрегированные в одной строке зависимые ключи по каждому bk
 , stage_agg AS (
-    SELECT 
+    SELECT
         hk_dv_hub_fact_journal,
         loadts,
         string_agg(hk_dv_hub_fact_work::varchar, ',' ORDER BY hk_dv_hub_fact_work) AS dep_keys,
@@ -90,12 +90,12 @@ WITH active_esat as(
 , parts_for_insert AS (
     SELECT DISTINCT hk_dv_hub_fact_journal, loadts, end_date
     FROM compared_stage_agg
-    WHERE 
-        dep_keys <> lead_dep_keys 
+    WHERE
+        dep_keys <> lead_dep_keys
         OR (end_date IS NULL AND select_source <> 'active esat')
 )
-    
-SELECT 
+
+SELECT
     s.hk_dv_lnk_fact_journal_fact_work,
     s.loadts,
     s.start_date,
@@ -110,20 +110,20 @@ JOIN parts_for_insert p
 
 
 with stage as (
-    SELECT 
+    SELECT
         hk_dv_lnk_fact_journal_fact_work,
         hk_dv_hub_fact_journal,
         hk_dv_hub_fact_work,
         loadts,
         loadts AS start_date
-        
+
     FROM {{ ref('stg_1c_works') }} stg
 
 )
 
 -- агрегированные в одной строке зависимые ключи по каждому bk
 , stage_agg AS (
-    SELECT 
+    SELECT
         hk_dv_hub_fact_journal,
         loadts,
         string_agg(hk_dv_hub_fact_work::varchar, ',' ORDER BY hk_dv_hub_fact_work) AS dep_keys
@@ -154,12 +154,12 @@ with stage as (
 , parts_for_insert AS (
     SELECT DISTINCT hk_dv_hub_fact_journal, loadts, end_date
     FROM compared_stage_agg
-    WHERE 
-        dep_keys <> lead_dep_keys 
+    WHERE
+        dep_keys <> lead_dep_keys
         OR end_date IS NULL
 )
-    
-SELECT 
+
+SELECT
     s.hk_dv_lnk_fact_journal_fact_work,
     s.loadts,
     s.start_date,

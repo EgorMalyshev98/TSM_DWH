@@ -30,7 +30,7 @@ FROM (
 	"Пользователь_value"::uuid,
 	"Пользователь_name"::varchar,
 	"ДельтаВремениСек"::numeric
-    FROM 
+    FROM
         {{ source('public', 'src_journal_time') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_journal,
 	bk_жуфвр_uuid,

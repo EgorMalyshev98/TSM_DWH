@@ -3,7 +3,12 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        tags=['msat', 'жуфвр_1с']
+        tags=['msat', 'жуфвр_1с'],
+        indexes=[
+            {
+                'columns': ['loadts']
+            }
+        ]
     )
 }}
 

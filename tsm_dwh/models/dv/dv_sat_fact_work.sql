@@ -2,7 +2,12 @@
     config(
         materialized='incremental',
         incremental_strategy='append',
-        tags=['sat', 'жуфвр_1с']
+        tags=['sat', 'жуфвр_1с'],
+        indexes=[
+            {
+                'columns': ['loadts']
+            }
+        ]
     )
 }}
 
@@ -85,9 +90,9 @@
 	видработ_codе,
 	видработ_name
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_fact_work <> lag_hdiff 
-            OR (hdiff_dv_sat_fact_work <> sat_hdiff AND lag_hdiff IS NULL) 
+    WHERE
+        hdiff_dv_sat_fact_work <> lag_hdiff
+            OR (hdiff_dv_sat_fact_work <> sat_hdiff AND lag_hdiff IS NULL)
             OR sat_hdiff IS NULL
     ORDER BY loadts
 
@@ -155,8 +160,8 @@
 	видработ_codе,
 	видработ_name
     FROM stage_cte
-    WHERE 
-        hdiff_dv_sat_fact_work <> lag_hdiff 
+    WHERE
+        hdiff_dv_sat_fact_work <> lag_hdiff
         OR lag_hdiff IS NULL
     ORDER BY loadts
 {% endif %}

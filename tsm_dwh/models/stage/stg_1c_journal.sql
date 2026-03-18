@@ -74,7 +74,7 @@ FROM (
 	"value_НаправлениеДеятельности_value"::uuid,
 	"value_НаправлениеДеятельности_codе"::varchar,
 	"value_НаправлениеДеятельности_name"::varchar
-    FROM 
+    FROM
         {{ source('public', 'src_journal') }}
 ) AS tmp (recsource, loadts, hkcode, hk_dv_hub_fact_journal,
 	bk_жуфвр_uuid,
