@@ -170,7 +170,7 @@ WHERE t.rn = 1
 	w.видработ_name,
 	w.объем_работы,
 
-    r.наименование as объект,
+    r.name as объект,
 
     (nw.нормируемая IS NOT NULL) AS нормируемая,
 
@@ -183,7 +183,7 @@ WHERE t.rn = 1
 FROM sat_work w
 JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
 JOIN active_journal j USING(hk_dv_hub_fact_journal)
-JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
+JOIN {{ source('public', 'ref_objects') }} r ON r.name_1c = j.направление_деятельности_name
 LEFT JOIN (
 	SELECT DISTINCT
 		тип_spider,

@@ -1,14 +1,14 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['направление_деятельности_name', 'ресурс_name', 'ресурс_codе', 'дата', 'смена_name'],
+        unique_key=['объект', 'ресурс_name', 'ресурс_codе', 'дата', 'смена'],
         incremental_strategy='merge',
         on_schema_change='sync_all_columns',
         pre_hook="SET LOCAL enable_nestloop = off",
         tags=['mart'],
         indexes=[
             {
-                'columns': ['направление_деятельности_name', 'ресурс_name', 'ресурс_codе', 'дата', 'смена_name'],
+                'columns': ['объект', 'ресурс_name', 'ресурс_codе', 'дата', 'смена'],
                 'unique': true
             },
             {
@@ -44,6 +44,12 @@ changed_works AS (
     FROM {{ ref('dv_lnk_fact_work_tech') }} lnk
     JOIN {{ ref('dv_sat_fact_tech') }} t USING(hk_dv_lnk_fact_work_tech)
     WHERE t.loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
+
+    UNION
+
+    SELECT hk_dv_hub_fact_work
+    FROM {{ ref('dv_msat_norm_workload') }}
+    WHERE loadts > (SELECT COALESCE(MAX(_dbt_loaded_at), '1970-01-01') FROM {{ this }})
 ),
 {% endif %}
 
@@ -131,15 +137,16 @@ sat_work AS (
 
 active_fact_works AS MATERIALIZED (
     SELECT
+        r.object_id,
+        r.name_1c as объект,
         w.hk_dv_hub_fact_work,
         j.смена_name,
-        j.направление_деятельности_name,
         j.дата,
         GREATEST(w.max_loadts, j.max_loadts) AS max_loadts
     FROM sat_work w
     JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
     JOIN active_journal j USING(hk_dv_hub_fact_journal)
-    JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
+    JOIN {{ source('public', 'ref_objects') }} r ON r.name_1c = j.направление_деятельности_name
     WHERE
         j.проведен IS TRUE
         AND j.пометка_удаления IS FALSE
@@ -147,13 +154,34 @@ active_fact_works AS MATERIALIZED (
         AND r.is_active IS TRUE
 ),
 
+active_norm_workload AS (
+    SELECT
+        hk_dv_hub_fact_work,
+        ресурс_spider_codе,
+        SUM(трудоемкость_нормативная) AS трудоемкость_нормативная
+    FROM (
+        SELECT
+            hk_dv_hub_fact_work,
+            ресурс_spider_codе,
+            трудоемкость_нормативная,
+            MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_work) AS max_loadts,
+            loadts
+        FROM {{ ref('dv_msat_norm_workload') }}
+        {% if is_incremental() %}
+        WHERE hk_dv_hub_fact_work IN (SELECT hk_dv_hub_fact_work FROM changed_works)
+        {% endif %}
+    ) t
+    WHERE loadts = max_loadts
+    GROUP BY hk_dv_hub_fact_work, ресурс_spider_codе
+),
+
 dwt_calc AS (
     SELECT
-        w.направление_деятельности_name,
+        w.object_id,
+        w.объект,
         t.ресурс_name,
         t.ресурс_codе,
         t.аналитика_name,
-        w.смена_name,
         w.дата,
         CASE
             WHEN t.bk_ресурс_uuid NOT IN (
@@ -163,38 +191,42 @@ dwt_calc AS (
             THEN t.госномер_техника_не_найдена
             ELSE t.аналитика_name
         END AS имя_ресурса,
-        SUM(t.часы)                                     AS часы,
+        case 
+            when w.смена_name like 'Дневная%' then 1
+            when w.смена_name like 'Ночная%' then 2
+        end as смена,
+        SUM(t.часы)                                     AS факт_часы,
         GREATEST(0, 10 - SUM(t.часы))                   AS простой,
+        sum(nw.трудоемкость_нормативная)                AS трудоемкость_нормативная,
         MAX(GREATEST(t.tech_max_loadts, w.max_loadts))  AS max_loadts
     FROM active_tech t
     JOIN active_fact_works w USING(hk_dv_hub_fact_work)
+    LEFT JOIN active_norm_workload nw
+        ON nw.hk_dv_hub_fact_work = w.hk_dv_hub_fact_work
+        AND nw.ресурс_spider_codе = t.ресурс_codе
     WHERE t.bk_ресурс_uuid NOT IN (
         '5da5e5d1-6257-11ec-a16c-00224dda35d0',
         '5da5e5d2-6257-11ec-a16c-00224dda35d0'
     )
-    GROUP BY
-        w.направление_деятельности_name,
-        t.аналитика_name,
-        t.ресурс_codе,
-        w.смена_name,
-        t.ресурс_name,
-        w.дата,
-        7  -- имя_ресурса
+    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
 )
 
 SELECT
-    направление_деятельности_name,
+    object_id,
+    объект,
     ресурс_name,
     ресурс_codе,
     дата,
-    смена_name,
-    SUM(часы)       AS часы,
-    SUM(простой)    AS простой,
-    MAX(max_loadts) AS _dbt_loaded_at
+    смена,
+    SUM(факт_часы)                   AS факт_часы,
+    SUM(простой)                     AS простой,
+    sum(трудоемкость_нормативная)    AS трудоемкость_нормативная,
+    MAX(max_loadts)                  AS _dbt_loaded_at
 FROM dwt_calc
 GROUP BY
-    направление_деятельности_name,
+    object_id,
+    объект,
     ресурс_name,
     ресурс_codе,
     дата,
-    смена_name
+    смена

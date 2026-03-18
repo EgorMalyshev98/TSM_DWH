@@ -45,7 +45,7 @@ active_journal AS (
 
         last_name || ' ' || first_name || '. ' || second_name || '.' as ответственный,
 
-        r.наименование AS объект,
+        r.name AS объект,
 
         t._dbt_loaded_at
 	FROM
@@ -78,7 +78,7 @@ active_journal AS (
 		  AND hk_dv_hub_fact_journal IN (SELECT hk_dv_hub_fact_journal FROM changed_journals)
 		{% endif %}
 		) t
-    JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
+    JOIN {{ source('public', 'ref_objects') }} r ON r.name_1c = t.направление_деятельности_name
 	WHERE rn = 1
     and r.is_active is true
     )

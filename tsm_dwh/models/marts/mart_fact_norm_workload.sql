@@ -177,7 +177,7 @@ WHERE t.rn = 1
 	w.видработ_name,
 	w.объем_работы,
 
-    r.наименование as объект,
+    r.name as объект,
 
 	w.пометка_удаления AS работа_пометка_удаления,
 	j.проведен,
@@ -188,7 +188,7 @@ WHERE t.rn = 1
 FROM sat_work w
 JOIN {{ ref('dv_lnk_fact_journal_fact_work') }} lnk USING(hk_dv_hub_fact_work)
 JOIN active_journal j USING(hk_dv_hub_fact_journal)
-JOIN {{ source('public', 'ref_object_names') }} r USING(территория_value)
+JOIN {{ source('public', 'ref_objects') }} r ON r.name_1c = j.направление_деятельности_name
 
 WHERE
 	j.проведен IS TRUE
@@ -274,12 +274,12 @@ SELECT
                 THEN prod * трудоемкость_фактическая
             END
             /
-            SUM(
+            NULLIF(SUM(
                 CASE
                     WHEN ключевой_ресурс_value = аналитика_value
                     THEN prod * трудоемкость_фактическая
                 END
-            ) OVER (PARTITION BY hk_dv_hub_fact_work)
+            ) OVER (PARTITION BY hk_dv_hub_fact_work), 0)
         ),
         3
     ) AS calc_vol,

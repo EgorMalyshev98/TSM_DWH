@@ -3,12 +3,13 @@ version: 2
 sources:
   - name: public
     tables:
-      - name: ref_object_names
+      - name: ref_objects
         columns:
           - name: территория_value
           - name: территория_name
           - name: spider_name
           - name: is_active
       - name: ref_enrp_assign
+
 
  
