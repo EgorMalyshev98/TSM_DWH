@@ -1,18 +1,18 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['объект', 'ресурс_name', 'ресурс_codе', 'дата', 'смена'],
+        unique_key=['object_id', 'ресурс_codе', 'дата', 'смена', 'уникальный_код'],
         incremental_strategy='merge',
         on_schema_change='sync_all_columns',
         pre_hook="SET LOCAL enable_nestloop = off",
         tags=['mart'],
         indexes=[
             {
-                'columns': ['объект', 'ресурс_name', 'ресурс_codе', 'дата', 'смена'],
+                'columns': ['object_id', 'ресурс_codе', 'дата', 'смена', 'уникальный_код'],
                 'unique': true
             },
             {
-                'columns': ['дата']
+                'columns': ['дата', 'object_id']
             },
             {
                 'columns': ['_dbt_loaded_at']
@@ -123,6 +123,7 @@ sat_work AS (
         SELECT
             hk_dv_hub_fact_work,
             тип_spider,
+            уникальный_код,
             пометка_удаления,
             MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_work) AS max_loadts,
             ROW_NUMBER() OVER(PARTITION BY hk_dv_hub_fact_work ORDER BY loadts DESC) AS rn
@@ -140,6 +141,7 @@ active_fact_works AS MATERIALIZED (
         r.object_id,
         r.name as объект,
         w.hk_dv_hub_fact_work,
+        w.уникальный_код,
         j.смена_name,
         j.дата,
         GREATEST(w.max_loadts, j.max_loadts) AS max_loadts
@@ -179,6 +181,7 @@ dwt_calc AS (
     SELECT
         w.object_id,
         w.объект,
+        w.уникальный_код,
         t.ресурс_name,
         t.ресурс_codе,
         t.аналитика_name,
@@ -208,12 +211,13 @@ dwt_calc AS (
         '5da5e5d1-6257-11ec-a16c-00224dda35d0',
         '5da5e5d2-6257-11ec-a16c-00224dda35d0'
     )
-    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
+    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9
 )
 
 SELECT
     object_id,
     объект,
+    уникальный_код,
     ресурс_name,
     ресурс_codе,
     дата,
@@ -226,6 +230,7 @@ FROM dwt_calc
 GROUP BY
     object_id,
     объект,
+    уникальный_код,
     ресурс_name,
     ресурс_codе,
     дата,
