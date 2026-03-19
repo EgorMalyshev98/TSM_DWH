@@ -138,7 +138,7 @@ sat_work AS (
 active_fact_works AS MATERIALIZED (
     SELECT
         r.object_id,
-        r.name_1c as объект,
+        r.name as объект,
         w.hk_dv_hub_fact_work,
         j.смена_name,
         j.дата,
