@@ -8,5 +8,6 @@ tsm_dwh:
       schema: public
       threads: 4
       type: postgres
+      keepalives_idle: 60
       user: "{{ env_var('DBT_USER', 'postgres') }}"
   target: prod
