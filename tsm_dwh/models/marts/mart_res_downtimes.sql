@@ -186,8 +186,9 @@ prepare AS (
         t.ресурс_name,
         t.ресурс_codе,
         t.аналитика_name,
+        t.часы,
         w.дата,
-        nw.трудоемкость_нормативная
+        nw.трудоемкость_нормативная,
         CASE
             -- техника без гос номера
             WHEN t.bk_ресурс_uuid NOT IN (
@@ -220,7 +221,7 @@ dwt_calc as (
         p.*,
         GREATEST(0, 10 - SUM(часы) OVER(PARTITION by bk_ресурс_uuid, дата, смена)) as простой,
         ROW_NUMBER() OVER (PARTITION BY object_id, bk_ресурс_uuid, дата, смена ORDER BY уникальный_код) AS rn
-    FROM prepare
+    FROM prepare p
 ),
 
 
