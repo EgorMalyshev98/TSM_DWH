@@ -1,14 +1,14 @@
 {{
     config(
         materialized='incremental',
-        unique_key=['object_id', 'ресурс_codе', 'дата', 'смена', 'уникальный_код'],
+        unique_key=['object_id', 'ресурс_codе', 'дата', 'смена'],
         incremental_strategy='merge',
         on_schema_change='sync_all_columns',
         pre_hook="SET LOCAL enable_nestloop = off",
         tags=['mart'],
         indexes=[
             {
-                'columns': ['object_id', 'ресурс_codе', 'дата', 'смена', 'уникальный_код'],
+                'columns': ['object_id', 'ресурс_codе', 'дата', 'смена'],
                 'unique': true
             },
             {
@@ -177,16 +177,19 @@ active_norm_workload AS (
     GROUP BY hk_dv_hub_fact_work, ресурс_spider_codе
 ),
 
-dwt_calc AS (
+prepare AS (
     SELECT
         w.object_id,
         w.объект,
         w.уникальный_код,
+        t.bk_ресурс_uuid,
         t.ресурс_name,
         t.ресурс_codе,
         t.аналитика_name,
         w.дата,
+        nw.трудоемкость_нормативная
         CASE
+            -- техника без гос номера
             WHEN t.bk_ресурс_uuid NOT IN (
                 '5195e3a3-66ff-11ec-a16c-00224dda35d0',
                 'e9ddfb4c-5be7-11ec-a16c-00224dda35d0'
@@ -198,40 +201,45 @@ dwt_calc AS (
             when w.смена_name like 'Дневная%' then 1
             when w.смена_name like 'Ночная%' then 2
         end as смена,
-        SUM(t.часы)                                     AS факт_часы,
-        GREATEST(0, 10 - SUM(t.часы))                   AS простой,
-        sum(nw.трудоемкость_нормативная)                AS трудоемкость_нормативная,
-        MAX(GREATEST(t.tech_max_loadts, w.max_loadts))  AS max_loadts
+        t.tech_max_loadts, 
+        w.max_loadts
     FROM active_tech t
     JOIN active_fact_works w USING(hk_dv_hub_fact_work)
     LEFT JOIN active_norm_workload nw
         ON nw.hk_dv_hub_fact_work = w.hk_dv_hub_fact_work
         AND nw.ресурс_spider_codе = t.ресурс_codе
+    -- люди
     WHERE t.bk_ресурс_uuid NOT IN (
         '5da5e5d1-6257-11ec-a16c-00224dda35d0',
         '5da5e5d2-6257-11ec-a16c-00224dda35d0'
     )
-    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9
+),
+
+dwt_calc as (
+    SELECT 
+        p.*,
+        GREATEST(0, 10 - SUM(часы) OVER(PARTITION by bk_ресурс_uuid, дата, смена)) as простой,
+        ROW_NUMBER() OVER (PARTITION BY object_id, bk_ресурс_uuid, дата, смена ORDER BY уникальный_код) AS rn
+    FROM prepare
+),
+
+
+grouped  AS (
+    SELECT
+        object_id,
+        объект,
+        ресурс_name,
+        ресурс_codе,
+        дата,
+        смена,
+        SUM(часы)                                       AS факт_часы,
+        SUM(CASE WHEN rn = 1 THEN простой ELSE 0 END)   AS простой, -- простой учтен по каждому объекту 
+        sum(трудоемкость_нормативная)                AS трудоемкость_нормативная,
+        MAX(GREATEST(tech_max_loadts, max_loadts))  AS _dbt_loaded_at
+    FROM dwt_calc 
+    GROUP BY 1, 2, 3, 4, 5, 6
 )
 
-SELECT
-    object_id,
-    объект,
-    уникальный_код,
-    ресурс_name,
-    ресурс_codе,
-    дата,
-    смена,
-    SUM(факт_часы)                   AS факт_часы,
-    SUM(простой)                     AS простой,
-    sum(трудоемкость_нормативная)    AS трудоемкость_нормативная,
-    MAX(max_loadts)                  AS _dbt_loaded_at
-FROM dwt_calc
-GROUP BY
-    object_id,
-    объект,
-    уникальный_код,
-    ресурс_name,
-    ресурс_codе,
-    дата,
-    смена
+
+select * from grouped 
+
