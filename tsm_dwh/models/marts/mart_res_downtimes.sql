@@ -106,7 +106,7 @@ active_journal AS (
             TRIM(территория_value::varchar) AS территория_value,
             смена_name,
             направление_деятельности_name,
-            дата,
+            DATE_TRUNC('day', дата)::date as дата,
             проведен,
             пометка_удаления,
             MAX(loadts) OVER(PARTITION BY hk_dv_hub_fact_journal) AS max_loadts,
